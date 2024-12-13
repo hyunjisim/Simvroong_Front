@@ -1,0 +1,169 @@
+.around-container {
+  max-width: 25rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background-color: #E7EAF1;
+  height: 100vh;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  height: 6.5rem; /* 헤더 높이 */
+  padding: 0 15px;
+  display: flex;
+  align-items: flex-end; /* 요소를 아래쪽으로 정렬 */
+  justify-content: space-between; /* 버튼과 텍스트를 양쪽으로 배치 */
+  position: relative;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  padding-bottom: 12px; /* 전체적으로 아래로 더 내리기 */
+}
+
+.header h1 {
+  font-size: 24px; /* 텍스트 크기 */
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+  text-align: center;
+  position: absolute; /* 텍스트를 위치 조정 가능 */
+  left: 50%; /* 화면의 중앙으로 이동 */
+  bottom: 12px; /* 버튼과 동일한 하단 위치 */
+  transform: translateX(-50%); /* 정확히 가운데 정렬 */
+}
+
+.back-btn {
+  position: absolute;
+  left: 15px; /* 버튼 왼쪽 위치 */
+  bottom: 12px; /* 하단 위치 */
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+}
+
+.back-btn:hover {
+  color: #000;
+}
+
+.map {
+  width: 100%;
+  height: 50vh; /* 지도 높이 */
+  border-bottom: 1px solid #ddd;
+}
+
+.list-container {
+  position: relative;
+  width: 100%;
+  height: 50%;
+  background: white;
+  overflow-y: auto;
+  border-top: 1px solid #ddd;
+  transition: height 0.3s ease-in-out;
+  padding-top: 20px; /* 리스트와 확장 버튼 간격 */
+}
+
+.list-container.expanded {
+  height: 90%; /* 리스트 확장 */
+}
+
+.request-item {
+  display: flex;
+  align-items: flex-start;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.request-image img {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+
+.request-details {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.request-header h3 {
+  margin: 0;
+  font-size: 14px;
+  color: #333;
+  font-weight: bold;
+}
+
+.request-header p {
+  margin: 5px 0 0;
+  font-size: 12px;
+  color: gray;
+}
+
+.request-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 10px;
+}
+
+.price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.actions button {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 14px; /* 버튼 크기 */
+  cursor: pointer;
+}
+
+.actions button:hover {
+  color: #333;
+}
+
+.expand-btn {
+  position: absolute;
+  top: -15px; /* 리스트 위에 위치 */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  width: 50px; /* 버튼 크기 */
+  height: 10px; /* 버튼 크기 */
+  background: gray;
+  color: white;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.expand-btn:hover {
+  background: #555;
+}
+
+.marker {
+  background: #007bff;
+  color: white;
+  padding: 5px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  text-align: center;
+}

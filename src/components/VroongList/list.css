@@ -1,0 +1,198 @@
+/* 기본 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+  }
+  
+  .vroong-container {
+    max-width: 25rem;
+    height: 874px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    background-color: #E7EAF1;
+    height: 100vh;
+    border: 1px solid #ddd;
+  }
+  
+  /* 헤더 */
+  .vroong-header {
+    height: 6.5rem;
+    padding: 0 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  
+  .vroong-header h1 {
+    font-size: 27px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  /* 메인 */
+  .vroong-main {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+  }
+  
+  .empty-state {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    height: 100%; 
+    text-align: center;
+  }
+  
+  .empty-state img {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .empty-state p {
+    margin-top: 10px;
+    color: #888;
+    font-size: 16px;
+  }
+  
+  .vroong-item {
+    display: flex;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    align-items: center;
+  }
+  
+  .vroong-image {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+    object-fit: cover;
+  }
+  
+  .vroong-content {
+    flex: 1;
+  }
+  
+  .vroong-content h3 {
+    font-size: 16px;
+    margin: 0 0 5px;
+  }
+  
+  .vroong-content p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+  }
+
+  .price-review {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 양쪽 끝으로 배치 */
+    margin-top: 5px; /* 약간의 간격 */
+  }
+  
+  .vroong-price {
+    font-size: 14px;
+    font-weight: bold;
+    color: #000;
+    margin: 0;
+  }
+
+  .location-time {
+    display: flex;
+    justify-content: space-between; /* 간격 균등 분배 */
+  }
+  
+  .location-time span:first-child {
+    margin-right: 10px; /* location과 time 간격 */
+  }
+  
+  
+  /* 태그 스타일 */
+  .vroong-tag {
+    display: inline-block;
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    color: white;
+  }
+  
+  .vroong-tag.완료 {
+    background-color: #FFBE33;
+  }
+  
+  .vroong-tag.진행중 {
+    background-color: #FFBE33;
+  }
+  
+  .vroong-tag.취소완료 {
+    background-color: #FFBE33;
+  }
+  
+  /* 후기 보내기 버튼 */
+  .review-btn {
+    margin-top: 10px;
+    padding: 5px 10px;
+    color: #3498db;
+    border: none;
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .review-btn:hover {
+    color: red;
+  }
+  
+  /* 푸터 */
+  .vroong-footer {
+    height: 4.2rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+    background-color: #fff;
+  }
+  
+  .vroong-footer button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-align: center; /* 텍스트와 이미지를 중앙 정렬 */
+    flex: 1;
+  }
+  
+  .vroong-footer img {
+    width: 30px;
+    height: 30px;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .vroong-footer span {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #666;
+  }
+  
+  .vroong-footer .active-tab {
+    color: #000; /* 활성화된 탭의 텍스트 색상 */
+    font-weight: bold;
+  }
+  
