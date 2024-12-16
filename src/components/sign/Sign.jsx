@@ -1,307 +1,346 @@
-import React, { useState, useEffect } from "react";
-import backb from "../../img/back-arrow.png";
-import { useNavigate } from "react-router-dom";
-import './Sign.css';
-import axios from "axios";
+import React, { useState, useEffect } from 'react'
+import backb from '../../img/back-arrow.png'
+import { useNavigate } from 'react-router-dom'
+import './Sign.css'
+import axios from 'axios'
 
 const Sign = () => {
-  const navigate = useNavigate();
+    const navigate = useNavigate()
 
-  // 상태 관리
-  const [selectedYear, setSelectedYear] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState("");
-  const [selectedDay, setSelectedDay] = useState("");
-  const [gender, setGender] = useState("");
-  const [phoneFirst, setPhoneFirst] = useState(""); // 휴대폰 번호 앞자리
-  const [phoneRest, setPhoneRest] = useState(""); // 휴대폰 번호 뒷자리
-  const [verifyCode, setVerifyCode] = useState(""); // 인증번호 입력값
-  const [verificationStatus, setVerificationStatus] = useState(false); // 인증 상태 메시지
-  const [agreements, setAgreements] = useState({
-    all: false,
-    check1: false,
-    check2: false,
-    check3: false,
-    check4: false,
-    check5: false,
-  });
+    const [selectedYear, setSelectedYear] = useState('')
+    const [selectedMonth, setSelectedMonth] = useState('')
+    const [selectedDay, setSelectedDay] = useState('')
+    const [gender, setGender] = useState('')
+    const [phoneFirst, setPhoneFirst] = useState('') // 휴대폰 번호 앞자리
+    const [phoneRest, setPhoneRest] = useState('') // 휴대폰 번호 뒷자리
+    const [verifyCode, setVerifyCode] = useState('') // 인증번호 입력값
+    const [verificationStatus, setVerificationStatus] = useState(false) // 인증 상태 메시지
+    const [agreements, setAgreements] = useState({
+        all: false,
+        check1: false,
+        check2: false,
+        check3: false,
+        check4: false
+    })
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(null)
+    const [isCodeSent, setIsCodeSent] = useState(false)
 
-  // 약관 데이터 가져오기
-  const [terms, setTerms] = useState([]);
-  useEffect(() => {
-    const fetchTerms = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get("http://localhost:8080/terms");
-        setTerms(response.data);
-        setLoading(false);
-      } catch (err) {
-        console.error("약관 데이터를 불러오는 중 오류 발생:", err);
-        setError("약관 데이터를 가져오는 데 실패했습니다.");
-        setLoading(false);
-      }
-    };
-    fetchTerms();
-  }, []);
-
-  // 뒤로가기 버튼 이벤트
-  const goBack = () => {
-    navigate("/Login");
-  };
-
-  // 약관 동의 상태 관리
-  const handleAllAgreement = () => {
-    const newStatus = !agreements.all;
-    setAgreements({
-      all: newStatus,
-      check1: newStatus,
-      check2: newStatus,
-      check3: newStatus,
-      check4: newStatus,
-      check5: newStatus,
-    });
-  };
-
-  const handleAgreementChange = (key) => {
-    setAgreements((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-      all: false, // 개별 변경 시 전체 동의 해제
-    }));
-  };
-
-  // 가입하기 버튼 이벤트
-  const handleSubmit = async () => {
-    const birthDate = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-${String(selectedDay).padStart(2, '0')}`;
-    const userData = {
-      birthDate,
-      gender,
-      phone: `${phoneFirst}-${phoneRest}`,
-      agreements,
-    };
-
-    try {
-      const response = await axios.post("http://localhost:8080/signup", userData);
-      alert("회원가입 성공!");
-      navigate("/Login");
-    } catch (err) {
-      console.error("회원가입 실패:", err);
-      alert("회원가입에 실패했습니다.");
+    // 뒤로가기 버튼 이벤트
+    const goBack = () => {
+        navigate('/login')
     }
-  };
 
-  // 인증번호 요청
-  const requestVerificationCode = async () => {
-    const phoneNumber = `${phoneFirst}-${phoneRest}`;
-    
-    if (!phoneFirst || !phoneRest || phoneRest.length !== 8) {
-      alert("휴대폰 번호를 정확히 입력해주세요.");
-      return;
-    }
-  
-    try {
-      // 인증번호 요청
-      const response = await axios.post("http://localhost:8080/sendCode", {
-        body: JSON.stringify({
-          phoneNumber
+    // 약관 동의 상태 관리
+    const handleAllAgreement = () => {
+        const newStatus = !agreements.all
+        setAgreements({
+            all: newStatus,
+            check1: newStatus,
+            check2: newStatus,
+            check3: newStatus,
+            check4: newStatus
         })
-      });
-  
-      // 서버 응답 처리
-      if (response.data.success) {
-        alert(response.data.message || "인증번호가 발송되었습니다.");
-        setVerificationStatus("sent");
-      } else {
-        throw new Error(response.data.message || "인증번호 발송 실패");
-      }
-    } catch (err) {
-      console.error("인증번호 발송 실패:", err);
-      alert("인증번호 발송에 실패했습니다.");
-      setVerificationStatus("failed");
     }
-  };
 
-  const confirmVerificationCode = async () => {
-    const phoneNumber = `${phoneFirst}-${phoneRest}`;
-  
-    if (!verifyCode) {
-      alert("인증번호를 입력해주세요.");
-      return;
+    const handleAgreementChange = key => {
+        setAgreements(prev => ({
+            ...prev,
+            [key]: !prev[key],
+            all: false
+        }))
     }
-  
-    try {
-      // 인증번호 확인
-      const response = await axios.post("http://localhost:8080/verifyCode", {
-        phone: phoneNumber,
-        code: verifyCode,
-      });
-  
-      // 서버 응답 처리
-      if (response.data.success) {
-        alert(response.data.message || "인증이 완료되었습니다.");
-        setVerificationStatus("verified");
-      } else {
-        throw new Error(response.data.message || "인증번호 확인 실패");
-      }
-    } catch (err) {
-      console.error("인증 실패:", err);
-      alert("인증번호가 올바르지 않습니다.");
-      setVerificationStatus("failed");
+
+    // 가입하기 버튼 이벤트
+    const handleSubmit = async () => {
+        const birth = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-${String(selectedDay).padStart(2, '0')}`
+
+        const nickname = document.getElementById('nickname').value.trim()
+        const userId = document.getElementById('id').value.trim()
+        const password = document.getElementById('password').value.trim()
+        const confirmPassword = document.getElementById('password-confirm').value.trim()
+        const name = document.getElementById('name').value.trim()
+
+        const userData = {
+            nickname: nickname,
+            userId: userId,
+            password: password,
+            name: name,
+            birth: birth,
+            gender: gender,
+            phoneNumber: `${phoneFirst}${phoneRest}`,
+            agreements: agreements
+        }
+
+        // 필수 약관 체크 여부 확인
+        if (!agreements.check1 || !agreements.check2 || !agreements.check3) {
+            alert('필수 약관을 모두 동의해주세요.')
+            return
+        }
+
+        // 필수 입력값 검증
+        if (!userData.nickname || !userData.userId || !userData.password || !userData.name || !birth || !gender) {
+            alert('모든 필수 항목을 입력해주세요.')
+            return
+        }
+
+        if (userData.password !== confirmPassword) {
+            alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.')
+            return
+        }
+
+        try {
+            const response = await axios.post('http://127.0.0.1:8080/auth/signup', userData)
+            alert('회원가입이 완료되었습니다!')
+            navigate('/login')
+        } catch (err) {
+            console.error('회원가입 실패:', err)
+            alert('회원가입에 실패했습니다. 다시 시도해주세요.')
+        }
     }
-  };
 
+    // 인증번호 요청
+    const requestVerificationCode = async () => {
+        const phoneNumber = `${phoneFirst}${phoneRest}`
+        if (!phoneFirst || !phoneRest || phoneRest.length !== 8) {
+            alert('휴대폰 번호를 정확히 입력해주세요.')
+            return
+        }
 
-  return (
-    <div className="sign-All">
-      <div className="sign-header">
-        <img onClick={goBack} src={backb} className="backb" alt="뒤로가기 버튼" />
-        <h2 className="headeralrimh">회원가입</h2>
-      </div>
+        try {
+            // 인증번호 요청
+            const response = await axios.post('http://127.0.0.1:8080/auth/sendCode', {
+                phoneNumber: phoneNumber // JSON 형태로 전달
+            })
 
-      <div className="form-el-nick">
-        <label htmlFor="nickname">닉네임*</label>
-        <input id="nickname" name="nickname" />
-      </div>
+            // 서버 응답 처리
+            if (response) {
+                alert('인증번호가 발송되었습니다.')
+                setVerificationStatus('sent')
+                setIsCodeSent(true)
+            } else {
+                throw new Error('인증번호 발송 실패')
+            }
+        } catch (err) {
+            console.error('인증번호 발송 실패:', err)
+            alert('인증번호 발송에 실패했습니다.')
+            setVerificationStatus('failed')
+        }
+    }
 
-      <div className="form-el-id">
-        <label htmlFor="id">아이디*</label>
-        <input id="id" name="id" maxLength={10} />
-      </div>
+    const confirmVerificationCode = async () => {
+        const phoneNumber = `${phoneFirst}${phoneRest}`
 
-      <div className="form-el-pw">
-        <label htmlFor="password">비밀번호*</label>
-        <input type="text" id="password" name="password" maxLength={20} />
-      </div>
+        if (!verifyCode) {
+            alert('인증번호를 입력해주세요.')
+            return
+        }
 
-      <div className="form-el-pwc">
-        <label htmlFor="password-confirm">비밀번호 확인*</label>
-        <input type="text" id="password-confirm" name="password-confirm" maxLength={20} />
-      </div>
+        try {
+            // 인증번호 확인
+            const response = await axios.post('http://127.0.0.1:8080/auth/verifyCode', {
+                phoneNumber: phoneNumber,
+                code: verifyCode
+            })
 
-      <div className="form-el-name">
-        <label htmlFor="name">이름*</label>
-        <input id="name" name="name" />
-      </div>
+            // 서버 응답 처리
+            if (response) {
+                alert('인증이 완료되었습니다.')
+                setVerificationStatus('verified')
+            } else {
+                throw new Error('인증번호 확인 실패')
+            }
+        } catch (err) {
+            console.error('인증 실패:', err)
+            alert('인증번호가 올바르지 않습니다.')
+            setVerificationStatus('failed')
+        }
+    }
 
-      <div className="form-el-birth">
-        <label>생년월일*</label>
-        <div className="birth-container">
-          <select className="box" value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
-            <option value="">년</option>
-            {Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - i).map((year) => (
-              <option key={year} value={year}>{year}</option>
-            ))}
-          </select>
-          <select className="box" value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)}>
-            <option value="">월</option>
-            {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
-              <option key={month} value={month}>{month}</option>
-            ))}
-          </select>
-          <select className="box" value={selectedDay} onChange={(e) => setSelectedDay(e.target.value)}>
-            <option value="">일</option>
-            {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => (
-              <option key={day} value={day}>{day}</option>
-            ))}
-          </select>
-        </div>
-      </div>
+    // 비밀번호
+    const [userPassword, setUserPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
 
-      <div className="form-el-gender">
-        <label htmlFor="gender">성별*</label>
-        <select className="gender" id="gender" value={gender} onChange={(e) => setGender(e.target.value)}>
-          <option value="">선택</option>
-          <option value="M">남자</option>
-          <option value="F">여자</option>
-        </select>
-      </div>
+    return (
+        // 회원가입폼
+        <form className="sign-All" onSubmit={e => e.preventDefault()}>
+            <div className="sign-header">
+                <img onClick={goBack} src={backb} className="backb" alt="뒤로가기 버튼" />
+                <h2 className="headeralrimh">회원가입</h2>
+            </div>
+            {/* 닉네임 */}
+            <div className="form-el-nick">
+                <label htmlFor="nickname">닉네임*</label>
+                <input id="nickname" name="nickname" />
+            </div>
+            {/* 아이디 */}
+            <div className="form-el-id">
+                <label htmlFor="id">아이디*</label>
+                <input id="id" name="id" maxLength={10} />
+            </div>
+            {/* 비밀번호 */}
+            <div className="form-el-pw">
+                <label htmlFor="password">비밀번호*</label>
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="비밀번호를 입력해주세요"
+                    value={userPassword}
+                    onChange={(e) => setUserPassword(e.target.value)}
+                    maxLength={30}
+                    autoComplete="off"
+                />
+            </div>
+            {/* 비밀번호 확인 */}
+            <div className="form-el-pwc">
+                <label htmlFor="password-confirm">비밀번호 확인*</label>
+                <input
+                    type="password"
+                    id="password-confirm"
+                    placeholder="비밀번호를 다시 입력해주세요"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    maxLength={30}
+                    autoComplete="off"
+                />
+            </div>
+            {/* 이름 */}
+            <div className="form-el-name">
+                <label htmlFor="name">이름*</label>
+                <input id="name" name="name" />
+            </div>
+            {/* 생년월일 */}
+            <div className="form-el-birth">
+                <label>생년월일*</label>
+                <div className="birth-container">
+                    <select className="box" value={selectedYear} onChange={e => setSelectedYear(e.target.value)}>
+                        <option value="">년</option>
+                        {Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - i).map(year => (
+                            <option key={year} value={year}>
+                                {year}
+                            </option>
+                        ))}
+                    </select>
+                    <select className="box" value={selectedMonth} onChange={e => setSelectedMonth(e.target.value)}>
+                        <option value="">월</option>
+                        {Array.from({ length: 12 }, (_, i) => i + 1).map(month => (
+                            <option key={month} value={month}>
+                                {month}
+                            </option>
+                        ))}
+                    </select>
+                    <select className="box" value={selectedDay} onChange={e => setSelectedDay(e.target.value)}>
+                        <option value="">일</option>
+                        {Array.from({ length: 31 }, (_, i) => i + 1).map(day => (
+                            <option key={day} value={day}>
+                                {day}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            </div>
+            {/* 성별 */}
+            <div className="form-el-gender">
+                <label htmlFor="gender">성별*</label>
+                <select className="gender" id="gender" value={gender} onChange={e => setGender(e.target.value)}>
+                    <option value="">선택</option>
+                    <option value="male">남자</option>
+                    <option value="female">여자</option>
+                </select>
+            </div>
+            {/* 휴대폰 인증 */}
+            <div className="form-el-phone">
+                <label htmlFor="phonenum">휴대폰 인증*</label>
+                <div className="phone-container">
+                    <select className="phone_first" name="phone_first" value={phoneFirst} onChange={e => setPhoneFirst(e.target.value)}>
+                        <option value="">앞자리 선택</option>
+                        <option value="010">010</option>
+                        <option value="011">011</option>
+                        <option value="016">016</option>
+                        <option value="017">017</option>
+                        <option value="018">018</option>
+                        <option value="019">019</option>
+                    </select>
+                    <span className="dash">-</span>
+                    <input type="text" placeholder="8자리 입력" maxLength={8} value={phoneRest} onChange={e => setPhoneRest(e.target.value)} />
+                </div>
+            </div>
+            {/* 인증번호 */}
+            <div className="verify-num">
+                <input
+                    type="text"
+                    placeholder="인증번호를 입력하세요"
+                    maxLength={20}
+                    value={verifyCode}
+                    onChange={(e) => setVerifyCode(e.target.value)}
+                />
+                <button
+                    type="button"
+                    className="verify-button"
+                    onClick={async () => {
+                        if (!isCodeSent) {
+                            try {
+                                await requestVerificationCode(); // 인증번호 발송 요청
+                                setIsCodeSent(true); // 버튼 상태 변경
+                                setVerificationStatus(''); // 문구를 초기화하여 숨김
+                            } catch (error) {
+                                console.error(error);
+                                alert('인증번호 발송이 실패했습니다. 다시 시도해주세요.');
+                            }
+                        } else {
+                            try {
+                                await confirmVerificationCode(); // 인증번호 확인 요청
+                                setVerificationStatus(''); // 문구를 초기화하여 숨김
+                            } catch (error) {
+                                console.error(error);
+                                alert('인증에 실패했습니다. 다시 시도해주세요.');
+                            }
+                        }
+                    }}
+                >
+                    {isCodeSent ? '인증번호 확인' : '인증번호 받기'}
+                </button>
+            </div>
 
-      <div className="form-el-phone">
-        <label htmlFor="phonenum">휴대폰 인증*</label>
-        <div className="phone-container">
-          <select className="phone_first" name="phone_first" value={phoneFirst} onChange={(e) => setPhoneFirst(e.target.value)}>
-            <option value="">앞자리 선택</option>
-            <option value="010">010</option>
-            <option value="011">011</option>
-            <option value="016">016</option>
-            <option value="017">017</option>
-            <option value="018">018</option>
-            <option value="019">019</option>
-          </select>
-        -
-        <input
-          type="text"
-          placeholder="8자리 입력"
-          maxLength={8}
-          value={phoneRest}
-          onChange={(e) => setPhoneRest(e.target.value)}
-        />
-        </div>
-      </div>
+            
 
-      <div className="verify-num">
-        <input
-          type="text"
-          placeholder="인증번호를 입력하세요"
-          maxLength={20}
-          value={verifyCode}
-          onChange={(e) => setVerifyCode(e.target.value)}
-        />
-        <button className="verify-button" onClick={requestVerificationCode}>인증번호 받기</button>
-        <button className="confirm-button" onClick={confirmVerificationCode}>인증번호 확인</button>
+            {/* 동의 */}
+            <div className="agreement-all">
+                {/* 전체 동의 체크 */}
+                <div className="p-7">
+                    <input type="checkbox" id="all-agree" checked={agreements.all} onChange={handleAllAgreement} />
+                    <label htmlFor="all-agree">모두 동의합니다.</label>
+                </div>
 
-        {/* 인증 상태 메시지 표시 */}
-        {verificationStatus === "sent" && <p className="status-message">인증번호가 발송되었습니다.</p>}
-        {verificationStatus === "verified" && <p className="status-message success">인증이 완료되었습니다.</p>}
-        {verificationStatus === "failed" && <p className="status-message error">인증에 실패했습니다. 다시 시도해주세요.</p>}
-      </div>
-      
+                <p className="select_agree"> 선택 동의 항목 포함</p>
+                <div className="agree-options">
+                    <div className="agree-item">
+                        <input type="checkbox" id="check1" checked={agreements.check1} onChange={() => handleAgreementChange('check1')} />
+                        <label htmlFor="check1">[필수] 만 14세 이상입니다</label>
+                    </div>
+                    <div className="agree-item">
+                        <input type="checkbox" id="check2" checked={agreements.check2} onChange={() => handleAgreementChange('check2')} />
+                        <label htmlFor="check2">[필수] 이용약관 동의</label>
+                    </div>
+                    <div className="agree-item">
+                        <input type="checkbox" id="check3" checked={agreements.check3} onChange={() => handleAgreementChange('check3')} />
+                        <label htmlFor="check3">[필수] 개인정보 수집 및 이용 동의</label>
+                    </div>
+                    <div className="agree-item">
+                        <input type="checkbox" id="check4" checked={agreements.check5} onChange={() => handleAgreementChange('check5')} />
+                        <label htmlFor="check5">[선택] 광고성 정보 수신 모두 동의</label>
+                    </div>
+                </div>
 
-      <div className="agreement-all">
-        <div className="p-7 border-b text-tc-middle mobile:p-4">
-          <input
-            type="checkbox"
-            id="all-check"
-            checked={agreements.all}
-            onChange={handleAllAgreement}
-          />
-          <label htmlFor="all-check">모두 동의합니다.</label>
-        </div>
-
-        <p className="select_agree">선택 동의 항목 포함</p>
-        <div className="agree-f1">
-          <input type="checkbox" id="check1" />
-          <label htmlFor="check1">[필수] 만 14세 이상입니다</label>
-        </div>
-        <div className="agree-f2">
-          <input type="checkbox" id="check2" />
-          <label htmlFor="check2">[필수] 이용약관 동의</label>
-        </div>
-        <div className="agree-f2">
-          <input type="checkbox" id="check3" />
-          <label htmlFor="check3">[필수] 개인 정보 수집 및 이용 동의</label>
-        </div>
-        <div className="agree-op1">
-          <input type="checkbox" id="check4" />
-          <label htmlFor="check4">[선택] 개인 정보 수집 및 이용 동의</label>
-        </div>
-        <div className="agree-op2">
-          <input type="checkbox" id="check5" />
-          <label htmlFor="check5">[선택] 광고성 정보 수신 모두 동의</label>
-        </div>
-      </div>
-
-      <div className="login-button">
-        <button onClick={handleSubmit} className="login-item" aria-label="가입하기">
-          가입하기
-        </button>
-      </div>
-    </div>
-  );
+                <div className="login-button">
+                    <button onClick={handleSubmit} className="login-item" aria-label="가입하기">
+                        가입하기
+                    </button>
+                </div>
+            </div>
+        </form>
+    )
 }
 
-export default Sign;
-
-
+export default Sign
