@@ -9,14 +9,16 @@ import Around from './components/around/around';
 import Profile from './components/Profile/profile';
 import PostPage from './components/post/post';
 import Main from './components/mainpage/main'
-import Login from './components/Login/Login';
 import Sign from './components/sign/Sign';
+import Login from './components/login/Login.jsx'
+import Request from './components/request/request.jsx';
+import FindId from './components/FindId/FindId.jsx';
+import FindPassword from './components/FindPw/FindPassword.jsx';
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />
         <Route path="/main" element={<Main />} />
         <Route path="/opprofile" element={<OpProfile />} />
         <Route path="/vroongList" element={<VroongList />} />
@@ -24,12 +26,14 @@ const App = () => {
         <Route path="/commitment" element={<Commitment />} />
         <Route path="/review" element={<Review />} />
         <Route path="/chat" element={<Chat />} /> 
-        <Route path="/sign" element={<Sign/>} />
         <Route path="/" element={<Around/>} />
         <Route path="/profile" element={<Profile/>} />
+        <Route path="/sign" element={<Sign/>} />
+        <Route path="/login" element={<Login/>} />
+        <Route path="/request" element={<Request/>} />
+        <Route path="/FindId" element={<FindId/>} />
+        <Route path="/FindPw" element={<FindPassword/>} />
       </Routes>
     </Router>
   );
 };
-
-export default App;

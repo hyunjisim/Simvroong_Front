@@ -1,0 +1,188 @@
+:root {
+  /* 컬러 정의 */
+  --darkgray-color: #404040;
+  --midgray-color: #636363;
+  --lowgray-color: #999999;
+  --color-white: #fff;
+  --color-red: #e95c5c;
+  --yellow-color: #ffe812;
+  --gray-button-color: #7f7f7f;
+  --gray-button-hover-color: #f1bb39;
+  --border-color: #ccc;
+  /* 쉐도우 컬러 정의 */
+  --drop-shadow-color: #000000;
+  --drop-shadow-opacity: 0.25;
+}
+
+/* 전체 폼 스타일링 */
+.findidform {
+  max-width: 25rem;
+  height: 874px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 가로 중앙 정렬 */
+  background-color: var(--color-white);
+  border: 1px solid var(--border-color);
+}
+
+.findidform > * {
+  width: 90%; /* 내부 내용의 너비를 80%로 설정 */
+  max-width: 100%; /* 부모의 너비를 초과하지 않도록 제한 */
+  box-sizing: border-box; /* 패딩과 테두리를 포함한 너비 계산 */
+}
+
+/* 헤더 스타일링 */
+.findidheader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  justify-content: center;
+  width: 100%;
+  /* 그림자 추가 */
+  box-shadow: 0 4px 6px rgba(var(--drop-shadow-color), var(--drop-shadow-opacity)); /* 그림자 적용 */
+  padding: 10px 0; /* 헤더에 약간의 패딩 추가 */
+  border-bottom: 1px solid var(--border-color);
+}
+
+.backb {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transform: translateX(40%);
+}
+
+.headeralrimh {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+/* 공통 폼 요소 스타일링 */
+.formel,
+.phonenumber,
+.verifynum {
+  margin-bottom: 20px;
+}
+
+.formel label,
+.phonenumber label {
+  font-weight: bold;
+  display: block;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.formel input,
+.phonenumber input[type="text"],
+.verifynum input,
+.phonefirst {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+/* 휴대폰 인증 스타일링 */
+.phonenumber div {
+  display: flex;
+  gap: 5px;
+}
+
+.phonefirst {
+  width: 50%;
+}
+
+/* 하이픈 스타일링 */
+.dash {
+  font-size: 20px;
+  font-weight: normal;
+  color: #555;
+  line-height: 3;
+}
+
+/* 인증번호 입력 및 버튼 스타일링 */
+.verifynum {
+  display: flex;
+  gap: 5px;
+}
+
+.verifybutton {
+  background-color: var(--yellow-color);
+  color: #000;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  cursor: pointer;
+}
+
+/* 아이디 찾기 버튼 스타일링 */
+.findidbutton {
+  margin-bottom: 20px;
+}
+
+.findidb {
+  width: 100%;
+  background-color: var(--yellow-color);
+  color: #000;
+  font-weight: bold;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* 로그인 및 비밀번호 찾기 버튼 컨테이너 */
+.confirmbutton,
+.confirmbutton1 {
+  display: flex; /* Flexbox 적용 */
+  flex: 1; /* 동일한 너비 할당 */
+  margin: 0; /* 여백 제거 */
+}
+
+.buttonContainer {
+  display: flex; /* 버튼을 가로로 배치 */
+  justify-content: space-between; /* 버튼 사이에 공간 배치 */
+  gap: 10px; /* 버튼 사이의 간격 */
+  margin-top: 10px; /* 위쪽 여백 */
+  width: 80%;
+}
+
+.loginbutt,
+.pwsearchbutt1 {
+  width: 100%;
+  background-color: var(--yellow-color);
+  color: #000;
+  font-weight: bold;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+}
+
+/* 휴대전화 정보 일치 메시지 */
+.findidlogall {
+  margin-bottom: 20px;
+}
+
+.findidlog {
+  text-align: center;
+}
+
+.phonelog {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* 비활성화된 버튼 스타일링 */
+.verifybutton.disabled {
+  background-color: var(--gray-button-color);
+  color: #666;
+  cursor: not-allowed;
+}
