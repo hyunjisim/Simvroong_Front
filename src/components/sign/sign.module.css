@@ -1,0 +1,172 @@
+.signAll {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 25rem;
+  height: 874px;
+}
+
+/* 헤더 스타일링 */
+.signheader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.backb {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.headeralrimh {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+/* 공통 폼 요소 스타일링 */
+.formelnick,
+.formelid,
+.formelpw,
+.formelpwc,
+.formelname,
+.formelbirth,
+.formelgender,
+.formelphone {
+  margin-bottom: 25px;
+  display: block;
+}
+
+.formelnick label,
+.formelid label,
+.formelpw label,
+.formelpwc label,
+.formelname label,
+.formelbirth label,
+.formelgender label,
+.formelphone label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 12px 0;
+  font-size: 15px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  outline: none;
+}
+
+/* 생년월일 스타일링 */
+.birthcontainer {
+  display: flex;
+  gap: 10px;
+}
+
+.birthcontainer .box {
+  width: 100px;
+  padding: 10px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* 성별 스타일링 */
+.formelgender select {
+  width: 30%;
+}
+
+/* 휴대폰 인증 스타일링 */
+.formelphone label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.phonecontainer {
+  display: flex;
+  gap: 10px;
+}
+
+.phonefirst {
+  width: 60%;
+  padding: 12px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.formelphone input[type="text"] {
+  flex-grow: 1;
+  padding: 12px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* 인증번호 입력 및 버튼 스타일 */
+.verifynum {
+  display: flex;
+  gap: 10px;
+}
+
+.verifynum input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.verifybutton {
+  background-color: #ffd400;
+  color: #000;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+/* 약관 동의 스타일링 */
+.agreementall {
+  margin: 20px 0;
+}
+
+.agreementall div {
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.agreementall input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+}
+
+.selectagree {
+  color: grey;
+}
+
+/* 가입하기 버튼 스타일 */
+.loginbutton {
+  margin-top: 20px;
+}
+
+.loginitem {
+  width: 100%;
+  background-color: #ffd400;
+  color: #000;
+  font-weight: bold;
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
