@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import backb from '../../img/back-arrow.png';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import styles from './sign.module.css';
+import React, { useState, useEffect } from 'react'
+import backb from '../../img/back-arrow.png'
+import { useNavigate } from 'react-router-dom'
+import styles from './Sign.module.css'
+import axios from 'axios'
 
 const Sign = () => {
     const navigate = useNavigate()
@@ -43,7 +43,7 @@ const Sign = () => {
             check4: newStatus
         })
     }
-    //동의하기
+
     const handleAgreementChange = key => {
         setAgreements(prev => ({
             ...prev,
@@ -91,7 +91,7 @@ const Sign = () => {
         }
 
         try {
-            const response = await axios.post('http://127.0.0.1:8080/auth/signup', userData)
+            await axios.post('http://127.0.0.1:8080/auth/signup', userData)
             alert('회원가입이 완료되었습니다!')
             navigate('/login')
         } catch (err) {
@@ -114,6 +114,8 @@ const Sign = () => {
                 phoneNumber: phoneNumber // JSON 형태로 전달
             })
 
+            console.log(response)
+            
             // 서버 응답 처리
             if (response) {
                 alert('인증번호가 발송되었습니다.')
@@ -128,7 +130,7 @@ const Sign = () => {
             setVerificationStatus('failed')
         }
     }
-    //인증번호
+
     const confirmVerificationCode = async () => {
         const phoneNumber = `${phoneFirst}${phoneRest}`
 
@@ -158,13 +160,20 @@ const Sign = () => {
         }
     }
 
+    // 비밀번호 숨김 설정
+    const [seePassword, setSeePassword] = useState(true)
     // 비밀번호
     const [userPassword, setUserPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
 
+    // 비밀번호 보이기/숨기기 핸들러
+    const seePasswordHandler = () => {
+        setSeePassword(!seePassword)
+    }
+
     return (
         // 회원가입폼
-<form className={styles.signAll} onSubmit={e => e.preventDefault()}>
+        <form className={styles.signAll} onSubmit={e => e.preventDefault()}>
             <div className={styles.signheader}>
                 <img onClick={goBack} src={backb} className={styles.backb} alt="뒤로가기 버튼" />
                 <h2 className={styles.headeralrimh}>회원가입</h2>
@@ -182,15 +191,8 @@ const Sign = () => {
             {/* 비밀번호 */}
             <div className={styles.formelpw}>
                 <label htmlFor="password">비밀번호*</label>
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="비밀번호를 입력해주세요"
-                    value={userPassword}
-                    onChange={(e) => setUserPassword(e.target.value)}
-                    maxLength={30}
-                    autoComplete="off"
-                />
+                <input type="password" id="password" placeholder="비밀번호를 입력해주세요" value={userPassword} onChange={e => setUserPassword(e.target.value)}
+                 maxLength={30} autoComplete="off" />
             </div>
             {/* 비밀번호 확인 */}
             <div className={styles.formelpwc}>
@@ -200,7 +202,7 @@ const Sign = () => {
                     id="password-confirm"
                     placeholder="비밀번호를 다시 입력해주세요"
                     value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    onChange={e => setConfirmPassword(e.target.value)}
                     maxLength={30}
                     autoComplete="off"
                 />
@@ -268,36 +270,31 @@ const Sign = () => {
             </div>
             {/* 인증번호 */}
             <div className={styles.verifynum}>
-                <input
-                    type="text"
-                    placeholder="인증번호를 입력하세요"
-                    maxLength={20}
-                    value={verifyCode}
-                    onChange={(e) => setVerifyCode(e.target.value)}
-                />
+                <input type="text" placeholder="인증번호를 입력하세요" maxLength={20} value={verifyCode} onChange={e => setVerifyCode(e.target.value)} />
                 <button
                     type="button"
                     className={styles.verifybutton}
                     onClick={async () => {
                         if (!isCodeSent) {
                             try {
-                                await requestVerificationCode(); // 인증번호 발송 요청
-                                setIsCodeSent(true); // 버튼 상태 변경
-                                setVerificationStatus(''); // 문구를 초기화하여 숨김
+                                await requestVerificationCode() // 인증번호 발송 요청
+                                setIsCodeSent(true) // 버튼 상태 변경
+                                setVerificationStatus('') // 문구를 초기화하여 숨김
                             } catch (error) {
-                                console.error(error);
-                                alert('인증번호 발송이 실패했습니다. 다시 시도해주세요.');
+                                console.error(error)
+                                alert('인증번호 발송이 실패했습니다. 다시 시도해주세요.')
                             }
                         } else {
                             try {
-                                await confirmVerificationCode(); // 인증번호 확인 요청
-                                setVerificationStatus(''); // 문구를 초기화하여 숨김
+                                await confirmVerificationCode() // 인증번호 확인 요청
+                                setVerificationStatus('') // 문구를 초기화하여 숨김
                             } catch (error) {
-                                console.error(error);
-                                alert('인증에 실패했습니다. 다시 시도해주세요.');
+                                console.error(error)
+                                alert('인증에 실패했습니다. 다시 시도해주세요.')
                             }
                         }
-                    }}>
+                    }}
+                >
                     {isCodeSent ? '인증번호 확인' : '인증번호 받기'}
                 </button>
             </div>

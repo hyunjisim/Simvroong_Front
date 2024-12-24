@@ -1,55 +1,55 @@
-import React, { useState } from 'react';
-import logo from '../../img/simvroong.png';
-import kakao from '../../img/Kakao_logo.png';
-import styles from './Login.module.css'; // CSS 모듈 사용
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from 'react'
+import logo from '../../img/simvroong.png'
+import kakao from '../../img/Kakao_logo.png'
+import styles from './Login.module.css' // CSS 모듈 사용
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 const Login = () => {
-    const navigate = useNavigate();
-    const [userId, setUserId] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const navigate = useNavigate()
+    const [userId, setUserId] = useState('')
+    const [password, setPassword] = useState('')
+    const [error, setError] = useState('')
 
     const fetchLogin = async () => {
         try {
             const response = await axios.post('http://127.0.0.1:8080/auth/login', {
                 userId,
-                password,
-            });
-            const token = response.data.token;
+                password
+            })
+            const token = response.data.token
             if (response.status === 200) {
-                localStorage.setItem('authToken', token);
-                navigate('/MainPage');
+                localStorage.setItem('authToken', token)
+                navigate('/Main')
             }
         } catch (error) {
             if (error.response) {
-                setError(error.response.data.message || '로그인에 실패했습니다.');
+                setError(error.response.data.message || '로그인에 실패했습니다.')
             } else {
-                setError('서버와 연결할 수 없습니다.');
+                setError('서버와 연결할 수 없습니다.')
             }
         }
-    };
+    }
 
     const goLoginMain = () => {
         if (userId.trim() !== '' && password.trim() !== '') {
-            fetchLogin();
+            fetchLogin()
         } else {
-            alert('아이디 또는 비밀번호를 확인해주세요.');
+            alert('아이디 또는 비밀번호를 확인해주세요.')
         }
-    };
+    }
 
     const goSign = () => {
-        navigate('/Sign');
-    };
+        navigate('/Sign')
+    }
 
     const goFindId = () => {
-        navigate('/FindId');
-    };
+        navigate('/FindId')
+    }
 
     const goFindPw = () => {
-        navigate('/FindPw');
-    };
+        navigate('/FindPw')
+    }
 
     return (
         <div className={styles.loginAll}>
@@ -59,24 +59,10 @@ const Login = () => {
             <div className={styles.all}>
                 <form className={styles.body}>
                     <p className={styles.iditem}>아이디</p>
-                    <input
-                        type="text"
-                        className={styles.inputstId}
-                        placeholder="예) apple0000"
-                        maxLength={30}
-                        value={userId}
-                        onChange={(e) => setUserId(e.target.value)}
-                    />
+                    <input type="text" className={styles.inputstId} placeholder="예) apple0000" maxLength={30} value={userId} onChange={e => setUserId(e.target.value)} />
                     <div className={styles.body}>
                         <p className={styles.pwitem}>비밀번호</p>
-                        <input
-                            type="password"
-                            className={styles.inputstPw}
-                            maxLength={30}
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            autoComplete="on"
-                        />
+                        <input type="password" className={styles.inputstPw} maxLength={30} value={password} onChange={e => setPassword(e.target.value)} autoComplete="on" />
                     </div>
                     {error && <p className={styles.errorMessage}>{error}</p>}
                     <div className={styles.loginbutton}>
@@ -106,7 +92,7 @@ const Login = () => {
                 </form>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Login;
+export default Login
