@@ -1,0 +1,119 @@
+:root {
+  /* 컬러 정의 */
+  --darkgray-color: #404040;
+  --midgray-color: #636363;
+  --lowgray-color: #999999;
+  --color-white: #fff;
+  --color-red: #E95C5C;
+  --orangeyellow-color: #FF7A00;
+  --yellow-color: #FFE812;
+  --lightyellow-color: #FFD797;
+
+  /* border 컬러 정의 */
+  --yellow-border-color: #f1bb39;
+  --blue-border-color: #18A0FB;
+
+  --small-border-color: #CBCBCB;
+  --big-border-color: #ADADAD;
+
+  --under-border-black-color: #000000;
+
+  /* 노란 버튼 컬러 정의 */
+  --yellow-button-color: #FFE812;
+  --yellow-button-text-color: #000000;
+
+  /* 그레이 버튼 컬러 정의 */
+  --gray-button-color: #7F7F7F;
+  --gray-button-text-color: #FFFFFF;
+  --gray-button-hover-color: #F1BB39;
+
+  /* 쉐도우 컬러 정의 */
+  --drop-shadow-color: #000000;
+  --drop-shadow-opacity: 0.25;
+
+  /* 텍스트 컬러 정의 */
+  --black-text-color: #000;
+  --darkgray-text-color: #404040;
+  --midgray-text-color: #636363;
+  --lowgray-text-color: #999999;
+  --yellow-text-color: #F2B93B;
+  --blue-text-color: #18A0FB;
+
+  /* 배경 컬러 정의 */
+  --gray-background-color: #E7EAF1;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.alrimheader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-white);
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+  position: relative;
+  /* width: 440px; */
+}
+
+.backb {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  position: absolute;
+  left: 16px;
+}
+
+.headeralrimh {
+  font-size: 1.2rem;
+  color: #333;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.alrimdetailall {
+  font-family: Arial, sans-serif;
+  margin: 0 auto;
+  padding: 20px;
+  width: 25rem;
+  height: 874px;
+}
+
+.alrimdetail {
+  padding: 20px;
+  background-color: var(--color-white);
+}
+
+.couponevent {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.contenthour {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 12px;
+}
+
+.contentevent {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+.contentdetail {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.alrimreview {
+  font-size: 14px;
+  color: #007aff;
+  cursor: pointer;
+  text-align: left;
+  font-weight: bold;
+}

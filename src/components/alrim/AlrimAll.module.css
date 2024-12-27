@@ -1,0 +1,139 @@
+:root {
+  /* 컬러 정의 */
+  --darkgray-color: #404040;
+  --midgray-color: #636363;
+  --lowgray-color: #999999;
+  --color-white: #fff;
+  --color-red: #E95C5C;
+  --orangeyellow-color: #FF7A00;
+  --yellow-color: #FFE812;
+  --lightyellow-color: #FFD797;
+
+  /* border 컬러 정의 */
+  --yellow-border-color: #f1bb39;
+  --blue-border-color: #18A0FB;
+
+  --small-border-color: #CBCBCB;
+  --big-border-color: #ADADAD;
+
+  --under-border-black-color: #000000;
+
+  /* 노란 버튼 컬러 정의 */
+  --yellow-button-color: #FFE812;
+  --yellow-button-text-color: #000000;
+
+  /* 그레이 버튼 컬러 정의 */
+  --gray-button-color: #7F7F7F;
+  --gray-button-text-color: #FFFFFF;
+  --gray-button-hover-color: #F1BB39;
+
+  /* 쉐도우 컬러 정의 */
+  --drop-shadow-color: #000000;
+  --drop-shadow-opacity: 0.25;
+
+  /* 텍스트 컬러 정의 */
+  --black-text-color: #000;
+  --darkgray-text-color: #404040;
+  --midgray-text-color: #636363;
+  --lowgray-text-color: #999999;
+  --yellow-text-color: #F2B93B;
+  --blue-text-color: #18A0FB;
+
+  /* 배경 컬러 정의 */
+  --gray-background-color: #E7EAF1;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+
+.AlrimAll {
+  font-family: 'Arial', sans-serif;
+  margin: 0 auto;
+  padding: 0;
+  width: 25rem;
+  height: 864px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-white);
+}
+
+.alrimheader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.backb {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  position: absolute;
+  left: 16px;
+}
+
+.headeralrimh {
+  font-size: 1.2rem;
+  color: #333;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.alrimlist {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.alrimlist img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 16px;
+}
+
+.content {
+  font-size: 14px;
+  color: #333333;
+  margin: 0 0 8px;
+}
+
+.alrimmoney {
+  font-size: 16px;
+  font-weight: bold;
+  color: #000000;
+  margin: 0 0 16px;
+}
+
+.acceptbutton,
+.rejectbutton {
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.acceptbutton {
+  background-color: var(--yellow-button-color);
+  color: var(--yellow-button-text-color);
+}
+
+.rejectbutton {
+  background-color: #f0f0f0;
+  color: #666666;
+}
+
+.arbuttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
