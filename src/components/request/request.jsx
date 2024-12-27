@@ -3,15 +3,16 @@ import styles from "./request.module.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import backb from "../../img/back-arrow.png";
-import imgPut from '../../img/imgput.png'
-import search from '../../img/search.png'
-
+import imgPut from "../../img/imgput.png";
+import search from "../../img/search.png";
+import CategoryBottomSheet from "./CategoryBottomSheet";
 
 const Request = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [address, setAddress] = useState("");
   const [detailAddress, setDetailAddress] = useState("");
   const [category, setCategory] = useState("");
+  const [isCategorySheetOpen, setIsCategorySheetOpen] = useState(false); 
   const [title, setTitle] = useState("");
   const [requestDetails, setRequestDetails] = useState("");
   const [date, setDate] = useState("");
@@ -19,13 +20,19 @@ const Request = () => {
   const [expectedTime, setExpectedTime] = useState("");
   const [fee, setFee] = useState("");
   const [cctvOption, setCctvOption] = useState(""); // CCTV 선택 상태
-  const [rememberChoice, setRememberChoice] = useState(false); // 체크박스 상태
   const [petOption, setPetOption] = useState(""); // 반려동물 옵션 상태
   const [parkingOption, setParkingOption] = useState(""); // 주차 가능 옵션 상태
   const [partnerPreference, setPartnerPreference] = useState(""); // 파트너 선호 옵션 상태
+  const [isFeeNegotiable, setIsFeeNegotiable] = useState(false); // 금액 제안 허용 여부
 
   const navigate = useNavigate();
   const goBack = () => navigate("/main");
+
+  // 카테고리 선택 핸들러
+  const handleCategorySelect = (selectedCategory) => {
+    setCategory(selectedCategory);
+    setIsCategorySheetOpen(false); // 바텀시트 닫기
+  };
 
   // 이미지 선택 핸들러
   const handleImageChange = (e) => {
@@ -42,7 +49,6 @@ const Request = () => {
         let fullAddress = data.address; // 기본 주소
         let extraAddress = ""; // 참고 항목
 
-        // 참고 항목 추가
         if (data.addressType === "R") {
           if (data.bname !== "") extraAddress += data.bname;
           if (data.buildingName !== "")
@@ -56,23 +62,45 @@ const Request = () => {
     }).open();
   };
 
+  // 금액 제안 허용 체크박스 핸들러
+  const handleFeeNegotiableChange = (e) => {
+    setIsFeeNegotiable(e.target.checked);
+  };
+
   // 데이터 제출 함수
   const handleSubmit = async () => {
     const userData = {
-      category,           // 카테고리
-      title,              // 제목
-      requestDetails,     // 요청사항
-      address,            // 주소
-      detailAddress,      // 상세 주소
-      cctvOption,         // CCTV 옵션 (있어요 / 없어요)
-      rememberChoice,     // 체크박스 상태 (true/false)
-      petOption,          // 반려동물 옵션 (있어요 / 없어요)
-      parkingOption,      // 주차 옵션 (가능해요 / 불가능해요)
-      partnerPreference,  // 파트너 선호 (무관 / 남성 / 여성)
-      date,               // 예약 날짜 (연도-월-일)
-      startTime,          // 시작 시간 (HH:mm)
-      expectedTime,       // 예상 소요시간 (HH:mm)
-      fee,                // 심부름비
+      category, // 카테고리
+      title, // 제목
+      taskDetails: {
+        description: requestDetails, // 요청사항
+        photoUrl: selectedImage || "", // 이미지 URL
+      },
+      location: {
+        area: address, // 기본 주소
+        detailedAddress, // 상세 주소
+        extraNotes: "", // 기타 전달사항
+      },
+      conditions: {
+        hasCCTV: cctvOption === "있어요", // CCTV 여부
+        hasAnimals: petOption === "있어요", // 반려동물 여부
+        partnerParkingAvailable: parkingOption === "가능해요", // 주차 가능 여부
+      },
+      partnerPreference: {
+        gender: partnerPreference, // 파트너 성별
+        ageRange: "", // 선호 연령대 (추가 필요 시 값 지정)
+        otherPreferences: "", // 기타 선호 조건
+      },
+      schedule: {
+        date, // 예약 날짜
+        time: startTime, // 시작 시간
+        estimatedDuration: expectedTime, // 예상 소요 시간
+      },
+      payment: {
+        serviceFee: fee, // 심부름비
+        minFee: 5000, // 최소 금액
+      },
+      isFeeNegotiable: false, // 금액 제안 허용 여부
     };
 
     try {
@@ -88,13 +116,7 @@ const Request = () => {
     }
   };
 
-  const handleCctvClick = (option) => {
-    setCctvOption(option); // "있어요" 또는 "없어요" 선택
-  };
-
-  const handleCheckboxChange = () => {
-    setRememberChoice((prev) => !prev); // 체크박스 상태 토글
-  };
+  const handleCctvClick = (option) => setCctvOption(option);
   const handlePetClick = (option) => setPetOption(option);
   const handleParkingClick = (option) => setParkingOption(option);
   const handlePartnerClick = (option) => setPartnerPreference(option);
@@ -109,14 +131,21 @@ const Request = () => {
       {/* 카테고리 */}
       <div className={styles.section}>
         <label>카테고리</label>
-        <input
-          type="text"
-          placeholder="의뢰할 심부름의 카테고리를 선택해주세요"
-          className={styles.input}
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        />
+        <button
+          className={styles.categoryButton}
+          onClick={() => setIsCategorySheetOpen(true)} // 바텀시트 열기
+        >
+          {category || "의뢰할 심부름의 카테고리를 선택해주세요"}
+        </button>
       </div>
+
+      {/* 바텀시트 모달 */}
+      {isCategorySheetOpen && (
+        <CategoryBottomSheet
+          onClose={() => setIsCategorySheetOpen(false)}
+          onSelect={handleCategorySelect}
+        />
+      )}
 
       {/* 제목 */}
       <div className={styles.section}>
@@ -217,17 +246,6 @@ const Request = () => {
             없어요
           </button>
         </div>
-
-        {/* 체크박스 */}
-        <div className={styles.checkboxContainer}>
-          <input
-            type="checkbox"
-            id="remember"
-            checked={rememberChoice}
-            onChange={handleCheckboxChange}
-          />
-          <label htmlFor="remember">다음에도 사용하기</label>
-        </div>
       </div>
 
       {/* 반려동물 */}
@@ -310,7 +328,29 @@ const Request = () => {
       {/* 심부름비 입력 */}
       <div className={styles.section}>
         <label>심부름비를 입력해 주세요</label>
-        <input type="number" placeholder="0 원" className={styles.input} value={fee} onChange={(e) => setFee(e.target.value)}/>
+        <div className={styles.feeInputContainer}>
+          <input
+            type="number"
+            placeholder="0"
+            className={styles.input}
+            value={fee}
+            onChange={(e) => setFee(e.target.value)}
+          />
+          <span className={styles.feeUnit}>원</span>
+        </div>
+        {/* 금액 제안 허용 체크박스 */}
+        <div className={styles.feeNegotiableContainer}>
+          <input
+            type="checkbox"
+            id="feeNegotiable"
+            className={styles.checkbox}
+            checked={isFeeNegotiable}
+            onChange={handleFeeNegotiableChange}
+          />
+          <label htmlFor="feeNegotiable" className={styles.checkboxLabel}>
+            금액 제안 허용
+          </label>
+        </div>
       </div>
 
       {/* 완료 버튼 */}

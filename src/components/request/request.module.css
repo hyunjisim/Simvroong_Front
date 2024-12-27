@@ -73,6 +73,23 @@
   cursor: pointer;
 }
 
+.categoryButton {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc; /* 제목 input과 동일한 테두리 색상 */
+  border-radius: 5px; /* 제목 input과 동일한 모서리 둥글기 */
+  background-color: white; /* 제목 input과 동일한 배경색 */
+  font-size: 1rem; /* 제목 input과 동일한 글자 크기 */
+  color: #000; /* 텍스트 색상 */
+  text-align: left; /* 텍스트 정렬을 왼쪽으로 */
+  box-sizing: border-box; /* 제목 input과 동일한 박스 크기 계산 방식 */
+  cursor: pointer; /* 버튼이므로 커서를 포인터로 변경 */
+}
+
+.categoryButton:hover {
+  background-color: #f9f9f9; /* hover 시 살짝 밝은 배경 */
+}
+
 .title {
   font-size: 1.5rem;
   font-weight: bold;
@@ -202,7 +219,36 @@
   color: var(--midgray-text-color);
 }
 
+.feeInputContainer {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
 
+.feeUnit {
+  position: absolute;
+  right: 10px;
+  font-size: 0.9rem;
+  color: var(--lowgray-color);
+}
+
+.feeNegotiableContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.checkbox {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+  accent-color: var(--blue-text-color); /* 체크박스 색상 */
+}
+
+.checkboxLabel {
+  font-size: 0.85rem;
+  color: var(--lowgray-color);
+}
 
 .section {
   margin-bottom: 1.5rem;

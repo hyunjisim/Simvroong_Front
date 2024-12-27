@@ -1,0 +1,290 @@
+:root {
+  --darkgray-color: #404040;
+  --midgray-color: #636363;
+  --lowgray-color: #999999;
+  --yellow-color: #FFE812;
+  --white-color: #FFFFFF;
+  --red-color: #E95C5C;
+}
+
+.container {
+  max-width: 25rem;
+  height: 874px;
+  margin: 0 auto;
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+  margin-bottom: 0.5rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--small-border-color);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.backIcon {
+  width: 1.5rem;
+  cursor: pointer;
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.profileImageContainer {
+  position: relative;
+}
+
+.profileImage {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+}
+
+.pencilButton {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  background-color: var(--white-color);
+  border-radius: 50%;
+  padding: 0.3rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.pencilButton img {
+  width: 1rem;
+  height: 1rem;
+}
+
+.imageUpload {
+  display: none; /* 숨겨진 파일 업로드 */
+}
+
+.nicknameContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.nickname {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--darkgray-color);
+  margin-right: 0.5rem;
+}
+
+.pencilButtonNickname {
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+}
+
+.nicknameInput {
+  font-size: 1.25rem;
+  border: 1px solid var(--lowgray-color);
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  width: 80%;
+}
+
+.formGroup1 {
+  width: 12rem;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 4px;
+  color: var(--color-white);
+  margin-bottom: 1rem;
+}
+
+.formGroup2 {
+  margin-bottom: 1rem;
+}
+
+
+/* .label {
+  font-size: 0.9rem;
+  color: var(--midgray-color);
+  margin-bottom: 0.5rem;
+  display: block;
+} */
+
+
+.labelid {
+  font-size: 0.9rem;
+  color: var(--midgray-color);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+
+.labelphone {
+  font-size: 0.9rem;
+  color: var(--midgray-color);
+  margin-bottom: 0.5rem;
+  display: none;
+}
+
+.labelpw {
+  font-size: 0.9rem;
+  color: var(--midgray-color);
+  display: block;
+  margin-bottom: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+
+.input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--lowgray-color);
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.input:disabled {
+  background-color: var(--lowgray-color);
+  color: var(--white-color);
+  pointer-events: none; /* 클릭 불가 */
+  border: 1px solid var(--white-color); /* 비활성화된 테두리 */
+}
+
+.phoneContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.phoneFirst {
+  flex: 1;
+  padding: 0.5rem;
+  margin-right: 0.1rem;
+  border: 1px solid var(--lowgray-color);
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.phoneRest {
+  flex: 1;
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+  border: 1px solid var(--lowgray-color);
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+/* .dash {
+  margin: 0 0.5rem;
+  color: var(--midgray-color);
+}*/
+/* 
+.dash {
+  font-size: 20px;
+  font-weight: normal;
+  color: #555;
+  line-height: 3;
+} */
+
+.dash {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--midgray-color);
+  line-height: 2;
+  display: inline-block;
+  margin: 0 0.5rem;
+  text-align: center;
+}
+
+.changeButton {
+  padding: 0.8rem 0.8rem;
+  background-color: var(--yellow-color);
+  color: var(--darkgray-color);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: bold;
+  margin-bottom: 2.5rem;
+  margin-left: 4.5px;
+}
+
+.changeButton1 {
+  padding: 0.8rem 0.8rem;
+  background-color: var(--yellow-color);
+  color: var(--darkgray-color);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: bold;
+  margin-bottom: 2.5rem;
+  margin-left: 4.5px;
+}
+
+.changeButton_1 {
+  padding: 0.8rem 0.8rem;
+  background-color: var(--yellow-color);
+  color: var(--darkgray-color);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 4.5px;
+}  
+
+
+.verifyContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 수평 공간 균등 분배 */
+  gap: 0.5rem; /* 요소 간 간격 추가 */
+}
+
+.input {
+  flex: 1;
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+  border: 1px solid var(--lowgray-color);
+  border-radius: 0.25rem;
+}
+
+.verifyButton {
+  flex-shrink: 0;
+  padding: 0.5rem 1rem;
+  background-color: var(--yellow-color);
+  color: var(--darkgray-color);
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+.saveContainer {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.saveButton {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--yellow-color);
+  color: var(--darkgray-color);
+  border: none;
+  border-radius: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.verifynumber{
+  width: 70%;
+  display: flex;
+  border: 1px solid var(--small-border-color);
+  border-radius: 0.5rem;
+  /* border-right: 5px; */
+}

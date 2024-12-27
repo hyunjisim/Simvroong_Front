@@ -1,0 +1,133 @@
+.chatvroongcontainer {
+    display: flex;
+    flex-direction: column;
+    font-family: "Arial", sans-serif;
+    color: #333;
+    max-width: 25rem;
+    height: 874px;
+    margin: 0 auto;
+    background-color: var(--color-white);
+    border: 1px solid var(--small-border-color);
+}
+
+.chatvroongheader {
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-white);
+    border-bottom: 1px solid var(--small-border-color);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.headerchatvroong {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--darkgray-color);
+}
+
+.chatvroonglist {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--small-border-color);
+    font-weight: bold;
+}
+
+.chatvroongrequire {
+    color: var(--blue-text-color);
+    font-size: 1rem;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    border-bottom: 2px solid var(--blue-text-color);
+    background-color: transparent;
+}
+
+.chatvroongexecute {
+    color: var(--lowgray-color);
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: transparent;
+    border: none;
+}
+
+/* 요구 및 수행 클릭시 색깔 */
+.chatvroongrequire.active,
+.chatvroongexecute.active {
+    color: #000;
+    border-bottom: 2px solid var(--black-text-color);
+}
+
+
+.chatListContainer {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: var(--lowgray-color);
+    font-size: 1rem;
+    background-color: var(--color-white);
+    padding: 2rem;
+}
+
+.detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.detail img {
+    width: 80px;
+    height: 80px;
+}
+
+.mainfooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: var(--color-white);
+    border-top: 1px solid var(--small-border-color);
+}
+
+.mainfooter button {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--lowgray-color);
+}
+
+.mainfooter img {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 0.25rem;
+}
+
+.mainfooter span {
+    font-size: 0.75rem;
+}
+
+
+.chatvroongrequire,
+.chatvroongexecute {
+    font-size: 1rem;
+    padding-bottom: 0.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    color: #aaa;
+}

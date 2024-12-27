@@ -1,0 +1,185 @@
+:root {
+  /* 컬러 및 스타일 변수 */
+  --darkgray-color: #404040;
+  --midgray-color: #636363;
+  --lowgray-color: #999999;
+  --color-white: #fff;
+  --color-red: #E95C5C;
+  --yellow-color: #FFE812;
+  --lightyellow-color: #FFD797;
+  --gray-background-color: #F8F8F8;
+  --small-border-color: #CBCBCB;
+  --drop-shadow-color: #000000;
+  --drop-shadow-opacity: 0.25;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--color-white);
+  max-width: 25rem;
+  height: 874px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  color: #333;
+  padding: 1rem;
+  box-sizing: border-box;
+  background-color: var(--color-white);
+  border: 1px solid var(--border-color);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* padding: 0.5rem; */
+  position: relative;
+  padding-top: 0.1rem;
+  padding: 10px 0;
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--small-border-color);
+  box-shadow: 0 4px 6px rgba(var(--drop-shadow-color), var(--drop-shadow-opacity));
+}
+
+.backIcon {
+  position: absolute;
+  left: 1rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+}
+
+.logo {
+  height: 2.5rem;
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--darkgray-color);
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  margin: 1rem 0;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 0.1rem;
+}
+
+.sectionTitle {
+  font-size: 15px;
+  font-weight: bold;
+  color: var(--darkgray-color);
+}
+
+.description {
+  font-size: 11px;
+  color: var(--lowgray-color);
+}
+
+
+.formContainer {
+  width: 95%;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  margin: 5rem 0;
+  width: 98%;
+  border: 1px solid var(--lowgray-color);
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  background-color: var(--color-white);
+}
+
+.inputLabel {
+  font-size: 0.9rem;
+  margin-right: 0.5rem;
+  color: var(--darkgray-color);
+}
+
+.input {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  font-size: 1rem;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.button {
+  background-color: var(--yellow-color);
+  color: var(--darkgray-color);
+  font-weight: bold;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: var(--lightyellow-color);
+}
+
+.errorMessage {
+  color: #ff0000;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.descriptionStrong {
+  font-size: 0.9rem;
+  color: var(--darkgray-color);
+  margin: 0.5rem 0;
+  text-align: center;
+}
+
+.descriptionStrong .strong {
+  font-weight: bold;
+}
+
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 1rem 0;
+  padding-left: 1rem;
+  width: fit-content;
+  padding: 0.1rem 0.1rem;
+  background-color: var(--yellow-color);
+  border-radius: 1.5rem;
+  margin-right: 18.5rem;
+}
+
+
+.userImage {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  /* border: 2px solid var(--yellow-color); */
+  margin-right: 0.5rem;
+}
+
+
+.userName {
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: #333;
+  /* background-color: var(--yellow-color); */
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.3rem;
+}

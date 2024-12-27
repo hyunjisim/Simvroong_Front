@@ -1,0 +1,167 @@
+/* 전체 컨테이너 */
+.profilecontainer {
+  max-width: 25rem;
+  margin: 0 auto;
+  background-color: #f7f7f7;
+  height: 874px;
+  display: flex;
+  flex-direction: column;
+  font-family: "Arial", sans-serif;
+  color: #333;
+}
+
+/* 상단 헤더 */
+.header {
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--small-border-color);
+  width: 100%;
+  box-shadow: 0 4px 6px rgba(var(--drop-shadow-color), var(--drop-shadow-opacity));
+}
+
+.header h1 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  color: var(--darkgray-text-color);
+}
+
+/* 프로필 카드 */
+.profilecard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--small-border-color);
+  font-weight: bold;
+}
+
+.profileinfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+  font-weight: bold;
+}
+
+.profileimage {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 0.8rem;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+}
+
+.profilename {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--darkgray-text-color);
+}
+
+.nextarrow {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.moneysection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  height: 2rem;
+  background-color: var(--yellow-color);
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.moneytitle {
+  font-size: 14px;
+  color: var(--darkgray-text-color);
+  font-weight: bold;
+}
+
+/* 메뉴 리스트 */
+.menulist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #f7f7f7;
+}
+
+.menuitem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--small-border-color);
+  height: 5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+}
+
+.menuitem:hover {
+  background-color: #f0f0f0;
+}
+
+.menuicon {
+  font-size: 18px;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.menutext {
+  flex: 1;
+  font-size: 14px;
+  color: var(--darkgray-text-color);
+}
+
+/* 푸터 */
+.mainfooter {
+  height: 4.2rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+  background-color: var(--color-white);
+  border-top: 1px solid var(--small-border-color);
+  font-weight: bold;
+}
+
+.mainfooter button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: center;
+  flex: 1;
+  font-weight: bold;
+}
+
+.mainfooter img {
+  width: 24px;
+  height: 24px;
+  display: block;
+  margin: 0 auto;
+  font-weight: bold;
+}
+
+.mainfooter span {
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+  color: var(--lowgray-text-color);
+  font-weight: bold;
+}

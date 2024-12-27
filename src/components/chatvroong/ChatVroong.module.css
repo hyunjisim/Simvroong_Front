@@ -1,0 +1,180 @@
+/* 헤더 */
+.chatvroongcontainer {
+    display: flex;
+    flex-direction: column;
+    font-family: "Arial", sans-serif;
+    color: #333;
+    max-width: 25rem;
+    height: 874px;
+    margin: 0 auto;
+    background-color: var(--color-white);
+    border: 1px solid var(--small-border-color);
+}
+
+.chatvroongheader {
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--small-border-color);
+}
+  
+.headerchatvroong {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+  
+.chatvroonglist {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--color-white);
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e0e0e0;
+    font-weight: bold;
+    position: relative;
+}
+  
+.requiree.active,
+.executee.active {
+    border-bottom: 2px solid var(--black-text-color);
+}
+  
+.requiree,
+.executee {
+    flex: 1;
+    text-align: center;
+}
+  
+.chatvroongrequire,
+.chatvroongexecute {
+    font-size: 1rem;
+    padding-bottom: 0.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    color: #aaa;
+}
+  
+.chatvroongrequire.active,
+.chatvroongexecute.active {
+    color: #000;
+}
+  
+.chatvroongrequire.active::after,
+.chatvroongexecute.active::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #000;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+  
+.chatListContainer {
+    flex-grow: 1;
+    padding: 1rem;
+    background-color: #ffffff;
+    overflow-y: auto;
+}
+  
+.chatList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+  
+.chatItem {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+  
+.chatImage {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+  
+.chatContent {
+    flex: 1;
+}
+  
+.chatTitle {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+}
+  
+.chatSubtitle {
+    font-size: 0.8rem;
+    color: #aaa;
+    margin: 0.2rem 0;
+}
+  
+.chatMessage {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0;
+}
+  
+.mainfooter {
+    height: 4.2rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    background-color: #ffffff;
+    border-top: 1px solid #e0e0e0;
+}
+  
+.mainfooter button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-align: center;
+    flex: 1;
+    font-weight: bold;
+}
+  
+.mainfooter img {
+    width: 24px;
+    height: 24px;
+    display: block;
+    margin: 0 auto;
+}
+  
+.mainfooter span {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #aaa;
+}
+  
+.emptyState {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #666;
+    font-size: 1rem;
+    text-align: center;
+}
+  
+.emptyState img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1rem;
+}

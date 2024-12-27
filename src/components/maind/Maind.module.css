@@ -1,0 +1,209 @@
+:root {
+    /* 컬러 정의 */
+    --darkgray-color: #404040;
+    --midgray-color: #636363;
+    --lowgray-color: #999999;
+    --color-white: #fff;
+    --color-red: #E95C5C;
+    --orangeyellow-color: #FF7A00;
+    --yellow-color: #FFE812;
+    --lightyellow-color: #FFD797;
+  
+    /* border 컬러 정의 */
+    --yellow-border-color: #f1bb39;
+    --blue-border-color: #18A0FB;
+  
+    --small-border-color: #CBCBCB;
+    --big-border-color: #ADADAD;
+  
+    --under-border-black-color: #000000;
+  
+    /* 노란 버튼 컬러 정의 */
+    --yellow-button-color: #FFE812;
+    --yellow-button-text-color: #000000;
+  
+    /* 그레이 버튼 컬러 정의 */
+    --gray-button-color: #7F7F7F;
+    --gray-button-text-color: #FFFFFF;
+  
+    --gray-button-hover-color: #F1BB39;
+  
+    /* 쉐도우 컬러 정의 */
+    --drop-shadow-color: 0, 0, 0;
+    --drop-shadow-opacity: 0.25;
+  
+    /* 텍스트 컬러 정의 */
+    --black-text-color: #000;
+    --darkgray-text-color: #404040;
+    --midgray-text-color: #636363;
+    --lowgray-text-color: #999999;
+    --yellow-text-color: #F2B93B;
+    --blue-text-color: #18A0FB;
+  
+    /* 배경 컬러 정의 */
+    --gray-background-color: #E7EAF1;
+  }
+
+.container {
+    font-family: Arial, sans-serif;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 25rem;
+    height: 874px;
+    background-color: white;
+    background: var(--color-white);
+    box-shadow: 0 2px 5px rgba(var(--drop-shadow-color), var(--drop-shadow-opacity));
+    border-radius: 8px;
+    overflow: hidden;
+    
+}
+  
+.backButton {
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+  
+.searchBar {
+    flex-grow: 1;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: var(--lowgray-color);
+}
+  
+.popularSection,
+.recentSection {
+    margin-top: 30px;
+}
+  
+.popularSection h2,
+.recentSection h2 {
+    font-size: 18px;
+    font-weight: bold;
+}
+  
+.popularList,
+.recentList {
+    list-style: none;
+    padding: 0;
+}
+  
+.popularList li,
+.recentList li {
+    margin: 10px 0;
+    font-size: 16px;
+}
+  
+.recentSection .clearAll {
+    font-size: 14px;
+    color: gray;
+    float: right;
+    cursor: pointer;
+}
+
+.recentsearch {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.clearAll {
+    font-size: 14px;
+    color: gray;
+    cursor: pointer;
+}
+
+.recentList li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+
+.clockIcon {
+    margin-right: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.time {
+    color: gray;
+    font-size: 14px;
+    margin-right: 10px; 
+    margin-left: auto; 
+}
+
+/* 삭제 아이콘 */
+.deleteIcon {
+    cursor: pointer;
+    color: gray;
+}
+
+
+.popularsearch {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.updateTime {
+    color: gray;
+    font-size: 12px;
+    margin-left: auto;
+}
+
+/* 인기 검색어 top3 */
+.topRankNumber {
+    color: #ffa500;
+    font-weight: bold;
+}
+
+
+.topRank {
+    font-weight: normal;
+}
+
+
+
+.mainheader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+    position: relative;
+    padding: 0.5rem 1rem; /* 내부 여백 추가 */
+}
+
+.headeralrimh {
+    font-size: 1.2rem;
+    color: #333;
+    text-align: center;
+    flex-grow: 1;
+}
+
+
+/* 뒤로가기 버튼 */
+.backb {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    margin-right: 1rem; /* 오른쪽 여백 추가 */
+}
+
+
+.hrlines {
+    width: 100%;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 20px 0;
+}
