@@ -242,7 +242,9 @@ const Request = () => {
           placeholder="상세 주소"
           className={styles.input}
           value={detailedAddress}
+
           onChange={(e) => setDetailedAddress(e.target.value)}
+
         />
         <input
           type="text"
