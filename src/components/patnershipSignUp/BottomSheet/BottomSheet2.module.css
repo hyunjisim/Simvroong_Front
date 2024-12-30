@@ -1,0 +1,122 @@
+.bottomSheetOverlay {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    max-width: 25rem;
+    background: var(--color-white);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    box-shadow: var(--box-shadow-overlay);
+    height: auto;
+    padding: 20px;
+    z-index: 1000;
+    animation: slideUp 0.3s ease-in-out;
+}
+
+.header {
+    text-align: left;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: var(--darkgray-text-color);
+    margin-bottom: 20px;
+}
+
+.accountInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+    gap: 5px;
+}
+.bank{
+    width: 370px;
+    background-color: var(--gray-background-color);
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.bankLogo {
+
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--blue-text-color);
+    gap: 5px;
+}
+
+
+.accountNumber {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--darkgray-text-color);
+}
+.account{
+    width: 370px;
+    border:solid 1px var(--lowgray-color);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.buttonGroup {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+
+.modifyButton {
+    height: 45px;
+    width: 200px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.confirmButton {
+    height: 45px;
+    width: 200px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    /* display: flex;
+    justify-content: flex-end; */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.modifyButton {
+    background-color: var(--gray-background-color);
+    color: var(--darkgray-text-color);
+}
+
+.confirmButton {
+    background-color: var(--blue-text-color);
+    color: var(--color-white);
+}
+
+.modifyButton:active {
+    background-color: var(--color-white);
+}
+
+.confirmButton:active {
+    background-color: var(--blue-text-color);
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}

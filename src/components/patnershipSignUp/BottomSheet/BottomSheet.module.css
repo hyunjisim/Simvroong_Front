@@ -1,0 +1,73 @@
+.bottomSheet {
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    max-width: 25rem;
+    background: var(--color-white);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    box-shadow: var(--box-shadow-overlay);
+    padding: 0 20px;
+    height: 50%;
+    overflow-y: auto;
+    box-sizing: border-box; /* 패딩이 전체 너비에 포함되도록 설정 */
+    animation: slideUp 0.3s ease-in-out;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.bankList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.bankItem {
+    padding: 10px;
+    border-bottom: 1px solid var(--big-border-color);
+    cursor: pointer;
+}
+
+.bankItem:hover {
+    background-color: var(--big-border-color);
+}
+
+.closeButton {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--blue-border-color);
+    color: var(--color-white);
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    box-sizing: border-box; /* 버튼 너비 계산 시 패딩 포함 */
+    left: 0px; /* 왼쪽으로 10px 이동 */
+}
+.closeButtonBackground {
+    position: sticky; /* 부모 내에서 고정 */
+    bottom: 0; /* 하단에 고정 */
+    background-color: var(--color-white); /* 버튼 주변 배경색 */
+    width: 100%;
+    height: 50px;
+    padding: 10px 20px; /* 버튼 주변 여백 */
+    z-index: 10; /* 다른 요소 위에 표시 */
+    box-sizing: border-box; /* 버튼 너비 계산 시 패딩 포함 */
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}

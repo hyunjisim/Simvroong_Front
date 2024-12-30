@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import backb from '../../img/back-arrow.png'
 import { useNavigate } from 'react-router-dom'
-import styles from './Sign.module.css'
+import styles from './sign.module.css'
 import axios from 'axios'
 
 const Sign = () => {

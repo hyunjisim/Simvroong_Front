@@ -10,7 +10,7 @@ import CategoryBottomSheet from "./CategoryBottomSheet";
 const Request = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [address, setAddress] = useState("");
-  const [detailAddress, setDetailAddress] = useState("");
+  const [detailedAddress, setDetailedAddress] = useState("");
   const [category, setCategory] = useState("");
   const [isCategorySheetOpen, setIsCategorySheetOpen] = useState(false); 
   const [title, setTitle] = useState("");
@@ -213,8 +213,8 @@ const Request = () => {
           type="text"
           placeholder="상세 주소"
           className={styles.input}
-          value={detailAddress}
-          onChange={(e) => setDetailAddress(e.target.value)}
+          value={detailedAddress}
+          onChange={(e) => detailedAddress(e.target.value)}
         />
         <input
           type="text"
