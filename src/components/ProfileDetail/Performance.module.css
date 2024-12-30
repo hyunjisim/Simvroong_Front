@@ -1,0 +1,197 @@
+.container{
+    padding: 20px;
+    display: flex;
+    margin: 0 auto;
+    /* justify-content: center; */
+    align-items: center;
+    max-width: 25rem;
+    height: 874px;
+    box-sizing: border-box;
+    position: relative; /* 부모를 relative로 설정 */
+    flex-direction: column; /* 모든 자식을 세로로 정렬 */
+}
+
+/* 헤더 스타일 */
+.header {
+    display: flex;
+    align-items: center; /* 세로로 가운데 정렬 */
+    gap: 3px; /* 이미지와 텍스트 사이 간격 */
+    margin-bottom: 10px; /* 아래 여백 */
+
+    width: 100%; /* 부모 padding 고려 */
+    flex-direction: column;
+    /* 헤더를 바디의 맨 위로 배치 */
+    top: 40px; /* 폼 아래쪽에서 20px 간격 */
+    left: 20px; /* 폼 왼쪽에서 20px 간격 */
+}
+
+.pagetitle {
+    display: flex;
+    align-items: center; /*세로로 가운데 정렬*/
+    gap: 3px; /* 이미지와 텍스트 사이 간격 */
+    margin-bottom: 10px; /* 아래 여백 */
+
+    width: calc(100% - 40px); /* 부모 padding 고려 */
+    /* 헤더를 바디의 맨 위로 배치 */
+    top: 40px; /* 폼 아래쪽에서 20px 간격 */
+    bottom: 40px;
+}
+
+.backbutton {
+    width: 40px; /* 아이콘 너비 */
+    height: auto; /* 비율 유지 */
+    margin-right: 1px; /* 텍스트와 간격 */
+    cursor: pointer;
+    align-items: left;
+    margin-left: -25px; /* 왼쪽으로 더 붙이기 */
+}
+
+.header h2 {
+    font-size: 24px; /* 텍스트 크기 */
+    font-weight: bold;
+    margin: auto
+}
+
+/* 콘텐츠 컨테이너 */
+.content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* 콘텐츠 간의 간격 */
+}
+
+
+.profileSection {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+.profilesection p{
+    margin: 0;
+    width: 30px;
+}
+
+.profileImage {
+    position: flex;
+    width: 100px; /* 프로필 사진 크기 */
+    height: 100px;
+    overflow: hidden;
+    overflow: visible; /* overflow를 visible로 설정 */
+}
+
+.profilePicture {
+    border-radius: 50%;
+    object-fit: cover; /* 비율 유지하면서 꽉 채우기 */
+}
+
+.profileinfo {
+    display: flex;
+    flex-direction: column; /* 텍스트를 세로로 나열 */
+}
+
+.profilename {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.profiledetail {
+    font-size: 15px;
+    color: #888;
+}
+
+.tabmenu {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 16px;
+    flex-direction: column;
+}
+
+.tabBarContainer {
+    
+    width: 100%;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+}
+
+.tabs {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.tab {
+    font-size: 16px;
+    font-weight: 500;
+    color: #aaa;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    flex: 1; /* 탭을 균등 분할 */
+    justify-content: center;
+}
+
+.tab.active {
+    color: #000;
+    font-weight: bold;
+}
+
+.tabCount {
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+.tab.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #6200ee; /* 파란색 하이라이트 */
+}
+
+.tabContent {
+    padding: 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+.tasklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.taskitem {
+    background: white;
+    margin-bottom: 16px;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.taskitemnegative {
+    background: #ffe6e6;
+}
+
+.tasktitle {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.taskdetail {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 8px;
+}
+
+.taskprice {
+    font-weight: bold;
+    color: #333;
+}

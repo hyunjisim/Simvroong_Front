@@ -24,6 +24,8 @@ import PartnershipStep2 from './components/patnershipSignUp/step2';
 import PartnershipStep3 from './components/patnershipSignUp/step3';
 import PartnershipStep4 from './components/patnershipSignUp/step4';
 import PartnershipStep5 from './components/patnershipSignUp/step5';
+import Performance from './components/ProfileDetail/Performance.jsx';
+import Review from './components/ProfileDetail/Review.jsx';
 
 const App = () => {
   return (
@@ -37,6 +39,8 @@ const App = () => {
         <Route path="/chat" element={<ChatVroong />} /> 
         <Route path="/around" element={<Around/>} />
         <Route path="/profile" element={<Profile/>} />
+        <Route path="/profile/Performance" element={<Performance/>}/>
+        <Route path="/profile/Review" element={<Review/>}/>
         <Route path="/sign" element={<Sign/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/request" element={<Request/>} />
