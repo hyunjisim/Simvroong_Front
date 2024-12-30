@@ -1,0 +1,163 @@
+:root {
+    /* 컬러 정의 */
+    --darkgray-color: #404040;
+    --midgray-color: #636363;
+    --lowgray-color: #999999;
+    --color-white: #fff;
+    --color-red: #E95C5C;
+    --orangeyellow-color: #FF7A00;
+    --yellow-color: #FFE812;
+    --lightyellow-color: #FFD797;
+  
+    /* border 컬러 정의 */
+    --yellow-border-color: #f1bb39;
+    --blue-border-color: #18A0FB;
+  
+    --small-border-color: #CBCBCB;
+    --big-border-color: #382929;
+  
+    --under-border-black-color: #000000;
+  
+    /* 노란 버튼 컬러 정의 */
+    --yellow-button-color: #FFE812;
+    --yellow-button-text-color: #000000;
+  
+    /* 그레이 버튼 컬러 정의 */
+    --gray-button-color: #7F7F7F;
+    --gray-button-text-color: #FFFFFF;
+    --gray-button-hover-color: #F1BB39;
+  
+    /* 쉐도우 컬러 정의 */
+    --drop-shadow-color: #000000;
+    --drop-shadow-opacity: 0.25;
+  
+    /* 텍스트 컬러 정의 */
+    --black-text-color: #000;
+    --darkgray-text-color: #404040;
+    --midgray-text-color: #636363;
+    --lowgray-text-color: #999999;
+    --yellow-text-color: #F2B93B;
+    --blue-text-color: #18A0FB;
+  
+    /* 배경 컬러 정의 */
+    --gray-background-color: #E7EAF1;
+  }
+  
+  .faqContainer {
+    max-width: 25rem;
+    height: 874px;
+    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--color-white);
+    border: 1px solid var(--small-border-color);
+  }
+  
+  .faqHeader {
+    display: flex;
+    width: 94%;
+    align-items: center;
+    background-color: var(--primary-white);
+    padding: 12px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    border: 1.5px solid var(--small-border-color);
+  }
+  
+  .backb {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    margin-right: 12px;
+  }
+  
+  .faqname {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    flex-grow: 1;
+  }
+  
+  .faqmenulist {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--primary-white);
+  }
+  
+  .faqnum1, .faqnum2, .faqnum3, .faqnum4, .faqnum5 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px;
+    border-bottom: 1px solid var(--light-gray);
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--darkgray-color);
+    transition: background-color 0.3s;
+  }
+  
+  .faqnum5 {
+    color: var(--midgray-color);
+    position: relative;
+  }
+  
+
+
+
+  .faqnum1:hover, .faqnum2:hover, .faqnum3:hover, .faqnum4:hover, .faqnum5:hover {
+    background-color: var(--light-gray);
+  }
+  
+  .nextarrow {
+    width: 20px;
+    height: 20px;
+  }
+
+
+  .faqnum1, .faqnum2, .faqnum3, .faqnum4, .faqnum5, .faqnum6, .faqnum7, .faqnum8, .faqnum9, .faqnum10,
+  .faqnum11, .faqnum12, .faqnum13, .faqnum14, .faqnum15, .faqnum16, .faqnum17, .faqnum18, .faqnum19,
+  .faqnum20, .faqnum21, .faqnum22, .faqnum23, .faqnum24, .faqnum25, .faqnum26 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid var(--light-gray);
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--darkgray-color);
+    transition: background-color 0.3s;
+  }
+
+
+.customerable {
+    background-color: var(--light-gray);
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--black-text-color);
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.partnerable {
+    background-color: var(--darkgray-color);
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--color-white);
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+} 
+
+
+/* .customerable {
+    background-color: var(--light-gray);
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--black-text-color);
+    border-radius: 10px;
+    margin-top: 0.5rem;
+    margin-right: 15rem;
+}  */

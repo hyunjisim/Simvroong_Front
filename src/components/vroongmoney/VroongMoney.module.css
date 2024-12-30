@@ -1,0 +1,351 @@
+.VroongMoneyContainer {
+    max-width: 25rem;
+    height: 874px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-white);
+    border: 1px solid var(--small-border-color);
+  }
+  
+.VroongMoneyHeader {
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    height: 56px;
+    border-bottom: 1px solid var(--small-border-color);
+    background-color: var(--color-white);
+}
+  
+.backButton {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+  
+.VroongMoneyTitle {
+    flex: 1;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    color: var(--black-text-color);
+}
+  
+.VroongMoneyHead {
+    background-color: var(--yellow-color);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid var(--small-border-color);
+}
+  
+.moneytitle {
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--black-text-color);
+}
+  
+.moneybalancehead {
+    margin-top: 0.5rem;
+}
+  
+.moneybalance {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--black-text-color);
+}
+  
+.balancebutton {
+    display: flex;
+    justify-content: flex-end; 
+    gap: 1rem;
+    margin: 1rem 0;
+    width: 100%;
+}
+  
+.moneyin {
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--color-white);
+    background-color: var(--orangeyellow-color);
+    border: 1px solid var(--yellow-border-color);
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    /* margin-left: 7rem; */
+}
+
+
+.moneyout {
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--color-white);
+    background-color: var(--orangeyellow-color);
+    border: 1px solid var(--yellow-border-color);
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    /* margin-left: 7rem; */
+}
+
+
+.moneyin:hover {
+    background-color: var(--yellow-border-color);
+}
+
+.moneyout:hover {
+    background-color: var(--yellow-border-color);
+}
+
+
+.balanceheader {
+    padding: 0 1rem;
+    font-size: 14px;
+    color: var(--lowgray-text-color);
+    border-top: 1rem solid var(--small-border-color);
+}
+
+.balanceheaderdetail {
+    font-size: 14px;
+    color: var(--lowgray-text-color);
+    padding: 2rem 0;
+}
+
+
+
+.balancemoneyedit1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--small-border-color);
+}
+
+
+.balancemoneyedit2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+
+.balancemoneyedit2_1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem 0;
+    margin-left: 74px;
+    border-bottom: 1px solid var(--small-border-color);
+    border-top: 1px solid var(--small-border-color);
+    margin-top: 40px;
+}
+
+
+.balancemoneyedit2_2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem 0;
+    margin-left: 74px;
+    border-bottom: 1px solid var(--small-border-color);
+}
+
+
+.balancemoneyedit3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--small-border-color);
+}
+
+
+.balanceday1 {
+    flex: 1;
+    font-size: 12px;
+    color: var(--midgray-text-color);
+}
+
+
+.balanceday2 {
+    flex: 1;
+    font-size: 12px;
+    color: var(--midgray-text-color);
+}
+
+
+.balanceday3 {
+    flex: 1;
+    font-size: 12px;
+    color: var(--midgray-text-color);
+}
+
+
+.balanceday2_1 {
+    display: none;
+}
+
+
+.balanceday2_2 {
+    display: none;
+}
+
+
+.balancetime1 {
+    flex: 1;
+    font-size: 12px;
+    text-align: center;
+    color: var(--lowgray-text-color);
+}
+
+
+.balancetime2 {
+    flex: 1;
+    font-size: 12px;
+    text-align: center;
+    color: var(--lowgray-text-color);
+}
+
+
+.balancetime3 {
+    flex: 1;
+    font-size: 12px;
+    text-align: center;
+    color: var(--lowgray-text-color);
+}
+
+
+.balancetimeplus2_1 {
+    flex: 1;
+    font-size: 12px;
+    text-align: center;
+    color: var(--lowgray-text-color);
+}
+
+
+.balancetimeplus2_2 {
+    flex: 1;
+    font-size: 12px;
+    text-align: center;
+    color: var(--lowgray-text-color);
+}
+
+
+.balancename1,
+.balancename2,
+.balancename3,
+.balancenameplus2_1,
+.balancenameplus2_2 {
+    flex: 2;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+    color: var(--black-text-color);
+}
+
+
+.balancename2 {
+    flex: 2;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+    color: var(--black-text-color);
+}
+
+
+.balancename3 {
+    flex: 2;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+    color: var(--black-text-color);
+}
+
+
+.balancenameplus2_1 {
+    flex: 2;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+    color: var(--black-text-color);
+}
+
+
+.balancenameplus2_2 {
+    flex: 2;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+    color: var(--black-text-color);
+}
+
+
+.balancemoney1 {
+    flex: 1;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: right;
+    color: var(--black-text-color);
+}
+
+
+.balancemoney2 {
+    flex: 1;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: right;
+    color: var(--black-text-color);
+}
+
+
+.balancemoney3 {
+    flex: 1;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: right;
+    color: var(--black-text-color);
+}
+
+
+.balancemoney2_1 {
+    flex: 1;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: right;
+    color: var(--black-text-color);
+}
+
+
+.balancemoney2_2 {
+    flex: 1;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: right;
+    color: var(--black-text-color);
+}
+
+.balancemoney1 {
+    color: var(--blue-text-color);
+}
+
+
+.balancemoney2_1 {
+    color: var(--blue-text-color); 
+}
+
+
+.balancemoney3 {
+    color: var(--blue-text-color); 
+}
+
+
+.balancemoney2 {
+    color: var(--color-red);
+}
+
+
+.balancemoney2_2 {
+    color: var(--color-red);
+}

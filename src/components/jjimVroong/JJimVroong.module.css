@@ -1,0 +1,128 @@
+/* 헤더 */
+.jjimvroongcontainer {
+    max-width: 25rem;
+    height: 874px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--color-white);
+    border: 1px solid var(--small-border-color);
+}
+
+.jjimvroongcontainer > * {
+    width: 90%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.jjimvroongheader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.1rem;
+    justify-content: center;
+    width: 100%;
+    /* box-shadow: 0 4px 6px rgba(var(--drop-shadow-color), var(--drop-shadow-opacity)); */
+    padding: 10px 0;
+    border-bottom: 1px solid var(--small-border-color);
+}
+
+.jjimvroongtittle {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.backb {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    position: absolute; 
+    left: 1rem; 
+    transform: translateY(-10%); 
+    transform: translateX(6.5rem); 
+}
+
+.jjimvroonglist {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f8f8;
+}
+
+.jjimvroongitem {
+    display: flex;
+    align-items: flex-start;
+    background-color: var(--color-white);
+    /* border: 0.1rem solid var(--small-border-color); */
+    position: relative;
+    border-bottom: 1px solid var(--small-border-color);
+}
+
+.userImage {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 0.8rem;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    margin-top: 1rem;
+    margin-left: 1rem;
+}
+
+.itemDetails {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.itemTitle {
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: var(--darkgray-color);
+    margin-bottom: 0.3rem;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.itemInfo {
+    font-size: 0.8rem;
+    color: var(--lowgray-color);
+    margin-bottom: 0.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.itemInfo::before {
+    content: \"📍\";
+}
+
+.itemPrice {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--black-text-color);
+}
+
+.itemActions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.8rem;
+    color: var(--lowgray-color);
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}

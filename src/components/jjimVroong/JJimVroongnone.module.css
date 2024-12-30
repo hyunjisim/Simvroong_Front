@@ -1,0 +1,75 @@
+:root {
+    --darkgray-color: #404040;
+    --midgray-color: #636363;
+    --lowgray-color: #999999;
+    --color-white: #fff;
+    --border-color: #e0e0e0;
+    --drop-shadow-color: 0, 0, 0;
+    --drop-shadow-opacity: 0.1;
+}
+
+/* 전체 헤더 */
+.jjimvroongcontainer {
+    max-width: 25rem;
+    height: 874px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-white);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(var(--drop-shadow-color), var(--drop-shadow-opacity));
+}
+
+/* 헤더 */
+.jjimvroongheader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px rgba(var(--drop-shadow-color), var(--drop-shadow-opacity));
+}
+
+.backIcon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    pointer-events: auto;
+    position: relative;
+    z-index: 10;
+}
+
+.jjimvroongtitle {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-left: -24px; /* Center-align title with back icon */
+}
+
+/* 내용 */
+.chatListContainer {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f8f8;
+}
+
+.detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+}
+
+.sadIcon {
+    width: 80px;
+    height: 80px;
+}
+
+.emptyMessage {
+    font-size: 0.9rem;
+    color: var(--midgray-color);
+}

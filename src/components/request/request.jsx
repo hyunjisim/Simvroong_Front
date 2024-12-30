@@ -62,6 +62,19 @@ const Request = () => {
     }).open();
   };
 
+  const handleExpectedTimeChange = (value) => {
+    // 입력값 파싱
+    const timeRegex = /(\d+)\s*시간\s*(\d*)\s*분?/; // "X시간 Y분" 형식
+    const match = value.match(timeRegex);
+    if (match) {
+      const hours = match[1]; // 시간 값
+      const minutes = match[2] || 0; // 분 값 (기본값 0)
+      console.log(`시간: ${hours}, 분: ${minutes}`);
+      // 필요하면 여기서 상태를 업데이트하거나 서버 요청 데이터 준비
+    }
+    setExpectedTime(value);
+  };
+
   // 금액 제안 허용 체크박스 핸들러
   const handleFeeNegotiableChange = (e) => {
     setIsFeeNegotiable(e.target.checked);
@@ -100,22 +113,37 @@ const Request = () => {
         serviceFee: fee, // 심부름비
         minFee: 5000, // 최소 금액
       },
-      isFeeNegotiable: false, // 금액 제안 허용 여부
+      isFeeNegotiable: isFeeNegotiable, // 금액 제안 허용 여부
     };
 
     try {
+      const token = localStorage.getItem("authToken"); // 토큰 가져오기
+      if (!token) {
+        alert("로그인이 필요합니다. 다시 로그인해 주세요.");
+        navigate("/login"); // 로그인 페이지로 이동
+        return;
+      }
+  
       const response = await axios.post(
         "http://127.0.0.1:8080/order/create",
-        userData
+        userData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Authorization 헤더에 토큰 추가
+          },
+        }
       );
       alert("심부름 의뢰가 완료되었습니다!");
       console.log(response.data);
+  
+      // 의뢰 완료 후 메인 페이지로 이동
+      navigate("/main");
     } catch (error) {
       console.error("심부름 의뢰 실패:", error);
       alert("심부름 의뢰에 실패했습니다. 다시 시도해주세요.");
     }
   };
-
+  
   const handleCctvClick = (option) => setCctvOption(option);
   const handlePetClick = (option) => setPetOption(option);
   const handleParkingClick = (option) => setParkingOption(option);
@@ -214,7 +242,9 @@ const Request = () => {
           placeholder="상세 주소"
           className={styles.input}
           value={detailedAddress}
-          onChange={(e) => detailedAddress(e.target.value)}
+
+          onChange={(e) => setDetailedAddress(e.target.value)}
+
         />
         <input
           type="text"
@@ -322,7 +352,13 @@ const Request = () => {
       </div>
       <div className={styles.section}>
         <label>심부름 예상 소요시간을 알려주세요</label>
-        <input type="time" className={styles.input} value={expectedTime} onChange={(e) => setExpectedTime(e.target.value)}/>
+        <input
+          type="text"
+          placeholder="예: 0시간 00분"
+          className={styles.input}
+          value={expectedTime}
+          onChange={(e) => handleExpectedTimeChange(e.target.value)}
+        />
       </div>
 
       {/* 심부름비 입력 */}

@@ -1,57 +1,91 @@
-import React, { useState } from "react";
-import styles from './PersonalInfo.module.css';
-import backb from "../../img/back-arrow.png";
-import panda from '../../img/panda.png';
-import logo from '../../img/simvroong.png';
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import React, { useState, useEffect } from 'react'
+import styles from './PersonalInfo.module.css'
+import backb from '../../img/back-arrow.png'
+import logo from '../../img/simvroong.png'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+
+const HOST_PORT = 'http://192.168.162.30:8080/'
 
 const PersonalInfo = () => {
-    const navigate = useNavigate();
-    const [password, setPassword] = useState(""); // 입력한 비밀번호
-    const [errorMessage, setErrorMessage] = useState(""); // 오류 메시지
-    const [isLoading, setIsLoading] = useState(false); // 로딩 상태
+    const navigate = useNavigate()
+    const [password, setPassword] = useState('') // 입력한 비밀번호
+    const [errorMessage, setErrorMessage] = useState('') // 오류 메시지
+    const [isLoading, setIsLoading] = useState(false) // 로딩 상태
+    const [nickname, setNickname] = useState('')
+    const [profileImg, setProfileImg] = useState('')
 
-    // 비밀번호 입력 핸들러
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
+    // 페이지 로드 시 닉네임 가져오기
+    useEffect(() => {
+        const fetchNickname = async () => {
+            try {
+                const token = localStorage.getItem('authToken')
+                if (!token) {
+                    setErrorMessage('로그인이 필요합니다.')
+                    return
+                }
 
-    // 비밀번호 확인 핸들러
-    const handleSubmit = async (e) => {
-        e.preventDefault(); // 기본 동작 방지
-        if (!password) {
-            setErrorMessage("비밀번호를 입력해주세요.");
-            return;
+                const response = await axios.get(`${HOST_PORT}profile/getNickname`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+
+                if (response) {
+                    setNickname(response.data.nickname)
+                    setProfileImg(response.data.photoUrl)
+                } else {
+                    setErrorMessage('닉네임을 불러오지 못했습니다.')
+                }
+            } catch (error) {
+                console.error('닉네임 불러오기 오류:', error)
+                setErrorMessage('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.')
+            }
         }
 
-        setIsLoading(true); // 로딩 시작
+        fetchNickname()
+    }, [nickname, profileImg])
+
+    // 비밀번호 입력 핸들러
+    const handlePasswordChange = e => {
+        setPassword(e.target.value)
+    }
+
+    // 비밀번호 확인 핸들러
+    const handleSubmit = async e => {
+        e.preventDefault() // 기본 동작 방지
+        if (!password) {
+            setErrorMessage('비밀번호를 입력해주세요.')
+            return
+        }
+
+        // setIsLoading(true) // 로딩 시작
         try {
             const token = localStorage.getItem('authToken')
             // 서버로 비밀번호 검증 요청
-            const response = await axios.post(
-                "http://127.0.0.1:8080/auth/verify-password",
-                { password },
-                {
-                  headers: {
-                    "Authorization": `Bearer ${token}`,
-                  },
-                }
-              );
 
-            if (response.status === 200 && response.data.success) {
-                alert("비밀번호가 일치합니다. 회원 정보 수정 페이지로 넘어갑니다.");
-                navigate("/editProfile"); // 회원 정보 수정 페이지로 이동
+            const response = await axios.post(
+                `${HOST_PORT}profile/userInfo`,
+                { password }, // 요청 본문
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            )
+            if (response) {
+                alert('비밀번호가 일치합니다. 회원 정보 수정 페이지로 넘어갑니다.')
+                navigate('/editProfile') // 회원 정보 수정 페이지로 이동
             } else {
-                setErrorMessage("입력하신 비밀번호가 맞지 않습니다. 다시 확인해주세요.");
+                setErrorMessage('입력하신 비밀번호가 맞지 않습니다. 다시 확인해주세요.')
             }
         } catch (error) {
-            console.error("비밀번호 검증 오류:", error);
-            setErrorMessage("서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+            console.error('비밀번호 검증 오류:', error)
+            setErrorMessage('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.')
         } finally {
-            setIsLoading(false); // 로딩 종료
+            setIsLoading(false) // 로딩 종료
         }
-    };
+    }
 
     return (
         <div className={styles.container}>
@@ -64,8 +98,8 @@ const PersonalInfo = () => {
 
             {/* 유저 정보 */}
             <div className={styles.userInfo}>
-                <img src={panda} alt="유저 이미지" className={styles.userImage} />
-                <span className={styles.userName}>유딩뀨</span>
+                <img src={profileImg} alt="유저 이미지" className={styles.userImage} />
+                <span className={styles.userName}>{nickname}</span>
             </div>
 
             {/* 개인정보 변경 */}
@@ -81,22 +115,18 @@ const PersonalInfo = () => {
             {/* 패스워드 확인 */}
             <form onSubmit={handleSubmit} className={styles.formContainer}>
                 <div className={styles.inputContainer}>
-                    <label htmlFor="password" className={styles.inputLabel}>비밀번호 확인</label>
-                    <input
-                        type="password"
-                        id="password"
-                        placeholder=""
-                        value={password}
-                        onChange={handlePasswordChange}
-                        className={styles.input} />
+                    <label htmlFor="password" className={styles.inputLabel}>
+                        비밀번호 확인
+                    </label>
+                    <input type="password" id="password" placeholder="" value={password} onChange={handlePasswordChange} className={styles.input} autoComplete="off" />
                     <button type="submit" className={styles.button} disabled={isLoading}>
-                        {isLoading ? "확인 중..." : "확인"}
+                        {isLoading ? '확인 중...' : '확인'}
                     </button>
                 </div>
                 {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
             </form>
         </div>
-    );
-};
+    )
+}
 
-export default PersonalInfo;
+export default PersonalInfo

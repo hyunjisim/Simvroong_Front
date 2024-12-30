@@ -1,0 +1,207 @@
+.VroongMoneyChargeContainer {
+    max-width: 25rem;
+    height: 874px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-white);
+    border: 1px solid var(--small-border-color);
+}
+  
+.VroongMoneyChargeHeader {
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    height: 56px;
+    border-bottom: 1px solid var(--small-border-color);
+    background-color: var(--color-white);
+}
+  
+.backButton {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+  
+.VroongMoneyChargeTitle {
+    flex: 1;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    color: var(--black-text-color);
+}
+  
+.VroongMoneyChargebalance {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+  
+.VroongMoneyChargemoney {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+  
+.chargeinput {
+    border: 1px solid var(--small-border-color);
+    border-radius: 8px;
+    /* padding: 0.8rem; */
+    font-size: 14px;
+    color: var(--lowgray-text-color);
+    outline: none;
+    height: 3rem;
+}
+  
+.accountcharge {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: var(--black-text-color);
+}
+  
+.chargeaccount,
+.chargeaccountbalance {
+    font-weight: bold;
+}
+  
+.chargebank,
+.chargeaccountnumber {
+    font-weight: normal;
+}
+  
+.accountnumberheader {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    justify-items: center;
+    margin-top: 2rem;
+}
+  
+.accountnumberheader span {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--black-text-color);
+    text-align: center;
+    cursor: pointer;
+}
+  
+.accountnumberheader span:hover {
+    color: var(--blue-border-color);
+}
+  
+.VroongMoneyChargebuttonhead {
+    margin-top: 2rem;
+    padding: 0 1rem;
+}
+  
+.VroongMoneyChargebutton {
+    width: 100%;
+    padding: 1rem 0;
+    background-color: var(--yellow-color);
+    color: var(--black-text-color);
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+}
+  
+.VroongMoneyChargebutton:hover {
+    background-color: var(--yellow-border-color);
+}
+
+.accountnumberheader {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    justify-items: center;
+    margin-top: 2rem;
+    grid-template-areas: 
+        "num1 num2 num3"
+        "num4 num5 num6"
+        "num7 num8 num9"
+        "num0 num0 clear";
+}
+
+.accountnumber1 {
+    grid-area: num1;
+}
+
+.accountnumber2 {
+    grid-area: num2;
+}
+
+.accountnumber3 {
+    grid-area: num3;
+}
+
+.accountnumber4 {
+    grid-area: num4;
+}
+
+.accountnumber5 {
+    grid-area: num5;
+}
+
+.accountnumber6 {
+    grid-area: num6;
+}
+
+.accountnumber7 {
+    grid-area: num7;
+}
+
+.accountnumber8 {
+    grid-area: num8;
+}
+
+.accountnumber9 {
+    grid-area: num9;
+}
+
+.accountnumber0 {
+    grid-area: num0;
+    margin-left: 8rem;
+}
+
+.clearnumber {
+    grid-area: clear;
+}
+
+.chargebank {
+    margin-left: auto;
+    margin-right: 0.5rem;
+    font-weight: normal;
+}
+
+.VroongMoneyChargemoney {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    border: 4px solid;
+    border-radius: 8px;
+    background-color: var(--color-white);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.chargeinput {
+    border: none;
+    border-radius: 0;
+    font-size: 14px;
+    color: var(--lowgray-text-color);
+    outline: none;
+    height: 2rem;
+}
+
+.VroongMoneyChargebalance {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
