@@ -32,7 +32,7 @@ const Profile = () => {
   const vroonglist = () => navigate("/vroonglist");
   const chat = () => navigate("/chat");
   const profile = () => navigate("/profile");
-  const goPartnership = () => navigate("/partnership"); // 파트너 지원하기 페이지로 이동
+  const goPartnership = () => navigate("/partnership/step1"); // 파트너 지원하기 페이지로 이동
   const goVroongMoney = () => navigate("/vroongmoney"); // 부릉머니 페이지로 이동
 
   const menuItems = [

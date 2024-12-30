@@ -1,0 +1,74 @@
+.bottomSheetOverlay {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin: 0 auto;
+    max-width: 25rem;
+    background-color: var(--black-overlay);
+    box-shadow: var(--box-shadow-overlay);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    animation: slideUp 0.3s ease-in-out;
+}
+
+.bottomSheet {
+    background-color: var(--color-white);
+    width: 100%;
+    max-width: 500px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.header {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.listItem {
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--small-border-color);
+    cursor: pointer;
+}
+
+.listItem:active  {
+    background-color: var(--lightyellow-color);
+}
+
+.closeButton {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: var(--gray-background-color);
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.closeButton:active {
+    background-color: var(--blue-border-color);
+}
+
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
