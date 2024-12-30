@@ -1,136 +1,228 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // 페이지 이동을 위한 useNavigate 추가
-import "./main.css";
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import axios from "axios";
+import styles from "./main.module.css";
 import simvroong from "../../img/simvroong.png";
-import bellIcon from "../../img/bell.png"; // 종 모양 이미지
-import searchIcon from "../../img/search.png"; // 검색 이미지
+import bellIcon from "../../img/bell.png";
+import searchIcon from "../../img/search.png";
 import Chat_none from "../../img/footer/Chat-none-color.png";
 import Details_none from "../../img/footer/Details-none-color.png";
 import Home_none from "../../img/footer/Home-none-color.png";
 import Profile_none from "../../img/footer/Profile-none-color.png";
 
+import All from "../../img/mainsel/All.png";
+import Deliver from "../../img/mainsel/Delivery.png";
+import Cleaning from "../../img/mainsel/Cleaning.png";
+import Repair from "../../img/mainsel/Repair.png";
+import Transporting from "../../img/mainsel/Transporting.png";
+import Replace from "../../img/mainsel/Replace.png";
+import PartTime from "../../img/mainsel/PartTime.png";
+import Pet from "../../img/mainsel/Pet.png";
+import Baby from "../../img/mainsel/Baby.png";
+import Other from "../../img/mainsel/Other.png";
+
+import Request from "../../img/mainsel/Request.png";
+import RequestFull from "../../img/mainsel/RequestFull.png";
+import Around from "../../img/mainsel/Around.png";
+
 const Main = () => {
-  const [activeCategory, setActiveCategory] = useState("전체");
-  const navigate = useNavigate(); // 페이지 이동을 위한 네비게이트 함수
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [activeCategory, setActiveCategory] = useState(
+    searchParams.get("category") || "전체"
+  );
+  const [allItems, setAllItems] = useState([]);
+  const [isScrolledToTop, setIsScrolledToTop] = useState(true);
+
+  const navigate = useNavigate();
+  const categoryWrapperRef = useRef(null);
 
   const categories = [
-    "전체",
-    "배달/퀵",
-    "청소/집안일",
-    "설치/수리",
-    "이사/운반",
-    "대행",
-    "알바",
-    "반려동물",
-    "돌봄/육아",
-    "기타",
+    { name: "전체", value: "전체", img: All },
+    { name: "배달·퀵", value: "배달·퀵", img: Deliver },
+    { name: "청소·집안일", value: "청소·집안일", img: Cleaning },
+    { name: "설치·수리", value: "설치·수리", img: Repair },
+    { name: "이사·운반", value: "이사·운반", img: Transporting },
+    { name: "대행", value: "대행", img: Replace },
+    { name: "알바", value: "알바", img: PartTime },
+    { name: "반려동물", value: "반려동물", img: Pet },
+    { name: "돌봄·육아", value: "돌봄·육아", img: Baby },
+    { name: "기타", value: "기타", img: Other },
   ];
 
-  const allItems = [
-    { id: 1, title: "클로크팟 판매 도와주세요", category: "기타", distance: "3.9km", time: "20분 전", price: "30,000원", likes: 6, comments: 2, image: '' },
-    { id: 2, title: "정말 눈 좀 치워주세요", category: "청소/집안일", distance: "4.1km", time: "1시간 전", price: "20,000원", likes: 4, comments: 3, image: '' },
-    { id: 3, title: "편의점에서 과자 사다주세요", category: "배달/퀵", distance: "4.1km", time: "5분 전", price: "15,000원", likes: 8, comments: 5, image: '' },
-    { id: 4, title: "다이소 양면 테이프 사다주세요", category: "배달/퀵", distance: "355m", time: "20분 전", price: "15,000원", likes: 2, comments: 1, image: '' },
-    { id: 5, title: "약국에서 밀크시슬 사다주세요", category: "배달/퀵", distance: "355m", time: "3시간 전", price: "10,000원", likes: 3, comments: 2, image: '' },
-    { id: 6, title: "핫팩 있으신 분... 너무 추워요", category: "기타", distance: "355m", time: "35분 전", price: "10,000원", likes: 11, comments: 6, image: '' },
-    { id: 7, title: "이불 빨래 검소 대신 해주세요", category: "청소/집안일", distance: "355m", time: "1시간 전", price: "10,000원", likes: 4, comments: 3, image: '' },
-  ];
+  const fetchItems = async (category = "전체") => {
+    try {
+      const token = localStorage.getItem("authToken");
+      const url =
+        category === "전체"
+          ? "http://127.0.0.1:8080/main"
+          : `http://127.0.0.1:8080/main?category=${encodeURIComponent(category)}`;
+  
+      const response = await axios.get(url, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+  
+      console.log("응답 데이터:", response.data.data); // 여기서 taskId 확인
+      setAllItems(response.data.data || []);
+    } catch (error) {
+      console.error("데이터 불러오기 오류:", error.message);
+      setAllItems([]);
+    }
+  };
 
-  const filteredItems = activeCategory === "전체" ? allItems : allItems.filter(item => item.category === activeCategory);
+  useEffect(() => {
+    const category = searchParams.get("category") || "전체";
+    fetchItems(category); // URL의 category를 기반으로 데이터 가져오기
+  }, [searchParams]);
 
-  const scrollLeft = () => {
-    const wrapper = document.querySelector(".category-wrapper");
-    wrapper.scrollBy({ left: -wrapper.clientWidth / 1.5, behavior: "smooth" });
+  const handleCategoryClick = (categoryValue) => {
+    setActiveCategory(categoryValue);
+    setSearchParams({ category: categoryValue });
   };
   
-  const scrollRight = () => {
-    const wrapper = document.querySelector(".category-wrapper");
-    wrapper.scrollBy({ left: wrapper.clientWidth / 1.5, behavior: "smooth" });
+  const filteredItems =
+  activeCategory === "전체"
+    ? allItems
+    : allItems.filter((item) => item.category?.trim() === activeCategory.trim());
+
+  const scrollLeft = () => {
+    if (categoryWrapperRef.current) {
+      categoryWrapperRef.current.scrollBy({
+        left: -categoryWrapperRef.current.clientWidth / 1.5,
+        behavior: "smooth",
+      });
+    }
   };
 
-  // 알림 페이지 이동 함수
-  const handleBellClick = () => {
-    navigate("/alrim");
+  const scrollRight = () => {
+    if (categoryWrapperRef.current) {
+      categoryWrapperRef.current.scrollBy({
+        left: categoryWrapperRef.current.clientWidth / 1.5,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const handleScroll = () => {
+    if (window.scrollY === 0) {
+      setIsScrolledToTop(true);
+    } else {
+      setIsScrolledToTop(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const goToPostPage = (taskId) => {
+    navigate(`/post/${taskId}`);
   };
 
   return (
-    <div className="main-container">
+    <div className={styles.mainContainer}>
       {/* 헤더 */}
-      <header className="main-header">
-        <img src={simvroong} alt="심부름 로고" className="logo" />
-        <div className="header-icons">
-          <img
-            src={bellIcon}
-            alt="알림"
-            className="header-icon"
-            onClick={handleBellClick}
-          />
-          <img src={searchIcon} alt="검색" className="header-icon" />
+      <header className={styles.mainHeader}>
+        <img src={simvroong} alt="심부름 로고" className={styles.logo} />
+        <div className={styles.headerIcons}>
+          <img src={bellIcon} alt="알림" className={styles.headerIcon} />
+          <img src={searchIcon} alt="검색" className={styles.headerIcon} />
         </div>
       </header>
 
-      {/* 카테고리 버튼 */}
-      <div className="category-container">
-        <button className="scroll-button left" onClick={scrollLeft}>◀</button>
-        <div className="category-wrapper">
+      {/* 카테고리 */}
+      <div className={styles.categorySection}>
+        <button className={styles.scrollButton} onClick={scrollLeft}>
+          ◀
+        </button>
+        <div className={styles.categoryWrapper} ref={categoryWrapperRef}>
           {categories.map((category) => (
-            <button
-              key={category}
-              className={`category-button ${activeCategory === category ? "active-category" : ""}`}
-              onClick={() => setActiveCategory(category)}
+            <div
+              key={category.value}
+              className={`${styles.category} ${
+                activeCategory === category.value ? styles.activeCategory : ""
+              }`}
+              onClick={() => handleCategoryClick(category.value)}
             >
-              {category}
-            </button>
+              <img
+                src={category.img}
+                alt={category.name}
+                className={styles.categoryIcon}
+              />
+              <span className={styles.categoryText}>{category.name}</span>
+            </div>
           ))}
         </div>
-        <button className="scroll-button right" onClick={scrollRight}>▶</button>
+        <button className={styles.scrollButton} onClick={scrollRight}>
+          ▶
+        </button>
       </div>
 
-      
-
       {/* 메인 리스트 */}
-      <main className="item-list">
-        {filteredItems.length > 0 ? (
-          filteredItems.map((item) => (
-            <div key={item.id} className="item" onClick={() => navigate('/postpage')}>
-              <img src={item.image} alt="item" className="item-image" />
-              <div className="item-content">
-                <h3>{item.title}</h3>
-                <p>📍{item.distance} · ⏱{item.time}</p>
-                <span className="item-price">{item.price}</span>
-              </div>
-              <div className="item-icons">
-                <div className="comments">
-                  💬 {item.comments}
-                </div>
-                <div className="likes">
-                  ❤️ {item.likes}
-                </div>
-              </div>
+      <main className={styles.itemList}>
+        {filteredItems.map((item) => (
+          <div
+            key={item.taskId}
+            className={styles.item}
+            onClick={() => goToPostPage(item.taskId)}
+          >
+            <div className={styles.itemDetails}>
+              <h3>{item.title}</h3>
+              <img
+                src={item.photoUrl}
+                alt={item.title}
+                className={styles.itemImage}
+              />
+              <p>{item.location?.area || "지역 정보 없음"}</p>
+              <p>{item.schedule?.estimatedDuration || "시간 정보 없음"}</p>
+              <span className={styles.itemPrice}>
+                {item.payment.serviceFee || "금액 정보 없음"}
+              </span>
             </div>
-          ))
-        ) : (
-          <p className="no-items">해당 카테고리에 아이템이 없습니다.</p>
-        )}
+            <div className={styles.itemIcons}>
+              <span>❤️ {item.likesCount || 0}</span>
+              <span>💬 {item.questionsCount || 0}</span>
+              <span>{item.isFeeNegotiable ? "금액제한 가능" : " "}</span>
+            </div>
+          </div>
+        ))}
       </main>
 
+      {/* 고정된 하단 아이콘 */}
+      <div className={styles.fixedIcons}>
+        <img
+          src={Around}
+          alt="주변"
+          className={`${styles.fixedIcon} ${styles.leftBottomIcon}`}
+          onClick={() => navigate("/around")}
+        />
+        <img
+          src={isScrolledToTop ? RequestFull : Request}
+          alt="요청"
+          className={`${styles.fixedIcon} ${styles.rightBottomIcon}`}
+          onClick={() => navigate("/request")}
+        />
+      </div>
+
       {/* 푸터 */}
-      <footer className="main-footer">
-        <button onClick={() => navigate('/home')}>
+      <footer className={styles.footer}>
+        <button onClick={() => navigate("/main")}>
           <img src={Home_none} alt="홈" />
-          <span>홈</span>
+          홈
         </button>
-        <button onClick={() => navigate('/vroonglist')}>
-          <img src={Details_none} alt="이용내역"/>
-          <span>이용내역</span>
+        <button onClick={() => navigate("/vroonglist")}>
+          <img src={Details_none} alt="이용내역" />
+          이용내역
         </button>
-        <button onClick={() => navigate('/chat')}>
+        <button onClick={() => navigate("/chat")}>
           <img src={Chat_none} alt="채팅" />
-          <span>채팅</span>
+          채팅
         </button>
-        <button onClick={() => navigate('/profile')}>
+        <button onClick={() => navigate("/profile")}>
           <img src={Profile_none} alt="내 정보" />
-          <span>내 정보</span>
+          내 정보
         </button>
       </footer>
     </div>
@@ -138,21 +230,3 @@ const Main = () => {
 };
 
 export default Main;
-
-
-
-// 이 부분 백엔드 연결을 위해 만들어 놈
-  // 백엔드에서 데이터를 가져오는 함수
-  // const fetchItems = async () => {
-  //   try {
-  //     const response = await axios.get("http://localhost:5000/items"); // 백엔드 API URL
-  //     setAllItems(response.data); // 받아온 데이터를 상태에 저장
-  //   } catch (error) {
-  //     console.error("데이터를 가져오는 중 오류 발생:", error);
-  //   }
-  // };
-
-  // 컴포넌트가 처음 렌더링될 때 데이터를 가져옴
-  // useEffect(() => {
-  //   fetchItems();
-  // }, []);

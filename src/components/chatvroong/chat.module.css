@@ -1,0 +1,287 @@
+:root {
+    /* 컬러 정의 */
+    --darkgray-color: #404040;
+    --midgray-color: #636363;
+    --lowgray-color: #999999;
+    --color-white: #fff;
+    --color-red: #E95C5C;
+    --orangeyellow-color: #FF7A00;
+    --yellow-color: #FFE812;
+    --lightyellow-color: #FFD797;
+  
+    /* border 컬러 정의 */
+    --yellow-border-color: #f1bb39;
+    --blue-border-color: #18A0FB;
+  
+    --small-border-color: #CBCBCB;
+    --big-border-color: #382929;
+  
+    --under-border-black-color: #000000;
+  
+    /* 노란 버튼 컬러 정의 */
+    --yellow-button-color: #FFE812;
+    --yellow-button-text-color: #000000;
+  
+    /* 그레이 버튼 컬러 정의 */
+    --gray-button-color: #7F7F7F;
+    --gray-button-text-color: #FFFFFF;
+    --gray-button-hover-color: #F1BB39;
+  
+    /* 쉐도우 컬러 정의 */
+    --drop-shadow-color: #000000;
+    --drop-shadow-opacity: 0.25;
+  
+    /* 텍스트 컬러 정의 */
+    --black-text-color: #000;
+    --darkgray-text-color: #404040;
+    --midgray-text-color: #636363;
+    --lowgray-text-color: #999999;
+    --yellow-text-color: #F2B93B;
+    --blue-text-color: #18A0FB;
+  
+    /* 배경 컬러 정의 */
+    --gray-background-color: #E7EAF1;
+  }
+
+.chatContainer {
+    max-width: 25rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    height: 874px;
+    background-color: var(--color-white);
+    border: 0.5px solid var(--small-border-color);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    /* border-bottom: 1px solid var(--lowgray-color); */
+    background-color: var(--color-white);
+}
+
+/* .backButton {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--darkgray-color);
+} */
+
+.backb {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transform: translateX(40%);
+}
+
+
+
+.headerDetails {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.headerTitle {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--darkgray-color);
+    margin: 0;
+}
+
+.responseTime {
+    font-size: 0.8rem;
+    color: var(--midgray-color);
+}
+
+.headerActions button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+    color: var(--darkgray-color);
+}
+
+.transactionSection {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--color-white);
+    box-shadow: 0 4px 6px rgba(var(--drop-shadow-color), var(--drop-shadow-opacity)), 0 -3px 4px rgba(var(--drop-shadow-color), var(--drop-shadow-opacity));
+}
+
+.transactionImage {
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+    margin-right: 1rem;
+}
+
+.transactionText {
+    flex-grow: 1;
+}
+
+.transactionStatus {
+    font-size: 0.8rem;
+    color: var(--midgray-color);
+}
+
+.transactionRequest {
+    font-size: 1rem;
+    color: var(--darkgray-color);
+    margin: 0.2rem 0;
+}
+
+.transactionPrice {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--blue-color);
+}
+
+.transactionButton {
+    background-color: var(--yellow-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--darkgray-color);
+}
+
+.messagesContainer {
+    flex-grow: 1;
+    padding: 1rem;
+    background-color: var(--lightgray-color);
+    overflow-y: auto;
+}
+
+.messageRow {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 1rem;
+}
+
+.messageRowRight {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+
+.messageAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.messageBubble {
+    background-color: var(--small-border-color);
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    /* border: 1px solid var(--lowgray-text-color); */
+    max-width: 70%;
+    font-size: 0.9rem;
+    color: var(--darkgray-color);
+}
+
+.messageBubbleRight {
+    background-color: var(--yellow-color);
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    max-width: 70%;
+    font-size: 0.9rem;
+    color: var(--darkgray-color);
+}
+
+.messageTime {
+    font-size: 0.7rem;
+    color: var(--lowgray-color);
+    margin-left: 0.5rem;
+}
+
+.messageTimeRight {
+    font-size: 0.7rem;
+    color: var(--lowgray-color);
+    margin-right: 0.5rem;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    /* border-top: 1px solid var(--lowgray-color); */
+    background-color: var(--color-white);
+    position: relative;
+    box-shadow: 0 4px 6px rgba(var(--drop-shadow-color), var(--drop-shadow-opacity)), 0 -3px 4px rgba(var(--drop-shadow-color), var(--drop-shadow-opacity));
+}
+
+.inputSection {
+    display: flex;
+    align-items: center;
+    flex-grow: 0.5;
+    background-color: var(--lightgray-color);
+    border-radius: 20px;
+    padding: 0.3rem 0.8rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.addButton {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--darkgray-color);
+    margin-right: 0.5rem;
+}
+
+.messageInput {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    outline: none;
+    color: var(--darkgray-color);
+    padding: 0 0.5rem;
+}
+
+.sendButton {
+    all: unset;
+    background-color:transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--darkgray-color);
+    margin-left: 0.5rem;
+}
+
+.sendmessage {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.sendsend {
+    background: var(--blue-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.send {
+    width: 2px;
+    height: 2px;
+}

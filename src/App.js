@@ -19,17 +19,29 @@ import Maind from './components/maind/Maind.jsx';
 import PersonalInfo from './components/editPsw/PersonalInfo.jsx';
 import EditProfile from './components/editPsw/editProfile.jsx';
 import ChangePsw from './components/editPsw/changePsw.jsx';
+import Notice from './components/notice/Notice.jsx';
+import FAQ from './components/FAQ/FAQ.jsx';
+import TermsofUse from './components/termsofUse/TermsofUse.jsx';
+import JJimVroong from './components/jjimVroong/JJimVroong.jsx';
+import JJimVroongnone from './components/jjimVroong/JJimVroongnone.jsx';
+import Chat from './components/chatvroong/chat.jsx';
+import VroongSetting from './components/set/VroongSetting.jsx';
+
+import VroongMoneyCharge from './components/vroongmoney/VroongMoneyCharge.jsx';
+import VroongMoneyOut from './components/vroongmoney/VroongMoneyOut.jsx';
+import VroongMoney from './components/vroongmoney/VroongMoney.jsx';
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route path="/" element={<Login />} />
         <Route path="/main" element={<Main />} />
         <Route path="/opprofile" element={<OpProfile />} />
         <Route path="/vroongList" element={<VroongList />} />
         <Route path="/postpage" element={<PostPage />} />
         <Route path="/chat" element={<ChatVroong />} /> 
+        <Route path="/chatting" element={<Chat />} /> 
         <Route path="/around" element={<Around/>} />
         <Route path="/profile" element={<Profile/>} />
         <Route path="/sign" element={<Sign/>} />
@@ -44,6 +56,17 @@ const App = () => {
         <Route path="/alrimall/:id" element={<AlrimAll />} />
         <Route path="/alrimdetail/:id" element={<AlrimDetail />} />
         <Route path="/maind" element={<Maind />} />
+        <Route path="/notice" element={<Notice />} />
+        <Route path="/question" element={<FAQ />} />
+        <Route path="/terms" element={<TermsofUse />} />
+        <Route path="/jjimvroong" element={<JJimVroong />} />
+        <Route path="/jjimvroongnone" element={<JJimVroongnone />} />
+        <Route path="/set" element={<VroongSetting />} />
+
+        <Route path="/money" element={<VroongMoney />} />
+        <Route path="/charge" element={<VroongMoneyCharge />} />
+        <Route path="/out" element={<VroongMoneyOut />} />
+
       </Routes>
     </Router>
   );

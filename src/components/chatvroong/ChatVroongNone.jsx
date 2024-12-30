@@ -7,7 +7,7 @@ import Profile_none from "../../img/footer/Profile-none-color.png";
 import sad from "../../img/sad.png";
 import styles from "./ChatVroongNone.module.css";
 
-const VroongList = () => {
+const ChatVroongNone = () => {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState("요구");
 
@@ -75,4 +75,4 @@ const VroongList = () => {
     );
 };
 
-export default VroongList;
+export default ChatVroongNone;

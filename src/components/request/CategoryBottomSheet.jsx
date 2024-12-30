@@ -2,14 +2,14 @@ import React from "react";
 import styles from "./CategoryBottomSheet.module.css";
 
 const categories = [
-  "배달 · 퀵",
-  "청소 · 집안일",
-  "설치 · 수리",
-  "이사 · 운반",
+  "배달·퀵",
+  "청소·집안일",
+  "설치·수리",
+  "이사·운반",
   "대행",
   "알바",
   "반려동물",
-  "돌봄 · 육아",
+  "돌봄·육아",
   "기타",
 ];
 
