@@ -23,8 +23,7 @@ import ChangePsw from './components/editPsw/changePsw.jsx';
 import Notice from './components/notice/Notice.jsx';
 import FAQ from './components/FAQ/FAQ.jsx';
 import TermsofUse from './components/termsofUse/TermsofUse.jsx';
-import JJimVroong from './components/jjimVroong/JJimVroong.jsx';
-import JJimVroongnone from './components/jjimVroong/JJimVroongnone.jsx';
+
 import Chat from './components/chatvroong/chat.jsx';
 import VroongSetting from './components/set/VroongSetting.jsx';
 
@@ -39,6 +38,7 @@ import PartnershipStep4 from './components/patnershipSignUp/step4';
 import PartnershipStep5 from './components/patnershipSignUp/step5';
 import Performance from './components/ProfileDetail/Performance.jsx';
 import Review from './components/ProfileDetail/Review.jsx';
+import JJimVroong from './components/likeList/JJimVroong.jsx';
 
 
 const App = () => {
@@ -72,14 +72,14 @@ const App = () => {
         <Route path="/notice" element={<Notice />} />
         <Route path="/question" element={<FAQ />} />
         <Route path="/terms" element={<TermsofUse />} />
-        <Route path="/jjimvroong" element={<JJimVroong />} />
-        <Route path="/jjimvroongnone" element={<JJimVroongnone />} />
         <Route path="/set" element={<VroongSetting />} />
 
         <Route path="/money" element={<VroongMoney />} />
         <Route path="/charge" element={<VroongMoneyCharge />} />
         <Route path="/out" element={<VroongMoneyOut />} />
 
+        <Route path="/post/:taskId" element={<PostPage />} />
+        <Route path="/JJimVroong" element={<JJimVroong/>}/>
 
         <Route path="/partnership/Step1" element={<PartnershipStep1/>}/>
         <Route path="/partnership/Step2" element={<PartnershipStep2/>}/>

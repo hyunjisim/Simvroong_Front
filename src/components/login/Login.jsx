@@ -18,8 +18,10 @@ const Login = () => {
                 password
             })
             const token = response.data.token
+
             if (response.status === 200) {
                 localStorage.setItem('authToken', token)
+
                 navigate('/Main')
             }
         } catch (error) {

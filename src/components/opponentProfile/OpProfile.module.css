@@ -1,0 +1,295 @@
+:root {
+  /* 컬러 정의 */
+  --darkgray-color: #404040;
+  --midgray-color: #636363;
+  --lowgray-color: #999999;
+  --color-white: #fff;
+  --color-red: #E95C5C;
+  --orangeyellow-color: #FF7A00;
+  --yellow-color: #FFE812;
+  --lightyellow-color: #FFD797;
+
+  /* border 컬러 정의 */
+  --yellow-border-color: #f1bb39;
+  --blue-border-color: #18A0FB;
+
+  --small-border-color: #CBCBCB;
+  --big-border-color: #ADADAD;
+
+  --under-border-black-color: #000000;
+
+  /* 노란 버튼 컬러 정의 */
+  --yellow-button-color: #FFE812;
+  --yellow-button-text-color: #000000;
+
+  /* 그레이 버튼 컬러 정의 */
+  --gray-button-color: #7F7F7F;
+  --gray-button-text-color: #FFFFFF;
+
+  --gray-button-hover-color: #F1BB39;
+
+  /* 쉐도우 컬러 정의 */
+  --drop-shadow-color: 0, 0, 0;
+  --drop-shadow-opacity: 0.25;
+
+  /* 텍스트 컬러 정의 */
+  --black-text-color: #000;
+  --darkgray-text-color: #404040;
+  --midgray-text-color: #636363;
+  --lowgray-text-color: #999999;
+  --yellow-text-color: #F2B93B;
+  --blue-text-color: #18A0FB;
+
+  /* 배경 컬러 정의 */
+  --gray-background-color: #E7EAF1;
+}
+
+.profileContainer {
+  max-width: 25rem;
+  margin: 0 auto;
+  height: 100vh; /* 전체 뷰포트 높이 */
+  display: flex;
+  flex-direction: column; 
+  background: var(--color-white);
+  box-shadow: 0 2px 5px rgba(var(--drop-shadow-color), var(--drop-shadow-opacity));
+  border: 1px solid var(--small-border-color);
+  overflow: hidden; /* 스크롤이 자식 요소로 제한 */
+}
+
+.profileHeader {
+  height: 6.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-bottom: 1px solid var(--small-border-color);
+  box-shadow: 0 2px 5px rgba(var(--drop-shadow-color), var(--drop-shadow-opacity));
+  padding: 0.5rem 1rem;
+}
+
+.profileHeader h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.backArrowText {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--darkgray-color);
+  position: absolute;
+  left: 1rem;
+  cursor: pointer;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.profileMain {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; /* 세로 스크롤 활성화 */
+  gap: 1.5rem; /* 섹션 간 간격 조정 */
+}
+
+.profileMain::-webkit-scrollbar {
+  width: 8px; /* 스크롤바 너비 */
+}
+
+.profileUser {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem; /* 간격 조정 */
+}
+
+.profilePhoto {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 1.5rem;
+  border: 2px solid var(--small-border-color);
+}
+
+.profileInfo {
+  flex: 1;
+}
+
+.profileInfo h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: var(--darkgray-color);
+}
+
+.profileInfo p {
+  margin: 0;
+  margin-top: 0.5rem; /* 간격 추가 */
+  color: var(--orangeyellow-color);
+  background-color: var(--lightyellow-color);
+  padding: 0.3rem 0.5rem; /* 텍스트 배경 간격 */
+  border-radius: 5px;
+}
+
+.profileStats {
+  display: flex;
+  justify-content: space-between;
+  margin: 0; /* 간격 조정 */
+  border-radius: 8px;
+  border: 1px solid var(--small-border-color);
+}
+
+.statBox {
+  text-align: center;
+  flex: 1;
+}
+
+.statBox h3 {
+  font-size: 14px;
+  color: var(--lowgray-color);
+  margin-bottom: 0.3rem;
+}
+
+.statBox p {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--darkgray-color);
+}
+
+/* 자기소개 섹션 */
+.profileServices {
+  padding: 1rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--small-border-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(var(--drop-shadow-color), var(--drop-shadow-opacity));
+}
+
+.profileServices h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  color: var(--darkgray-color);
+}
+
+.servicesList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem; /* 버튼 간 간격 조정 */
+}
+
+.servicesList button {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  color: var(--black-text-color);
+  background: var(--color-white);
+  border: 1px solid var(--small-border-color);
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(var(--drop-shadow-color), var(--drop-shadow-opacity));
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.servicesList button:hover {
+  box-shadow: 0px 4px 6px rgba(var(--drop-shadow-color), var(--drop-shadow-opacity));
+  transform: translateY(-2px);
+}
+
+/* 이동 수단 */
+.profileVehicle {
+  padding: 1rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--small-border-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(var(--drop-shadow-color), var(--drop-shadow-opacity));
+}
+
+.profileVehicle h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.profileVehicle p {
+  font-size: 1rem;
+  color: var(--midgray-text-color);
+}
+
+/* 보유 자격증 */
+.profileCertificates {
+  padding: 1rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--small-border-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(var(--drop-shadow-color), var(--drop-shadow-opacity));
+}
+
+.profileCertificates ul {
+  list-style: none;
+  padding: 0;
+}
+
+.profileCertificates li {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: var(--darkgray-text-color);
+}
+
+/* 거래 후기 */
+.profileReviews {
+  padding: 1rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--small-border-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(var(--drop-shadow-color), var(--drop-shadow-opacity));
+}
+
+.profileReviews ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.profileReviews li {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--small-border-color);
+}
+
+.profileReviews li p {
+  margin: 0;
+  color: var(--darkgray-color);
+}
+
+.reviewMenuButton {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 2.5rem;
+  right: 0.5rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--small-border-color);
+  border-radius: 5px;
+  padding: 0.5rem;
+  z-index: 1000;
+}
+
+.reportButton {
+  background-color: var(--color-red);
+  color: var(--color-white);
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.reportButton:hover {
+  background-color: var(--orangeyellow-color);
+}

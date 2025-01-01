@@ -5,7 +5,7 @@ import backb from '../../img/back-arrow.png'
 import pencil from '../../img/pencil.png'
 import axios from 'axios'
 
-const HOST_PORT = 'http://192.168.162.30:8080/'
+const HOST_PORT = 'http://127.0.0.1:8080/'
 
 const EditProfile = () => {
     const navigate = useNavigate()
