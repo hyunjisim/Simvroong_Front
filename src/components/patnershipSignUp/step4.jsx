@@ -28,7 +28,7 @@ const PartnershipStep4 = () => {
     // 다음 버튼 클릭 시 DB로 데이터 전송
     const handleSubmit = async () => {
         try {
-            const token = localStorage.getItem('authToken');
+            const token = sessionStorage.getItem('authToken');
             if (!token) {
                 throw new Error('토큰이 없습니다.');
             }

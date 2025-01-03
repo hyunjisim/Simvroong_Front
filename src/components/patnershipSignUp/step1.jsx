@@ -64,7 +64,7 @@ const PartnershipStep1 = () => {
         data.append("ssn", `${formData.ssnFirst}-${formData.ssnSecond}`);
         
         try {
-            const token = localStorage.getItem('authToken');
+            const token = sessionStorage.getItem('authToken');
             if (!token) {
                 throw new Error('토큰이 없습니다.');
             }

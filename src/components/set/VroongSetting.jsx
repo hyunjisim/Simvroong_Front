@@ -5,14 +5,15 @@ import { useNavigate } from "react-router-dom";
 
 const VroongSetting = () => {
   const navigate = useNavigate();
-  const [isNotificationOn, setIsNotificationOn] = useState(true); // 알림 상태
-  const [isNotificationOn2, setIsNotificationOn2] = useState(true); // 진동 상태
+  const [isNotificationOn, setIsNotificationOn] = useState(true);
+  const [isNotificationOn2, setIsNotificationOn2] = useState(true);
+  const [showAlert, setShowAlert] = useState(false); // Alert 상태 추가
 
   // 뒤로가기 버튼
   const goBack = () => navigate("/profile");
 
   // 토큰 가져오기
-  const getAuthToken = () => localStorage.getItem("authToken");
+  const getAuthToken = () => sessionStorage.getItem("authToken");
 
   // 서버에 진동 상태 저장
   const saveVibrationStateToServer = async (isOn) => {
@@ -62,38 +63,45 @@ const VroongSetting = () => {
 
   // 로그아웃 기능
   const handleLogout = () => {
-    localStorage.removeItem("authToken"); // 토큰 삭제
+    sessionStorage.removeItem("authToken"); // 토큰 삭제
     alert("로그아웃되었습니다.");
     navigate("/login"); // 로그인 페이지로 이동
   };
 
   // 탈퇴하기 기능
-  const handleWithdrawal = () => {
-    if (window.confirm("정말로 '심부릉'을 탈퇴하시겠습니까?")) {
-      const token = getAuthToken();
-      if (!token) {
-        alert("로그인이 필요합니다.");
-        navigate("/login");
-        return;
-      }
+  const handleWithdrawal = async () => {
+    const token = getAuthToken();
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+      return;
+    }
 
-      fetch("http://127.0.0.1:8080/user/withdraw", {
+    try {
+      // 백엔드에 탈퇴하기 경로랑 맞게 나중에 고치기!
+      const response = await fetch("http://127.0.0.1:8080/user/withdraw", {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      })
-        .then(() => {
-          alert("탈퇴가 완료되었습니다.");
-          localStorage.removeItem("authToken"); // 토큰 삭제
-          navigate("/login"); // 로그인 페이지로 이동
-        })
-        .catch((error) => {
-          console.error("탈퇴 실패:", error);
-          alert("탈퇴에 실패했습니다. 다시 시도해주세요.");
-        });
+      });
+
+      if (!response.ok) {
+        throw new Error("탈퇴 처리 실패");
+      }
+
+      alert("탈퇴가 완료되었습니다.");
+      sessionStorage.removeItem("authToken"); // 토큰 삭제
+      navigate("/login"); // 로그인 페이지로 이동
+    } catch (error) {
+      console.error("탈퇴 실패:", error);
+      alert("탈퇴에 실패했습니다. 다시 시도해주세요.");
     }
   };
+
+  // Alert 창 열기/닫기
+  const openAlert = () => setShowAlert(true);
+  const closeAlert = () => setShowAlert(false);
 
   return (
     <div className={styles.VroongSettingContainer}>
@@ -114,10 +122,12 @@ const VroongSetting = () => {
         <div className={styles.settingItem1}>
           <div className={styles.settingTextContainer}>
             <div className={styles.settingTitle}>알림</div>
+            <div className={styles.settingTitle_detail}>해주세요 알림음</div>
             <p className={styles.settingDescription}>
               OFF시 휴대폰 기본 알림음이 적용돼요
             </p>
           </div>
+          {/* 토글버튼 */}
           <button
             className={`${styles.toggleButton} ${
               isNotificationOn ? styles.toggleOn : styles.toggleOff
@@ -130,7 +140,8 @@ const VroongSetting = () => {
 
         {/* 앱 진동 */}
         <div className={styles.settingItem2}>
-          <div className={styles.settingTitle}>앱 진동</div>
+          앱진동
+          {/* 토글버튼 */}
           <button
             className={`${styles.toggleButton} ${
               isNotificationOn2 ? styles.toggleOn : styles.toggleOff
@@ -142,15 +153,29 @@ const VroongSetting = () => {
         </div>
 
         {/* 로그아웃 */}
-        <div className={styles.settingLogout} onClick={handleLogout}>
-          로그아웃
-        </div>
+        <div className={styles.settingLogout} onClick={handleLogout}>로그아웃</div>
 
         {/* 탈퇴하기 */}
-        <div className={styles.settingWithdraw} onClick={handleWithdrawal}>
-          탈퇴하기
-        </div>
+        <div className={styles.settingWithdraw} onClick={openAlert}>탈퇴하기</div>
       </div>
+
+      {/* 탈퇴 경고창 */}
+      {showAlert && (
+        <div className={styles.alertoutHeader}>
+          <div className={styles.alertoutContainer}>
+            <h3 className={styles.alertoutTitle}>정말 탈퇴할까요?</h3>
+            <ul className={styles.alertoutList}>
+              <li className={styles.alertout1}>탈퇴 시 모든 정보는 삭제돼요.</li>
+              <li className={styles.alertout2}>탈퇴 후 재가입은 30일 뒤에 가능해요.</li>
+              <li className={styles.alertout3}>수익금 또는 충전금이 있으면 탈퇴할 수 없어요.</li>
+            </ul>
+            <div className={styles.alertoutButtons}>
+              <button className={styles.confirmButton} onClick={handleWithdrawal}>탈퇴하기</button>
+              <button className={styles.cancelButton} onClick={closeAlert}>아니요</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

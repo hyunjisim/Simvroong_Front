@@ -5,7 +5,7 @@ import backb from '../../img/back-arrow.png'
 import pencil from '../../img/pencil.png'
 import axios from 'axios'
 
-const HOST_PORT = 'http://192.168.162.30:8080/'
+const HOST_PORT = 'http://127.0.0.1:8080/'
 
 const EditProfile = () => {
     const navigate = useNavigate()
@@ -38,7 +38,7 @@ const EditProfile = () => {
     useEffect(() => {
         const fetchNickname = async () => {
             try {
-                const token = localStorage.getItem('authToken')
+                const token = sessionStorage.getItem('authToken')
                 if (!token) {
                     setErrorMessage('로그인이 필요합니다.')
                     return
@@ -80,7 +80,7 @@ const EditProfile = () => {
             formData.append('upload_preset', 'ml_default') // Unsigned Preset 사용 (Cloudinary에서 설정)
 
             try {
-                const token = localStorage.getItem('authToken')
+                const token = sessionStorage.getItem('authToken')
                 const response = await fetch('https://api.cloudinary.com/v1_1/YOUR_CLOUD_NAME/image/upload', {
                     method: 'POST',
                     body: formData
@@ -176,7 +176,7 @@ const EditProfile = () => {
             data.nickname = nickname
             data.phoneNumber = `${phoneFirst}${phoneRest}`
 
-            const token = localStorage.getItem('authToken')
+            const token = sessionStorage.getItem('authToken')
 
             const response = await axios.put(`${HOST_PORT}profile/userInfo/modifyInfo`, data, {
                 headers: {

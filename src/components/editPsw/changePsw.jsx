@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import styles from './changePsw.module.css'
 
-const HOST_PORT = 'http://192.168.162.30:8080/'
+const HOST_PORT = 'http://127.0.0.1:8080/'
 
 const ChangePsw = () => {
     const navigate = useNavigate()
@@ -24,7 +24,7 @@ const ChangePsw = () => {
         }
 
         try {
-            const token = localStorage.getItem('authToken')
+            const token = sessionStorage.getItem('authToken')
             if (!token) {
                 throw new Error('토큰이 없습니다. 다시 로그인해주세요.')
             }

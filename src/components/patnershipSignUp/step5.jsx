@@ -25,7 +25,7 @@ const PartnershipStep5 = () => {
         console.log("Profile Image State:", profileImage);
         const fetchData = async () => {
             try {
-                const token = localStorage.getItem("authToken");
+                const token = sessionStorage.getItem("authToken");
                 const response = await axios.get("http://localhost:8080/partnership/step5", {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -66,7 +66,7 @@ const PartnershipStep5 = () => {
         }
 
         try {
-            const token = localStorage.getItem("authToken");
+            const token = sessionStorage.getItem("authToken");
             const response = await axios.post(
                 "http://localhost:8080/partnership/step5",
                 { bio: introduction, transportation: transport },

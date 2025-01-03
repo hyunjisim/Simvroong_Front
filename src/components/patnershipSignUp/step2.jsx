@@ -35,7 +35,7 @@ const PartnershipStep2 = () => {
         data.append("facePhoto", file);
 
         try {
-            const token = localStorage.getItem('authToken');
+            const token = sessionStorage.getItem('authToken');
             if (!token) {
                 throw new Error('토큰이 없습니다.');
             }
@@ -80,8 +80,6 @@ const PartnershipStep2 = () => {
                 </div>
             </div>
 
-
-
             {/* 컨텐츠 영역 */}
             <div className={styles.content}>
                 <form className={styles.partnershipform} onSubmit={handleSubmit} encType="multipart/form-data">
@@ -98,10 +96,11 @@ const PartnershipStep2 = () => {
                                     src={URL.createObjectURL(file)}
                                     alt="사진 첨부 미리보기"
                                     className={styles.image}
+                                    
                                 />
                             ) : (
                                 <>
-                                    <img src={PhotoIcon} alt="사진첨부 아이콘" className={styles.icon} />
+                                    <img src={PhotoIcon} alt="사진첨부 아이콘" className={styles.icon}/>
                                 </>
                             )}
                         </label>

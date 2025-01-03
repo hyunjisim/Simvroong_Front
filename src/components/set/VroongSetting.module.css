@@ -1,194 +1,252 @@
 :root {
-    /* 컬러 정의 */
-    --darkgray-color: #404040;
-    --midgray-color: #636363;
-    --lowgray-color: #999999;
-    --color-white: #fff;
-    --color-red: #E95C5C;
-    --orangeyellow-color: #FF7A00;
-    --yellow-color: #FFE812;
-    --lightyellow-color: #FFD797;
-  
-    /* border 컬러 정의 */
-    --yellow-border-color: #f1bb39;
-    --blue-border-color: #18A0FB;
-  
-    --small-border-color: #CBCBCB;
-  
-    /* 노란 버튼 컬러 정의 */
-    --yellow-button-color: #FFE812;
-    --yellow-button-text-color: #000000;
-  
-    /* 그레이 버튼 컬러 정의 */
-    --gray-button-color: #7F7F7F;
-    --gray-button-text-color: #FFFFFF;
-  
-    /* 텍스트 컬러 정의 */
-    --black-text-color: #000;
-    --lowgray-text-color: #999999;
-  
-    /* 배경 컬러 정의 */
-    --gray-background-color: #E7EAF1;
-  }
-  
-  .VroongSettingContainer {
-    max-width: 25rem;
-    height: 874px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: var(--color-white);
-    border: 1px solid var(--small-border-color);
-  }
-  
-  .VroongSettingHeader {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--small-border-color);
-  }
-  
-  .backButton {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    margin: 0 13px 0 7px;
-  }
-  
-  .VroongSettingTitle {
-    font-size: 18px;
-    font-weight: bold;
-    color: var(--black-text-color);
-    padding: 0 9rem;
-  }
-  
-  .VroongSettingList {
-    width: 100%;
-    margin-top: 7px;
-  }
-  
-  .settingItem1 {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 16px;
-  }
+  /* 컬러 정의 */
+  --darkgray-color: #404040;
+  --midgray-color: #636363;
+  --lowgray-color: #999999;
+  --color-white: #fff;
+  --color-red: #E95C5C;
+  --orangeyellow-color: #FF7A00;
+  --yellow-color: #FFE812;
+  --lightyellow-color: #FFD797;
 
-  .settingItem2 {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 16px;
-    margin-bottom: 10rem;
-  }
-  
-  .settingTextContainer {
-    /* display: flex; */
-    flex-direction: column;
-  }
-  
-  .settingTitle {
-    font-size: 12px;
-    color: var(--lowgray-text-color);
-    border-bottom: 5px;
-  }
+  /* border 컬러 정의 */
+  --yellow-border-color: #f1bb39;
+  --blue-border-color: #18A0FB;
 
-  .settingTitle_detail {
-    font-size: 16px;
-    color: var(--black-text-color);
-    border-bottom-width: 3rem;
-  }
-  
-  .settingDescription {
-    font-size: 12px;
-    color: var(--lowgray-text-color);
-  }
-  
-  .toggleButton {
-    width: 50px;
-    height: 24px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    font-size: 12px;
-    color: var(--color-white);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s;
-  }
-  
-  .toggleOn {
-    background-color: var(--blue-border-color);
-  }
-  
-  .toggleOff {
-    background-color: var(--lowgray-color);
-  }
-  
-  .settingLogout {
-    padding: 0 16px;
-    padding-top: 30px;
-    font-size: 16px;
-    color: var(--black-text-color);
-    cursor: pointer;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    border-top: 6px solid var(--small-border-color);
+  --small-border-color: #CBCBCB;
+
+  /* 노란 버튼 컬러 정의 */
+  --yellow-button-color: #FFE812;
+  --yellow-button-text-color: #000000;
+
+  /* 그레이 버튼 컬러 정의 */
+  --gray-button-color: #7F7F7F;
+  --gray-button-text-color: #FFFFFF;
+
+  /* 텍스트 컬러 정의 */
+  --black-text-color: #000;
+  --lowgray-text-color: #999999;
+
+  /* 배경 컬러 정의 */
+  --gray-background-color: #E7EAF1;
+}
+
+.VroongSettingContainer {
+  max-width: 25rem;
+  height: 874px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--color-white);
+  border: 1px solid var(--small-border-color);
+}
+
+.VroongSettingHeader {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--small-border-color);
+}
+
+.backButton {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  margin: 0 13px 0 7px;
+}
+
+.VroongSettingTitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--black-text-color);
+  padding: 0 9rem;
+}
+
+.VroongSettingList {
+  width: 100%;
+  margin-top: 7px;
+}
+
+.settingItem1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+}
+
+.settingItem2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  margin-bottom: 10rem;
+}
+
+.settingTextContainer {
+  /* display: flex; */
+  flex-direction: column;
+}
+
+.settingTitle {
+  font-size: 12px;
+  color: var(--lowgray-text-color);
+  border-bottom: 5px;
+}
+
+.settingTitle_detail {
+  font-size: 16px;
+  color: var(--black-text-color);
+  border-bottom-width: 3rem;
+}
+
+.settingDescription {
+  font-size: 12px;
+  color: var(--lowgray-text-color);
+}
+
+.toggleButton {
+  width: 50px;
+  height: 24px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.toggleOn {
+  background-color: var(--blue-border-color);
+}
+
+.toggleOff {
+  background-color: var(--lowgray-color);
+}
+
+.settingLogout {
+  padding: 0 16px;
+  padding-top: 30px;
+  font-size: 16px;
+  color: var(--black-text-color);
+  cursor: pointer;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  border-top: 6px solid var(--small-border-color);
 }
 
 
-  .settingWithdraw {
-    padding: 16px;
-    font-size: 16px;
-    color: var(--lowgray-color);
-    cursor: pointer;
-  }
+.settingWithdraw {
+  padding: 16px;
+  font-size: 16px;
+  color: var(--lowgray-color);
+  cursor: pointer;
+}
 
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .modalContent {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-  }
-  
-  .modalActions {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 10px;
-  }
-  
-  .confirmButton,
-  .cancelButton {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .confirmButton {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    border-radius: 5px;
-  }
-  
-  .cancelButton {
-    background-color: #ccc;
-    color: black;
-    border: none;
-    border-radius: 5px;
-  }
+/* 설정 탈퇴하기 추가 */
+.alertoutHeader {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.5);
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 1000;
+}
+
+.alertoutContainer {
+background-color: var(--color-white);
+border-radius: 8px;
+padding: 20px;
+width: auto;
+max-width: 400px;
+text-align: center;
+box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+margin-top: 9rem;
+font-weight: 900;
+}
+
+.alertoutTitle {
+font-size: 18px;
+font-weight: bold;
+margin-bottom: 30px;
+margin-right: 9.5rem;
+}
+
+
+.alertoutList {
+list-style-type: disc;
+padding-left: 20px;
+text-align: left;
+margin-bottom: 20px;
+font-size: 14px;
+color: #555;
+}
+
+
+.alertout1 {
+list-style-type: disc;
+padding-left: 1px;
+text-align: left;
+font-size: 14px;
+color: #555;
+margin-bottom: 2rem;
+}
+
+
+.alertout2 {
+list-style-type: disc;
+padding-left: 1px;
+text-align: left;
+font-size: 14px;
+color: #555;
+margin-bottom: 2rem;
+}
+
+
+.alertout3 {
+list-style-type: disc;
+padding-left: 1px;
+text-align: left;
+font-size: 14px;
+color: #555;
+margin-bottom: 2rem;
+}
+
+
+.alertoutButtons {
+display: flex;
+justify-content: space-between;
+}
+
+.confirmButton {
+width: auto;
+background-color: #f1d5e5;
+color: var(--color-red);
+border: none;
+border-radius: 10px;
+padding: 10px 20px;
+font-size: 14px;
+cursor: pointer;
+font-weight: bold;
+margin-left: 3rem;
+}
+
+.cancelButton {
+background-color: var(--color-white);
+color: #333;
+border: 1px solid #ddd;
+border-radius: 10px;
+padding: 10px 25px;
+font-size: 14px;
+cursor: pointer;
+font-weight: bold;
+margin-right: 4rem;
+}

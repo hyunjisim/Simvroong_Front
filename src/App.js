@@ -15,7 +15,6 @@ import FindPassword from './components/FindPw/FindPassword.jsx';
 import Alrim from './components/alrim/Alrim.jsx';
 import AlrimAll from './components/alrim/AlrimAll.jsx'
 import AlrimDetail from './components/alrim/AlrimDetail.jsx'
-import Maind from './components/maind/Maind.jsx';
 import PersonalInfo from './components/editPsw/PersonalInfo.jsx';
 import EditProfile from './components/editPsw/editProfile.jsx';
 import ChangePsw from './components/editPsw/changePsw.jsx';
@@ -23,8 +22,7 @@ import ChangePsw from './components/editPsw/changePsw.jsx';
 import Notice from './components/notice/Notice.jsx';
 import FAQ from './components/FAQ/FAQ.jsx';
 import TermsofUse from './components/termsofUse/TermsofUse.jsx';
-import JJimVroong from './components/jjimVroong/JJimVroong.jsx';
-import JJimVroongnone from './components/jjimVroong/JJimVroongnone.jsx';
+
 import Chat from './components/chatvroong/chat.jsx';
 import VroongSetting from './components/set/VroongSetting.jsx';
 
@@ -39,7 +37,9 @@ import PartnershipStep4 from './components/patnershipSignUp/step4';
 import PartnershipStep5 from './components/patnershipSignUp/step5';
 import Performance from './components/ProfileDetail/Performance.jsx';
 import Review from './components/ProfileDetail/Review.jsx';
+import JJimVroong from './components/likeList/JJimVroong.jsx';
 
+import Maind from './components/maind/Maind.jsx';
 
 const App = () => {
   return (
@@ -50,8 +50,8 @@ const App = () => {
         <Route path="/opprofile" element={<OpProfile />} />
         <Route path="/vroongList" element={<VroongList />} />
         <Route path="/postpage" element={<PostPage />} />
-        <Route path="/chat" element={<ChatVroong />} /> 
-        <Route path="/chatting" element={<Chat />} /> 
+        <Route path="/chatting" element={<ChatVroong />} /> 
+        <Route path="/chat/:taskId" element={<Chat />} /> 
         <Route path="/around" element={<Around/>} />
         <Route path="/profile" element={<Profile/>} />
         <Route path="/profile/Performance" element={<Performance/>}/>
@@ -72,14 +72,14 @@ const App = () => {
         <Route path="/notice" element={<Notice />} />
         <Route path="/question" element={<FAQ />} />
         <Route path="/terms" element={<TermsofUse />} />
-        <Route path="/jjimvroong" element={<JJimVroong />} />
-        <Route path="/jjimvroongnone" element={<JJimVroongnone />} />
         <Route path="/set" element={<VroongSetting />} />
 
         <Route path="/money" element={<VroongMoney />} />
         <Route path="/charge" element={<VroongMoneyCharge />} />
         <Route path="/out" element={<VroongMoneyOut />} />
 
+        <Route path="/post/:taskId" element={<PostPage />} />
+        <Route path="/JJimVroong" element={<JJimVroong/>}/>
 
         <Route path="/partnership/Step1" element={<PartnershipStep1/>}/>
         <Route path="/partnership/Step2" element={<PartnershipStep2/>}/>
