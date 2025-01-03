@@ -18,7 +18,7 @@ const ChatVroong = () => {
     // 채팅 데이터 가져오기 함수
     const fetchChats = async () => {
         try {
-            const token = localStorage.getItem("authToken");
+            const token = sessionStorage.getItem("authToken");
             if (!token) throw new Error("토큰이 없습니다. 다시 로그인해주세요.");
 
             const endpoint =

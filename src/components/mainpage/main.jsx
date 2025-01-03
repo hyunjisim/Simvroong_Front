@@ -51,7 +51,7 @@ const Main = () => {
 
   const fetchItems = async (category = "전체") => {
     try {
-      const token = localStorage.getItem("authToken");
+      const token = sessionStorage.getItem("authToken");
       const url =
         category === "전체"
           ? "http://127.0.0.1:8080/main"
@@ -128,7 +128,7 @@ const Main = () => {
         <img src={simvroong} alt="심부름 로고" className={styles.logo} />
         <div className={styles.headerIcons}>
           <img src={bellIcon} alt="알림" className={styles.headerIcon} />
-          <img src={searchIcon} alt="검색" className={styles.headerIcon} />
+          <img src={searchIcon} alt="검색" className={styles.headerIcon} onClick={() => navigate("/maind")}/>
         </div>
       </header>
 

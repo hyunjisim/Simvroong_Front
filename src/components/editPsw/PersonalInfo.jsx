@@ -20,7 +20,7 @@ const PersonalInfo = () => {
     useEffect(() => {
         const fetchNickname = async () => {
             try {
-                const token = localStorage.getItem('authToken')
+                const token = sessionStorage.getItem('authToken')
                 if (!token) {
                     setErrorMessage('로그인이 필요합니다.')
                     return
@@ -62,7 +62,7 @@ const PersonalInfo = () => {
 
         // setIsLoading(true) // 로딩 시작
         try {
-            const token = localStorage.getItem('authToken')
+            const token = sessionStorage.getItem('authToken')
             // 서버로 비밀번호 검증 요청
 
             const response = await axios.post(

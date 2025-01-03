@@ -1,79 +1,160 @@
-import './list.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'
-import Sleep from '../../img/sleep.png';
-import Cycle from '../../img/cycle.png';
-import Nerv from '../../img/nerv.png';
-import Chat_color from '../../img/footer/Chat-color.png';
-import Details_color from '../../img/footer/Details-color.png';
-import Home_color from '../../img/footer/Home-color.png';
-import Profile_color from '../../img/footer/Profile-color.png';
-import Chat_none from '../../img/footer/Chat-none-color.png';
-import Details_none from '../../img/footer/Details-none-color.png';
-import Home_none from '../../img/footer/Home-none-color.png';
-import Profile_none from '../../img/footer/Profile-none-color.png';
+import axios from 'axios';
+import styles from './list.module.css';
 import Sad from '../../img/sad.png';
-// bureung
+import Home_none from '../../img/footer/Home-none-color.png';
+import Details_color from '../../img/footer/Details-color.png';
+import Chat_none from '../../img/footer/Chat-none-color.png';
+import Profile_none from '../../img/footer/Profile-none-color.png';
+
 const VroongList = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('details');
+  const [activeTab, setActiveTab] = useState('my'); // 기본 탭: 나의 부릉부릉
+  const [myVroongList, setMyVroongList] = useState([]); // 나의 부릉부릉 리스트
+  const [requestedVroongList, setRequestedVroongList] = useState([]); // 수행 요청 부릉부릉 리스트
+  const [loading, setLoading] = useState(true);
 
-  const [vroongList, setVroongList] = useState([ // 이건 화면 어떻게 나오는지 확인하기 위한 예시
-    { id: 1, title: '편의점 과자 부릉좀 해주세요', location: '동작구 사당제1동', time: '3일 전', price: '10,000원', tag: '완료', image: Sleep },
-    { id: 2, title: '카페 부릉', location: '동작구 사당제1동', time: '하루 전', price: '20,000원', tag: '진행중', image: Cycle },
-    { id: 3, title: '쓰레기 부릉', location: '동작구 사당제1동', time: '한달 전', price: '20,000원', tag: '취소완료', image: Nerv },
-  ]);
-
-  // 이 부분 백엔드 연결을 위해 만들어 놈
-   // 백엔드에서 데이터를 가져오는 함수
-  //  const fetchVroongList = async () => {
-  //   try {
-  //     const response = await axios.get('http://localhost:5000/vroongList'); // 백엔드 API URL
-  //     setVroongList(response.data); // 받아온 데이터를 상태에 저장
-  //   } catch (error) {
-  //     console.error('데이터를 가져오는 중 오류 발생:', error);
-  //   }
-  // };
-
-  // 컴포넌트가 처음 렌더링될 때 데이터를 가져옴
-  // useEffect(() => {
-  //   fetchVroongList();
-  // }, []);
-
-  const handleFooterClick = (tab) => {
-    setActiveTab(tab); 
-    navigate(`/${tab}`);
+  // "나의 부릉부릉" 데이터 가져오기
+  const fetchMyVroongList = async () => {
+    try {
+      const token = sessionStorage .getItem('authToken');
+      const response = await axios.get('http://127.0.0.1:8080/list/mylist', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const formattedData = response.data.data.map((order) => ({
+        taskId: order.taskId,
+        title: order.title,
+        photoUrl: order.photoUrl,
+        location: order.location,
+        schedule: order.schedule,
+        payment: order.payment,
+        isActive: order.isActive,
+      }));
+      setMyVroongList(formattedData);
+    } catch (error) {
+      console.error('나의 부릉부릉 데이터를 가져오는 데 실패했습니다:', error);
+      setMyVroongList([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
+  // "수행 요청 부릉부릉" 데이터 가져오기
+  const fetchRequestedVroongList = async () => {
+    try {
+      const token = sessionStorage.getItem('authToken');
+      const response = await axios.get('http://127.0.0.1:8080/list/partner', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const formattedData = response.data.data.map((order) => ({
+        taskId: order.taskId,
+        title: order.title,
+        photoUrl: order.photoUrl,
+        location: order.location,
+        schedule: order.schedule,
+        payment: order.payment,
+        isActive: order.isActive,
+      }));
+      setRequestedVroongList(formattedData);
+    } catch (error) {
+      console.error('수행 요청 부릉부릉 데이터를 가져오는 데 실패했습니다:', error);
+      setRequestedVroongList([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    if (activeTab === 'my') {
+      fetchMyVroongList();
+    } else if (activeTab === 'request') {
+      fetchRequestedVroongList();
+    }
+  }, [activeTab]);
+
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+  };
+
+  const displayList = activeTab === 'my' ? myVroongList : requestedVroongList;
+
   return (
-    <div className="vroong-container">
-      <header className="vroong-header">
+    <div className={styles.vroongContainer}>
+      {/* 헤더 */}
+      <header className={styles.vroongHeader}>
         <h1>부릉 리스트</h1>
+        
       </header>
 
-      <main className="vroong-main">
-        {vroongList.length === 0 ? (
-          <div className="empty-state">
+      <div className={styles.tabs}>
+          <button
+            className={`${styles.tabButton} ${activeTab === 'my' ? styles.activeTab : ''}`}
+            onClick={() => handleTabChange('my')}
+          >
+            나의 부릉부릉
+          </button>
+          <button
+            className={`${styles.tabButton} ${activeTab === 'request' ? styles.activeTab : ''}`}
+            onClick={() => handleTabChange('request')}
+          >
+            수행 요청 부릉부릉
+          </button>
+        </div>
+
+      {/* 메인 */}
+      <main className={styles.vroongMain}>
+        {loading ? (
+          <div>로딩 중...</div>
+        ) : displayList.length === 0 ? (
+          <div className={styles.emptyState}>
             <img src={Sad} alt="슬픈 이모티콘" />
-            <p>이용 내역이 없어요</p>
+            <p>{activeTab === 'my' ? '심부름 내역이 없어요.' : '수행 요청 내역이 없어요.'}</p>
           </div>
         ) : (
-          vroongList.map((item) => (
-            <div key={item.id} className="vroong-item">
-              <img src={item.image} alt={item.title} className="vroong-image" />
-              <div className="vroong-content">
-                <span className={`vroong-tag ${item.tag}`}>{item.tag}</span>
+          displayList.map((item) => (
+            console.log(item),
+            <div
+              key={item.taskId}
+              className={styles.vroongItem}
+              onClick={() => navigate(`/post/${item.taskId}`)}
+            >
+              <img
+                src={item.photoUrl || 'https://via.placeholder.com/60'}
+                alt={item.title}
+                className={styles.vroongImage}
+              />
+              <div className={styles.vroongContent}>
+                <span
+                  className={`${styles.vroongTag} ${
+                    item.isActive ? '진행중' : '완료'
+                  }`}
+                >
+                  {item.isActive ? '진행중' : '완료'}
+                </span>
                 <h3>{item.title}</h3>
-                <p className="location-time">
-                    <span>{item.location}</span>
-                    <span>{item.time}</span>
+                <p className={styles.locationTime}>
+                  <span>{item.location?.area || '지역 정보 없음'}</span>
+                  <span>{item.schedule?.estimatedDuration || '시간 정보 없음'}</span>
                 </p>
-                <div className="price-review">
-                    <p className="vroong-price">{item.price}</p>
-                    {item.tag === '완료' && (
-                        <button className="review-btn">후기 보내기</button>
-                    )}
+                <div className={styles.priceReview}>
+                  <p className={styles.vroongPrice}>
+                    {item.payment?.serviceFee
+                      ? `${item.payment.serviceFee.toLocaleString()}원`
+                      : '0원'}
+                  </p>
+                  {!item.isActive && (
+                    <button
+                      className={styles.reviewBtn}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        alert('후기 보내기 기능 구현 필요');
+                      }}
+                    >
+                      후기 보내기
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -81,22 +162,23 @@ const VroongList = () => {
         )}
       </main>
 
-      <footer className="vroong-footer">
-        <button onClick={() => handleFooterClick('home')}>
-          <img src={activeTab === 'home' ? Home_color : Home_none} alt="홈" />
-          <span className={activeTab === 'home' ? 'active-tab' : ''}>홈</span>
+      {/* 푸터 */}
+      <footer className={styles.vroongFooter}>
+        <button onClick={() => navigate('/main')}>
+          <img src={Home_none} alt="홈" />
+          <span>홈</span>
         </button>
-        <button onClick={() => handleFooterClick('main')}>
-          <img src={activeTab === 'details' ? Details_color : Details_none} alt="이용 내역" />
-          <span className={activeTab === 'details' ? 'active-tab' : ''}>이용내역</span>
+        <button onClick={() => navigate('/vroonglist')}>
+          <img src={Details_color} alt="이용 내역" />
+          <span>이용내역</span>
         </button>
-        <button onClick={() => handleFooterClick('chat')}>
-          <img src={activeTab === 'chat' ? Chat_color : Chat_none} alt="채팅" />
-          <span className={activeTab === 'chat' ? 'active-tab' : ''}>채팅</span>
+        <button onClick={() => navigate('/chat')}>
+          <img src={Chat_none} alt="채팅" />
+          <span>채팅</span>
         </button>
-        <button onClick={() => handleFooterClick('profile')}>
-          <img src={activeTab === 'profile' ? Profile_color : Profile_none} alt="내 정보" />
-          <span className={activeTab === 'profile' ? 'active-tab' : ''}>내 정보</span>
+        <button onClick={() => navigate('/profile')}>
+          <img src={Profile_none} alt="내 정보" />
+          <span>내 정보</span>
         </button>
       </footer>
     </div>

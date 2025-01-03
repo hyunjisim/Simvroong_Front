@@ -19,7 +19,7 @@ const WarningBottomSheet = ({ onClose, onConfirm,introduction,transport }) => {
         data.append("transport", transport);
 
         try {
-            const token = localStorage.getItem('authToken');
+            const token = sessionStorage.getItem('authToken');
             if (!token) {
                 throw new Error('토큰이 없습니다.');
             }

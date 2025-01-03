@@ -15,7 +15,6 @@ import FindPassword from './components/FindPw/FindPassword.jsx';
 import Alrim from './components/alrim/Alrim.jsx';
 import AlrimAll from './components/alrim/AlrimAll.jsx'
 import AlrimDetail from './components/alrim/AlrimDetail.jsx'
-import Maind from './components/maind/Maind.jsx';
 import PersonalInfo from './components/editPsw/PersonalInfo.jsx';
 import EditProfile from './components/editPsw/editProfile.jsx';
 import ChangePsw from './components/editPsw/changePsw.jsx';
@@ -40,6 +39,7 @@ import Performance from './components/ProfileDetail/Performance.jsx';
 import Review from './components/ProfileDetail/Review.jsx';
 import JJimVroong from './components/likeList/JJimVroong.jsx';
 
+import Maind from './components/maind/Maind.jsx';
 
 const App = () => {
   return (
@@ -50,8 +50,8 @@ const App = () => {
         <Route path="/opprofile" element={<OpProfile />} />
         <Route path="/vroongList" element={<VroongList />} />
         <Route path="/postpage" element={<PostPage />} />
-        <Route path="/chat" element={<ChatVroong />} /> 
-        <Route path="/chatting" element={<Chat />} /> 
+        <Route path="/chatting" element={<ChatVroong />} /> 
+        <Route path="/chat/:taskId" element={<Chat />} /> 
         <Route path="/around" element={<Around/>} />
         <Route path="/profile" element={<Profile/>} />
         <Route path="/profile/Performance" element={<Performance/>}/>

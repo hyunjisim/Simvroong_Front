@@ -20,7 +20,7 @@ const Login = () => {
             const token = response.data.token
 
             if (response.status === 200) {
-                localStorage.setItem('authToken', token)
+                sessionStorage.setItem('authToken', token)
 
                 navigate('/Main')
             }

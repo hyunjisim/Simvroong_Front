@@ -27,7 +27,7 @@ const OpProfile = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const token = localStorage.getItem("authToken");
+      const token = sessionStorage.getItem("authToken");
       try {
         const response = await axios.get("http://127.0.0.1:8080/profile", {
           headers: token
@@ -62,7 +62,7 @@ const OpProfile = () => {
   } = profileData || defaultProfileData;
 
   const handleReport = async (reviewId) => {
-    const token = localStorage.getItem("authToken");
+    const token = sessionStorage.getItem("authToken");
     if (!token) {
       alert("로그인이 필요합니다.");
       return;
@@ -186,7 +186,7 @@ const OpProfile = () => {
                       <button
                         className={styles.reportButton}
                         onClick={() => handleReport(review.id)}
-                        disabled={!localStorage.getItem("authToken")} // 로그인 안 한 경우 비활성화
+                        disabled={!sessionStorage.getItem("authToken")} // 로그인 안 한 경우 비활성화
                       >
                         신고
                       </button>

@@ -117,7 +117,7 @@ const Request = () => {
     };
 
     try {
-      const token = localStorage.getItem("authToken"); // 토큰 가져오기
+      const token = sessionStorage.getItem("authToken"); // 토큰 가져오기
       if (!token) {
         alert("로그인이 필요합니다. 다시 로그인해 주세요.");
         navigate("/login"); // 로그인 페이지로 이동

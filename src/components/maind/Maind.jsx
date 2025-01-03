@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import backb from "../../img/back-arrow.png";
 import styles from "./Maind.module.css";
+import axios from "axios";
 
 const Maind = () => {
-    // 검색 입력 상태
   const [searchText, setSearchText] = useState("");
-  const navigate = useNavigate();
-
-  // 최근 검색어 리스트 상태
   const [recentSearches, setRecentSearches] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const navigate = useNavigate();
 
   // 뒤로 가기 버튼
   const goBack = () => {
@@ -18,12 +19,15 @@ const Maind = () => {
 
   // 전체 삭제 버튼 클릭 핸들러
   const handleClearAll = () => {
-    setRecentSearches([]); // 리스트를 빈 배열로 설정
+    setRecentSearches([]);
+    sessionStorage.removeItem("recentSearches");
   };
 
   // 개인 삭제 버튼
   const handleDeleteSearch = (id) => {
-    setRecentSearches(recentSearches.filter((search) => search.id !== id)); 
+    const updatedSearches = recentSearches.filter((search) => search.id !== id);
+    setRecentSearches(updatedSearches);
+    sessionStorage.setItem("recentSearches", JSON.stringify(updatedSearches));
   };
 
   // 검색 입력 핸들러
@@ -32,29 +36,77 @@ const Maind = () => {
   };
 
   // 검색어 추가 핸들러
-  const handleAddSearch = () => {
-    if (searchText.trim() === "") return; // 빈 입력은 추가하지 않음
+  const handleAddSearch = async (encodedText) => {
+    if (!encodedText) return;
 
-    // 현재 시간 가져오기
     const now = new Date();
     const formattedTime = `${String(now.getHours()).padStart(2, "0")}:${String(
       now.getMinutes()
     ).padStart(2, "0")}`;
 
-    // 새 검색어 추가
     const newSearch = {
-      id: Date.now(), // 고유 ID 생성
-      text: searchText,
+      id: Date.now(),
+      text: decodeURIComponent(encodedText),
       time: formattedTime,
     };
 
-    setRecentSearches([newSearch, ...recentSearches]); // 새 검색어를 리스트에 추가
-    setSearchText(""); // 입력 필드 초기화
+    setRecentSearches([newSearch, ...recentSearches]);
+    setSearchText("");
+
+    try {
+      const token = sessionStorage.getItem("authToken");
+      const response = await axios.get(
+        `http://127.0.0.1:8080/search/?keyword=${encodedText}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      // 응답 데이터가 유효한지 확인 후 처리
+      if (response.data && Array.isArray(response.data.results)) {
+        const formattedResults = response.data.results.map((order) => ({
+          taskId: order.taskId,
+          title: order.title,
+          photoUrl: order.photoUrl || "https://via.placeholder.com/60",
+          location: order.location?.area || "지역 정보 없음",
+          schedule: order.schedule?.estimatedDuration || "시간 정보 없음",
+          payment: order.payment?.serviceFee
+            ? `${order.payment.serviceFee.toLocaleString()}원`
+            : "0원",
+          likesCount: order.likesCount || 0,
+          questionsCount: order.questionsCount || 0,
+          isFeeNegotiable: order.isFeeNegotiable || false,
+          createdAt: new Date(order.createdAt).toLocaleDateString(),
+        }));
+
+        setSearchResults(formattedResults);
+      } else {
+        console.error("검색 결과가 비어 있거나 잘못된 형식입니다:", response.data);
+        alert("검색 결과를 처리할 수 없습니다.");
+      }
+    } catch (error) {
+      console.error("검색 요청 실패:", error);
+      alert("연관된 검색어가 없습니다.");
+    }
   };
+
+  // 페이지네이션 처리
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const currentResults = Array.isArray(searchResults)
+    ? searchResults.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+      )
+    : [];
+
+  useEffect(() => {
+    const savedSearches = JSON.parse(sessionStorage.getItem("recentSearches") || "[]");
+    setRecentSearches(savedSearches);
+  }, []);
 
   return (
     <div className={styles.container}>
-      {/* 메인 헤더 */}
       <div className={styles.mainheader}>
         <img
           onClick={goBack}
@@ -70,40 +122,14 @@ const Maind = () => {
           onChange={handleInputChange}
           onKeyDown={(event) => {
             if (event.key === "Enter") {
-              handleAddSearch(); // Enter 키를 누르면 검색어 추가
+              const encodedText = encodeURIComponent(searchText);
+              handleAddSearch(encodedText);
             }
           }}
         />
       </div>
       <div className={styles.hrlines}></div>
-      {/* 인기 검색어 */}
-      <div className={styles.popularSection}>
-        <h2 className={styles.popularsearch}>
-          연관 심부름
-          <span className={styles.updateTime}>17:24 업데이트</span>
-        </h2>
-        <ul className={styles.popularList}>
-          <li className={styles.topRank}>
-            <span className={styles.topRankNumber}>1.</span> 산책
-          </li>
-          <li className={styles.topRank}>
-            <span className={styles.topRankNumber}>2.</span> 서류 작성
-          </li>
-          <li className={styles.topRank}>
-            <span className={styles.topRankNumber}>3.</span> 단순 업무
-          </li>
-          <li>
-            <span className={styles.topRankNumber4}>4.</span> 레포트
-          </li>
-          <li>
-            <span className={styles.topRankNumber5}>5.</span> 줄서기
-          </li>
-          <li>
-            <span className={styles.topRankNumber6}>6.</span> 프린트
-          </li>
-        </ul>
-      </div>
-      <div className={styles.hrlines}></div>
+
       {/* 최근 검색어 */}
       <div className={styles.recentSection}>
         <h2 className={styles.recentsearch}>
@@ -113,21 +139,70 @@ const Maind = () => {
           </span>
         </h2>
       </div>
-      {/* 최근 검색어 리스트 */}
       <div className={styles.recentList}>
         {recentSearches.map((search) => (
           <li key={search.id}>
             <span className={styles.clockIcon}>⏲</span> {search.text}{" "}
             <span className={styles.time}>{search.time}</span>{" "}
-            <span 
-                className={styles.deleteIcon}
-                onClick={() => handleDeleteSearch(search.id)}>✕</span>
+            <span
+              className={styles.deleteIcon}
+              onClick={() => handleDeleteSearch(search.id)}
+            >
+              ✕
+            </span>
           </li>
         ))}
         {recentSearches.length === 0 && (
           <p className={styles.noRecent}>최근 검색어가 없습니다.</p>
         )}
       </div>
+
+      {/* 검색 결과 */}
+      {searchText.trim() !== "" && searchResults.length > 0 && (
+        <div className={styles.searchResults}>
+          <h3>검색 결과</h3>
+          <ul className={styles.resultList}>
+            {currentResults.map((result) => (
+              <li
+                key={result.taskId}
+                className={styles.resultItem}
+                onClick={() => navigate(`/post/${result.taskId}`)}
+              >
+                <img
+                  src={result.photoUrl}
+                  alt={result.title}
+                  className={styles.resultImage}
+                />
+                <div className={styles.resultContent}>
+                  <h4>{result.title}</h4>
+                  <p>{result.location}</p>
+                  <p>{result.schedule}</p>
+                  <p className={styles.resultPrice}>{result.payment}</p>
+                  <p className={styles.resultStats}>
+                    ❤️ {result.likesCount} | 💬 {result.questionsCount}{" "}
+                    {result.isFeeNegotiable && <span>💸 협의 가능</span>}
+                  </p>
+                  <p className={styles.resultDate}>작성일: {result.createdAt}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <div className={styles.pagination}>
+            <button
+              onClick={() => paginate(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              이전
+            </button>
+            <button
+              onClick={() => paginate(currentPage + 1)}
+              disabled={currentPage * itemsPerPage >= searchResults.length}
+            >
+              다음
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

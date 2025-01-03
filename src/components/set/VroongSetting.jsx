@@ -13,7 +13,7 @@ const VroongSetting = () => {
   const goBack = () => navigate("/profile");
 
   // 토큰 가져오기
-  const getAuthToken = () => localStorage.getItem("authToken");
+  const getAuthToken = () => sessionStorage.getItem("authToken");
 
   // 서버에 진동 상태 저장
   const saveVibrationStateToServer = async (isOn) => {
@@ -63,7 +63,7 @@ const VroongSetting = () => {
 
   // 로그아웃 기능
   const handleLogout = () => {
-    localStorage.removeItem("authToken"); // 토큰 삭제
+    sessionStorage.removeItem("authToken"); // 토큰 삭제
     alert("로그아웃되었습니다.");
     navigate("/login"); // 로그인 페이지로 이동
   };
@@ -91,7 +91,7 @@ const VroongSetting = () => {
       }
 
       alert("탈퇴가 완료되었습니다.");
-      localStorage.removeItem("authToken"); // 토큰 삭제
+      sessionStorage.removeItem("authToken"); // 토큰 삭제
       navigate("/login"); // 로그인 페이지로 이동
     } catch (error) {
       console.error("탈퇴 실패:", error);

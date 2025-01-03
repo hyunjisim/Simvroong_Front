@@ -21,7 +21,7 @@ const Profile = () => {
     // 예시로 하드코딩된 데이터 사용
     const fetchPartnerStatus = async () => { 
       try{
-        const token = localStorage.getItem("authToken")
+        const token = sessionStorage.getItem("authToken")
         const response = await axios.get("http://localhost:8080/partnership/getpartner", {
           headers: {
               Authorization: `Bearer ${token}`,
@@ -44,7 +44,7 @@ const Profile = () => {
     // 닉네임 가져오기
     const fetchNickname = async () => {
         try {
-            const token = localStorage.getItem("authToken");
+            const token = sessionStorage.getItem("authToken");
             const response = await axios.get("http://localhost:8080/profile/getNickname", {
                 headers: {
                     Authorization: `Bearer ${token}`,

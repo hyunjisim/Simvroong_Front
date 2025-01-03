@@ -21,18 +21,18 @@ const PostPage = () => {
     const [editingReply, setEditingReply] = useState(null);
     const [updatedReplyContent, setUpdatedReplyContent] = useState('');
     const [currentUserId, setCurrentUserId] = useState(null);
+    const [showQuestionInput, setShowQuestionInput] = useState(false);
 
     const fetchData = async () => {
         try {
-            const token = localStorage.getItem('authToken');
+            const token = sessionStorage.getItem('authToken');
             const response = await axios.get(`http://localhost:8080/order/${taskId}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-
-            setCurrentUserId(response.data._id); // _id 설정
-            console.log('현재 사용자 ID:', response.data._id);
-            
             const data = response.data.data;
+
+            setCurrentUserId(response.data.currentUser); // _id 설정
+            
             setRequestData(data);
             setQuestions(data.QnA || []);
             setIsLiked(data.isLiked || false);
@@ -55,7 +55,7 @@ const PostPage = () => {
         const updatedLikeStatus = !isLiked;
         setIsLiked(updatedLikeStatus);
         try {
-            const token = localStorage.getItem('authToken');
+            const token = sessionStorage.getItem('authToken');
             await axios.patch(
                 `http://localhost:8080/order/${taskId}`,
                 { action: updatedLikeStatus ? 'addFavorite' : 'removeFavorite' },
@@ -84,7 +84,7 @@ const PostPage = () => {
             return;
         }
         try {
-            const token = localStorage.getItem('authToken');
+            const token = sessionStorage.getItem('authToken');
             await axios.patch(
                 `http://localhost:8080/order/${taskId}`,
                 {
@@ -106,8 +106,8 @@ const PostPage = () => {
     const addQuestion = async () => {
         if (newQuestion.trim() === '') return;
         try {
-            const token = localStorage.getItem('authToken');
-            const userId = localStorage.getItem('userMongoId');
+            const token = sessionStorage.getItem('authToken');
+            const userId = sessionStorage.getItem('userMongoId');
             await axios.patch(
                 `http://localhost:8080/order/${taskId}`,
                 {
@@ -116,8 +116,10 @@ const PostPage = () => {
                 },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
+            
             fetchData();
             setNewQuestion('');
+            setShowQuestionInput(false); // 입력창 숨김
         } catch (error) {
             console.error('질문 추가 실패:', error);
             alert('질문 추가에 실패했습니다.');
@@ -130,7 +132,7 @@ const PostPage = () => {
             return;
         }
         try {
-            const token = localStorage.getItem('authToken');
+            const token = sessionStorage.getItem('authToken');
             await axios.patch(
                 `http://localhost:8080/order/${taskId}`,
                 {
@@ -151,7 +153,7 @@ const PostPage = () => {
 
     const deleteQuestion = async (questionId) => {
         try {
-            const token = localStorage.getItem('authToken');
+            const token = sessionStorage.getItem('authToken');
             await axios.patch(
                 `http://localhost:8080/order/${taskId}`,
                 { action: 'deleteQuestion', questionId },
@@ -171,7 +173,7 @@ const PostPage = () => {
         }
         try {
             const { questionId, replyId } = editingReply;
-            const token = localStorage.getItem('authToken');
+            const token = sessionStorage.getItem('authToken');
             await axios.patch(
                 `http://localhost:8080/order/${taskId}`,
                 {
@@ -193,7 +195,7 @@ const PostPage = () => {
 
     const deleteReply = async (questionId, replyId) => {
         try {
-            const token = localStorage.getItem('authToken');
+            const token = sessionStorage.getItem('authToken');
             await axios.patch(
                 `http://localhost:8080/order/${taskId}`,
                 { action: 'deleteAnswer', questionId, answerId: replyId },
@@ -205,6 +207,25 @@ const PostPage = () => {
             alert('답글 삭제에 실패했습니다.');
         }
     };
+
+    const handleTaskAccept = async () => {
+        try {
+          const token = sessionStorage.getItem("authToken");
+          // 심부름 생성 요청
+          const response = await axios.post(
+            `http://127.0.0.1:8080/check/agree/${taskId}`,
+            { taskId, message: '심부름 신청하겠습니다' }, // 게시물 ID 전달
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+          console.log(token)
+          fetchData();
+          
+        } catch (error) {
+          alert("심부름 신청 실패")
+        }
+      };
 
     if (loading) {
         return <div>데이터를 불러오는 중입니다...</div>;
@@ -235,11 +256,39 @@ const PostPage = () => {
             </main>
             <section className={styles.qna}>
                 <h3>Q&A</h3>
+                <button
+                className={styles.qbutton}
+                onClick={() => setShowQuestionInput(true)} // 입력창 표시
+            >
+                질문하기
+            </button>
+            {showQuestionInput && (
+                <div className={styles.questionInput}>
+                    <input
+                        type="text"
+                        placeholder="질문을 입력하세요..."
+                        value={newQuestion}
+                        onChange={(e) => setNewQuestion(e.target.value)}
+                        className={styles.input}
+                    />
+                    <button onClick={addQuestion} className={styles.button}>
+                        확인
+                    </button>
+                    <button
+                        onClick={() => setShowQuestionInput(false)} // 입력창 숨김
+                        className={styles.button}
+                    >
+                        취소
+                    </button>
+                </div>
+            )}
                 {Array.isArray(questions) &&
-                    questions.map((q) => (
+                    questions.map((q) => 
+                        (
+                        console.log(q),
                         <div key={q._id} className={styles.qnaItem}>
                             <div className={styles.question}>
-                                <span>{q.question.userId || '익명 사용자'}:</span>
+                                <span><img src={q.question.photoUrl} className={styles.QnAImg}/>{q.question.nickname || '익명'}:</span>
                                 {editingQuestionId === q._id ? (
                                     <div>
                                         <input
@@ -311,7 +360,7 @@ const PostPage = () => {
                                         </div>
                                     ) : (
                                         <div className={styles.replyView}>
-                                            <span>{r.userId || '익명 사용자'}:</span>
+                                            <span><img src={r.photoUrl} className={styles.QnAImg}/>{r.nickname || '익명 사용자'}:</span>
                                             <p>{r.content}</p>
                                             {currentUserId === r.userId && (
                                                 <>
@@ -358,19 +407,12 @@ const PostPage = () => {
                             )}
                         </div>
                     ))}
-                <div className={styles.questionInput}>
-                    <input
-                        type="text"
-                        placeholder="질문을 입력하세요..."
-                        value={newQuestion}
-                        onChange={(e) => setNewQuestion(e.target.value)}
-                        className={styles.input}
-                    />
-                    <button onClick={addQuestion} className={styles.button}>
-                        질문하기
-                    </button>
-                </div>
             </section>
+            <footer className={styles.footer}>
+              <button className={styles.acceptButton} onClick={handleTaskAccept}>
+                심부름 하기
+              </button>
+            </footer>
         </div>
     );
 };
