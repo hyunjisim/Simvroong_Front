@@ -5,9 +5,17 @@ import heartFull from '../../img/Heart(red).png';
 import heartEmpty from '../../img/Heart(empty).png';
 import headimg from '../../img/head.jpg';
 import axios from 'axios';
+import { Socket } from 'socket.io-client';
+import io from 'socket.io-client';
+
+// Socket.IO 초기화
+const socket = io('http://127.0.0.1:8080', {
+    transports: ['websocket'], // WebSocket 연결 강제
+    auth: { token: sessionStorage.getItem('authToken') },
+});
 
 const PostPage = () => {
-    const { taskId } = useParams();
+    
     const navigate = useNavigate();
     const [requestData, setRequestData] = useState({});
     const [isLiked, setIsLiked] = useState(false);
@@ -20,8 +28,11 @@ const PostPage = () => {
     const [replyContent, setReplyContent] = useState('');
     const [editingReply, setEditingReply] = useState(null);
     const [updatedReplyContent, setUpdatedReplyContent] = useState('');
-    const [currentUserId, setCurrentUserId] = useState(null);
     const [showQuestionInput, setShowQuestionInput] = useState(false);
+    const {taskId} = useParams()
+    const [taskid, setTaskid] = useState(null);         // URL에서 가져옴
+    const [userId, setUserId] = useState(null);          // 심부름 게시물의 작성자 ID
+    const [currentUserId, setCurrentUserId] = useState(null); // 현재 로그인한 사용자 ID
 
     const fetchData = async () => {
         try {
@@ -30,16 +41,24 @@ const PostPage = () => {
                 headers: { Authorization: `Bearer ${token}` },
             });
             const data = response.data.data;
+            console.log(response)
 
-            setCurrentUserId(response.data.currentUser); // _id 설정
-            
+            setTaskid(data.taskId) //심부름 게시물 taskid 설정
+            console.log(data.taskId);
+            setUserId(data.user_id); // 심부름 게시물 작성자 ID 설정
+            console.log(data.user_id);
+            setCurrentUserId(response.data.currentUser); // 현재 로그인된 사용자 ID 설정
+            console.log(response.data.currentUser);
+            console.log(response.data);
+
+
             setRequestData(data);
             setQuestions(data.QnA || []);
             setIsLiked(data.isLiked || false);
         } catch (error) {
             console.error('데이터 가져오기 실패:', error.response?.data || error.message);
             if (error.response?.status === 401) {
-                alert('인증이 필요합니다. 로그인 페이지로 이동합니다.');
+                    
                 navigate('/login');
             }
         } finally {
@@ -210,22 +229,65 @@ const PostPage = () => {
 
     const handleTaskAccept = async () => {
         try {
-          const token = sessionStorage.getItem("authToken");
-          // 심부름 생성 요청
-          const response = await axios.post(
-            `http://127.0.0.1:8080/check/agree/${taskId}`,
-            { taskId, message: '심부름 신청하겠습니다' }, // 게시물 ID 전달
-            {
-              headers: { Authorization: `Bearer ${token}` },
+            const token = sessionStorage.getItem("authToken");
+            // 심부름 생성 요청
+            const response = await axios.post(
+                `http://127.0.0.1:8080/check/agree/${taskId}`,
+                { taskId, message: '심부름 신청하겠습니다' }, // 게시물 ID 전달
+                {
+                headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+            console.log(token)
+            fetchData();
+            
+            } catch (error) {
+            alert("심부름 신청 실패",error)
+            console.log(error);
             }
-          );
-          console.log(token)
-          fetchData();
-          
+        };
+    // 채팅 채널 만들기
+    const handleCreateChannel = async () => {
+        try{
+            const token = sessionStorage.getItem('authToken');
+            const channel = `${taskId}_${userId}_${currentUserId}`
+
+
+            console.log('전달 데이터:', { taskId, userId, currentUserId, channel });
+
+            const response = await axios.post(
+                `http://127.0.0.1:8080/chat/${channel}`,
+                {
+                    channel,message: `채널명 : ${channel}`,
+                    taskId,
+                    userId,
+                    currentUserId,
+                },
+                {
+                    'Content-Type': 'application/json',
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            )
+
+            // 스키마에 기본값 거래중으로 둬야함
+            // socket.emit('setChannel : ',channel,'token : ',token)
+            // // 응답 데이터 확인
+            console.log("서버 응답:", response.data);
+
+            if (!response.data || !response.data.data || !response.data.data._id) {
+                throw new Error('유효하지 않은 응답 데이터');
+            }
+
+            // 채팅방을 만들고 조인룸을 하면서 채널과 태스크아이디,현재유저아이디를 보낸다
+            //게시물 데이터는 taskid로 백엔드에서 찾아서 프론트에 넘긴다
+            const channelId = response.data.data._id;
+            navigate(`/chat/${channelId}`)
+            //이러고 백엔드에서 보낼때는 _id를 암호화해서 보낸다
+            //백엔드에 어쓰컨트롤러에 8번째 줄
         } catch (error) {
-          alert("심부름 신청 실패")
+            console.log("채팅 채널 만들기 실패:",error);
         }
-      };
+    }
 
     if (loading) {
         return <div>데이터를 불러오는 중입니다...</div>;
@@ -409,7 +471,7 @@ const PostPage = () => {
                     ))}
             </section>
             <footer className={styles.footer}>
-              <button className={styles.acceptButton} onClick={handleTaskAccept}>
+              <button className={styles.acceptButton} onClick={handleCreateChannel}>
                 심부름 하기
               </button>
             </footer>

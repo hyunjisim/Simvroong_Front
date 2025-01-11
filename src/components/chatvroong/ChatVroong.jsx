@@ -11,6 +11,7 @@ import axios from "axios";
 
 const ChatVroong = () => {
     const navigate = useNavigate();
+    const [userId,setUserId] = useState({})
     const [activeTab, setActiveTab] = useState("요구"); // 현재 활성화된 탭
     const [chatList, setChatList] = useState([]); // 채팅 목록 데이터
     const [loading, setLoading] = useState(true); // 로딩 상태
@@ -21,15 +22,10 @@ const ChatVroong = () => {
             const token = sessionStorage.getItem("authToken");
             if (!token) throw new Error("토큰이 없습니다. 다시 로그인해주세요.");
 
-            const endpoint =
-                activeTab === "요구"
-                    ? "http://127.0.0.1:8080/chats/request"
-                    : "http://127.0.0.1:8080/chats/perform";
-
-            const response = await axios.get(endpoint, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+            const data = data //유저 아이디 가져와야함
+            const userId = data.userId
+            const response = await axios.get('http://127.0.0.1:8080/chat', {
+                headers: { Authorization: `Bearer ${token}` },userId
             });
 
             setChatList(response.data);
@@ -93,7 +89,7 @@ const ChatVroong = () => {
                             <li
                                 key={chat.chatId}
                                 className={styles.chatItem}
-                                onClick={() => navigate(`/chatroom/${chat.chatId}`)}
+                                onClick={() => navigate(`/chat/${chat.chatId}`)}
                             >
                                 <img
                                     src={chat.user.profileImage}
