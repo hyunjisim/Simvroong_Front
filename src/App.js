@@ -50,8 +50,10 @@ const App = () => {
         <Route path="/opprofile" element={<OpProfile />} />
         <Route path="/vroongList" element={<VroongList />} />
         <Route path="/postpage" element={<PostPage />} />
-        <Route path="/chatting" element={<ChatVroong />} /> 
-        <Route path="/chat/:taskId" element={<Chat />} /> 
+
+        <Route path="/chat" element={<ChatVroong />} /> 
+        
+        <Route path="/chat/:channel" element={<Chat />} /> 
         <Route path="/around" element={<Around/>} />
         <Route path="/profile" element={<Profile/>} />
         <Route path="/profile/Performance" element={<Performance/>}/>
