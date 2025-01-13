@@ -18,9 +18,11 @@ const Login = () => {
                 password
             })
             const token = response.data.token
+            const nickname = response.data.userNickname
 
             if (response.status === 200) {
                 sessionStorage.setItem('authToken', token)
+                sessionStorage.setItem('nickname', nickname)
 
                 navigate('/Main')
             }

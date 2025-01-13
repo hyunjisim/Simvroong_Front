@@ -7,7 +7,9 @@ import { useNavigate } from "react-router-dom";
 const FAQ = () => {
 const navigate = useNavigate();
 
-const goBack = () => navigate(-1);
+const goBack = () => navigate("/profile");
+const goCustomer = () => navigate("/customer");
+const goPartner = () => navigate("/partner");
 
 return (
 <div className={styles.faqContainer}>
@@ -19,8 +21,8 @@ return (
 
       {/* 버튼 선택 */}
     <div className={styles.tabContainer}>
-        <button className={styles.customerable}>고객</button>
-        <button className={styles.partnerable}>파트너</button>
+        <button onClick={goCustomer} className={styles.customerable}>고객</button>
+        <button onClick={goPartner} className={styles.partnerable}>파트너</button>
     </div>
 
       {/* 자주하는 질문 리스트 */}

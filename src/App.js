@@ -21,6 +21,7 @@ import ChangePsw from './components/editPsw/changePsw.jsx';
 
 import Notice from './components/notice/Notice.jsx';
 import FAQ from './components/FAQ/FAQ.jsx';
+import FAQcustom from './components/FAQ/FAQcustomer.jsx';
 import TermsofUse from './components/termsofUse/TermsofUse.jsx';
 
 import Chat from './components/chatvroong/chat.jsx';
@@ -73,6 +74,8 @@ const App = () => {
 
         <Route path="/notice" element={<Notice />} />
         <Route path="/question" element={<FAQ />} />
+        <Route path="/customer" element={<FAQcustom />} />
+
         <Route path="/terms" element={<TermsofUse />} />
         <Route path="/set" element={<VroongSetting />} />
 

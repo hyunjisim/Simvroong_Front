@@ -31,16 +31,13 @@
 
 .header {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  /* padding: 0.5rem; */
-  position: relative;
-  padding-top: 0.1rem;
-  padding: 10px 0;
-  background-color: var(--color-white);
-  border-bottom: 1px solid var(--small-border-color);
-  box-shadow: 0 4px 6px rgba(var(--drop-shadow-color), var(--drop-shadow-opacity));
+    align-items: center;
+    margin-bottom: 0.1rem;
+    justify-content: center;
+    width: 100%;
+    /* box-shadow: 0 4px 6px rgba(var(--drop-shadow-color), var(--drop-shadow-opacity)); */
+    padding: 10px 0;
+    border-bottom: 1px solid var(--small-border-color);
 }
 
 .backIcon {
@@ -49,6 +46,7 @@
   width: 1.5rem;
   height: 1.5rem;
   cursor: pointer;
+  transform: translateX(11rem);
 }
 
 .logo {
@@ -101,20 +99,27 @@
 }
 
 .inputLabel {
-  font-size: 0.9rem;
-  margin-right: 0.5rem;
+  font-size: 1rem;
+  font-weight: bold;
   color: var(--darkgray-color);
+  margin-right: 1rem;
+  flex-shrink: 0;
 }
 
 .input {
   flex: 1;
-  padding: 0.5rem;
-  border: none;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
   font-size: 1rem;
+  background-color: var(--color-white);
+  transition: border-color 0.3s ease;
 }
 
 .input:focus {
   outline: none;
+  border: 1px solid var(--lowgray-color);
+  box-shadow: 0 0 5px rgba(255, 232, 18, 0.5);
 }
 
 .button {

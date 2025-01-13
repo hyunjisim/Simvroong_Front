@@ -26,21 +26,26 @@
   position: relative;
   height: 6.5rem;
   padding: 0 15px;
-  text-align: center;
   border-bottom: 1px solid #ddd;
   background-color: var(--color-white);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; 
 }
 
 .logo {
+  position: absolute; 
+  left: 50%; 
+  transform: translateX(-50%); 
   height: 40px;
 }
 
 .headerIcons {
+  position: absolute; 
+  right: 15px; 
   display: flex;
   gap: 10px;
+  align-items: center;
 }
 
 .headerIcon {
@@ -195,22 +200,31 @@
 
 /* 고정된 아이콘 */
 .fixedIcons {
-  /* position: absolute;  */
+  position: fixed; 
+  bottom: 100px; 
+  left: 50%; 
+  transform: translateX(-50%); 
   display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  z-index: 100;
+  gap: 230px; 
+  z-index: 100; 
 }
 
 .fixedIcon {
-  width: 50px;
+  width: 50px; 
   height: 50px;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  background-color: var(--yellow-color);
+  border-radius: 50%; /* 원형 버튼 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .fixedIcon:hover {
-  transform: scale(1.1);
+  transform: scale(1.1); 
+  background-color: var(--lightyellow-color); 
 }
 
 

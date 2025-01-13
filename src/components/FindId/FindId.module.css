@@ -65,6 +65,7 @@
     border: 1px solid var(--border-color);
     border-radius: 10px;
     box-sizing: border-box;
+    background-color: var(--color-white);
 }
 
 /* 휴대폰 인증 스타일링 */
@@ -75,6 +76,7 @@
 
 .phonefirst {
     width: 50%;
+    height: 40px;
 }
 
 /* 하이픈 스타일링 */
@@ -82,7 +84,7 @@
     font-size: 20px;
     font-weight: normal;
     color: #555;
-    line-height: 3;
+    line-height: 2;
 }
 
 /* 인증번호 입력 및 버튼 스타일링 */
@@ -97,7 +99,7 @@
     font-weight: bold;
     border: none;
     border-radius: 10px;
-    padding: 12px;
+    /* padding: 12px; */
     cursor: pointer;
 }
 
