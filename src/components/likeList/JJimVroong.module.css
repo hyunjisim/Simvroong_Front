@@ -34,14 +34,14 @@
     font-weight: bold;
 }
 
-.backb {
+.backIcon {
     width: 24px;
     height: 24px;
     cursor: pointer;
     position: absolute; 
     left: 1rem; 
     transform: translateY(-10%); 
-    transform: translateX(6.5rem); 
+    transform: translateX(11rem);
 }
 
 .jjimvroonglist {

@@ -43,7 +43,7 @@
     --gray-background-color: #E7EAF1;
   }
   
-  .faqContainer {
+  .faqcustomerContainer {
     max-width: 25rem;
     height: 874px;
     margin: 0 auto;
@@ -53,7 +53,7 @@
     border: 1px solid var(--small-border-color);
   }
   
-  .faqHeader {
+  .faqcustomerHeader {
     display: flex;
     width: 94%;
     align-items: center;
@@ -62,15 +62,8 @@
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     border: 1.5px solid var(--small-border-color);
   }
-  
-  .backb {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    margin-right: 12px;
-  }
-  
-  .faqname {
+
+  .faqcustomername {
     justify-content: center;
     width: auto;
     align-items: center;
@@ -78,14 +71,31 @@
     background-color: var(--primary-white);
     flex-grow: 1;
   }
+
+
   
-  .faqmenulist {
+  .backb {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    margin-left: 12px;
+    transform: translateX(-0.8rem);
+  }
+  
+  .faqname {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    flex-grow: 0.8;
+  }
+  
+  .faqcustomermenulist {
     display: flex;
     flex-direction: column;
     background-color: var(--primary-white);
   }
   
-  .faqnum1, .faqnum2, .faqnum3, .faqnum4, .faqnum5 {
+  .faqcustomernum1, .faqcustomernum2, .faqcustomernum3, .faqcustomernum4, .faqcustomernum5 {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -97,7 +107,7 @@
     transition: background-color 0.3s;
   }
   
-  .faqnum5 {
+  .faqcustomernum5 {
     color: var(--midgray-color);
     position: relative;
   }
@@ -105,19 +115,24 @@
 
 
 
-  .faqnum1:hover, .faqnum2:hover, .faqnum3:hover, .faqnum4:hover, .faqnum5:hover {
+  .faqcustomernum1:hover, .faqcustomernum2:hover, .faqcustomernum3:hover, .faqcustomernum4:hover, .faqcustomernum5:hover {
     background-color: var(--light-gray);
   }
   
-  .nextarrow {
+  .nextarrow1 {
+    width: 20px;
+    height: 20px;
+  }
+
+  .nextarrow2 {
     width: 20px;
     height: 20px;
   }
 
 
-  .faqnum1, .faqnum2, .faqnum3, .faqnum4, .faqnum5, .faqnum6, .faqnum7, .faqnum8, .faqnum9, .faqnum10,
-  .faqnum11, .faqnum12, .faqnum13, .faqnum14, .faqnum15, .faqnum16, .faqnum17, .faqnum18, .faqnum19,
-  .faqnum20, .faqnum21, .faqnum22, .faqnum23, .faqnum24, .faqnum25, .faqnum26 {
+  .faqcustomernum1, .faqcustomernum2, .faqcustomernum3, .faqcustomernum4, .faqcustomernum5, .faqcustomernum6, .faqcustomernum7, .faqcustomernum8, .faqcustomernum9, .faqcustomernum10,
+  .faqcustomernum11, .faqcustomernum12, .faqcustomernum13, .faqcustomernum14, .faqcustomernum15, .faqcustomernum16, .faqcustomernum17, .faqcustomernum18, .faqcustomernum19,
+  .faqcustomernum20, .faqcustomernum21, .faqcustomernum22, .faqcustomernum23, .faqcustomernum24, .faqcustomernum25, .faqcustomernum26, .faqcustomernum27, .faqcustomernum28, .faqcustomernum29, .faqcustomernum30, .faqcustomernum31, .faqcustomernum32{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -131,12 +146,12 @@
 
 
 .customerable {
-    background-color: var(--light-gray);
+    background-color: var(--darkgray-color);
     border: none;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
-    color: var(--black-text-color);
-    border-radius: 10px;
+    color: var(--color-white);
+    border-radius: 22px;
     cursor: pointer;
     margin-top: 0.5rem;
     margin-left: 0.5rem;
@@ -144,22 +159,60 @@
 }
 
 .partnerable {
-    background-color: var(--darkgray-color);
-    font-size: 14px;
-    font-weight: bold;
-    color: var(--color-white);
-    border-radius: 10px;
-    cursor: pointer;
-    margin-top: 0.5rem;
-} 
-
-
-/* .customerable {
     background-color: var(--light-gray);
     font-size: 14px;
     font-weight: bold;
     color: var(--black-text-color);
     border-radius: 10px;
+    cursor: pointer;
     margin-top: 0.5rem;
-    margin-right: 15rem;
-}  */
+} 
+
+/* 임시 */
+.faqItem {
+  border-bottom: 1px solid var(--light-gray);
+  padding: 10px 0;
+}
+
+.faqQuestion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--darkgray-color);
+  cursor: pointer;
+  padding: 10px;
+}
+
+.nextarrow {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+.nextarrow.rotated {
+  transform: rotate(180deg);
+}
+
+.faqAnswer {
+  padding: 10px 20px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--midgray-color);
+  background-color: var(--gray-background-color);
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.answerstyle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid var(--light-gray);
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--darkgray-color);
+    transition: background-color 0.3s;
+}

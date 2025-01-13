@@ -22,13 +22,14 @@ const ChatVroong = () => {
             const token = sessionStorage.getItem("authToken");
             if (!token) throw new Error("토큰이 없습니다. 다시 로그인해주세요.");
 
-            const data = data //유저 아이디 가져와야함
-            const userId = data.userId
+            // const data = data //유저 아이디 가져와야함
+            // const userId = data.userId
             const response = await axios.get('http://127.0.0.1:8080/chat', {
-                headers: { Authorization: `Bearer ${token}` },userId
+                headers: { Authorization: `Bearer ${token}` }
             });
 
-            setChatList(response.data);
+            console.log(response.data.data);
+            setChatList(response.data.data);
         } catch (error) {
             console.error("채팅 데이터 불러오기 실패:", error);
             setChatList([]); // 실패 시 빈 배열 설정
@@ -89,16 +90,12 @@ const ChatVroong = () => {
                             <li
                                 key={chat.chatId}
                                 className={styles.chatItem}
-                                onClick={() => navigate(`/chat/${chat.chatId}`)}
+                                onClick={() => navigate(`/chat/${chat._id}`)}
                             >
-                                <img
-                                    src={chat.user.profileImage}
-                                    alt={`${chat.user.username} 프로필 이미지`}
-                                    className={styles.chatImage}
-                                />
+                                {/* <img/> 채팅상대 프로필 이미지 */}
                                 <div className={styles.chatContent}>
-                                    <h4 className={styles.chatTitle}>{chat.user.username}</h4>
-                                    <p className={styles.chatSubtitle}>{chat.location}</p>
+                                    <h4 className={styles.chatTitle}>{chat.toTaskUserId}</h4>
+                                    {/* <p className={styles.chatSubtitle}>{chat.location}</p> */}
                                     <p className={styles.chatMessage}>{chat.lastMessage}</p>
                                 </div>
                                 <span className={styles.chatTime}>{chat.lastMessageTime}</span>

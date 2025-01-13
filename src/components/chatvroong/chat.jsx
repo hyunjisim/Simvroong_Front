@@ -48,9 +48,13 @@ const Chat = () => {
                 );
 
                 const data = response.data;
-                setUser(response.data.toTaskUserId)
                 console.log("data",data);
-                setRequestData(data);
+
+                setUser(response.data.ChatData.toTaskUserId) //안씀
+                setChatPartner(response.data.Nickname) //안씀
+                // setNickname(nickname)
+
+                setRequestData(data);//이거로 씀
                 
             } catch (error) {
                 console.error('게시물 데이터를 가져오는 데 실패했습니다:', error.response?.data || error.message);
@@ -58,24 +62,25 @@ const Chat = () => {
                 setLoading(false);
             }
         };
-        // 유저 닉네임 패치
-        const fetchUser = async () => {
-            try{
-                const token = sessionStorage.getItem('authToken');
-                const response = await axios.get(`http://127.0.0.1:8080/chat/${channel}`,
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-                console.log(response);
-                setChatPartner(response.data.ChatPartner)
-                setNickname(response.data.Nickname)
-                console.log('상대방 닉네임 : ',chatPartner,
-                    '현재 로그인 유저 닉네임 : ',nickname)
+        // // 유저 닉네임 패치
+        // const fetchUser = async () => {
+        //     try{
+        //         const token = sessionStorage.getItem('authToken');
+        //         const nickname = sessionStorage.getItem('nickname');
+        //         const response = await axios.get(`http://127.0.0.1:8080/chat/${channel}`,
+        //         {
+        //             headers: { Authorization: `Bearer ${token}` },
+        //         });
+        //         console.log(response);
+        //         setChatPartner(response.data.ChatPartner)
+        //         setNickname(nickname)
+        //         console.log('상대방 닉네임 : ',chatPartner,
+        //             '현재 로그인 유저 닉네임 : ',nickname)
                 
-            } catch (error) {
-                console.log('닉네임 정보 가져오기 실패 : ', error)
-            }
-        }
+        //     } catch (error) {
+        //         console.log('닉네임 정보 가져오기 실패 : ', error)
+        //     }
+        // }
         // 채팅내역 패치
         const fetchChat = async () => {
             try{
@@ -92,7 +97,7 @@ const Chat = () => {
         }
         fetchChat()
         fetchData();
-        fetchUser()
+        // fetchUser()
     }, [channel, navigate]);
 
     // 채팅 소켓 연결
@@ -173,7 +178,7 @@ const Chat = () => {
                     onClick={() => navigate('/chat')}
                 />
                 <div className={styles.headerDetails}>
-                    <h3 className={styles.headerTitle}>{requestData.TaskuserId || '알 수 없음'}</h3>
+                    <h3 className={styles.headerTitle}>{requestData.Nickname || '알 수 없음'}</h3>
                     <span className={styles.responseTime}>보통 1시간 이내 응답</span>
                 </div>
                 <div className={styles.headerActions}>
@@ -185,18 +190,18 @@ const Chat = () => {
             {/* 거래 정보 */}
             <div className={styles.transactionSection}>
                 <img
-                    src={requestData.imageUrl || panda}
+                    src={requestData.ChatData.imageUrl || panda}
                     alt="Thumbnail"
                     className={styles.transactionImage}
                 />
                 <div className={styles.transactionText}>
-                    <p className={styles.transactionStatus}>{requestData.transactionDetails.status || '진행 중'}</p>
+                    <p className={styles.transactionStatus}>{requestData.ChatData.transactionDetails.status || '진행 중'}</p>
                     <p className={styles.transactionRequest}>
-                        {requestData.transactionDetails.title || '제목 없음'}
+                        {requestData.ChatData.transactionDetails.title || '제목 없음'}
                     </p>
                     <p className={styles.transactionPrice}>
-                        {requestData.transactionDetails.price
-                            ? `${requestData.transactionDetails.price.toLocaleString()}원`
+                        {requestData.ChatData.transactionDetails.price
+                            ? `${requestData.ChatData.transactionDetails.price.toLocaleString()}원`
                             : '가격 미정'}
                     </p>
                 </div>
