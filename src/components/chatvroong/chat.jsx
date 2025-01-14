@@ -50,7 +50,7 @@ const Chat = () => {
                 const data = response.data;
                 console.log("data",data);
 
-                setUser(response.data.ChatData.toTaskUserId) //안씀
+                setUser(response.data.mongo_id) //안씀
                 setChatPartner(response.data.Nickname) //안씀
                 // setNickname(nickname)
 
@@ -85,6 +85,9 @@ const Chat = () => {
         const fetchChat = async () => {
             try{
                 const token = sessionStorage.getItem('authToken');
+                // const nickname = sessionStorage.getItem('nickname')
+                // console.log('nickname',nickname)
+                // 이게 아니라 _id가 sender에 담겨서 가져와지니까 현재 유저_id랑 비교해야함
                 const response = await axios.get(
                     `http://127.0.0.1:8080/chat/${channel}/message?page=${page}&limit=20`,
                     { headers: { Authorization: `Bearer ${token}` } }
@@ -178,6 +181,7 @@ const Chat = () => {
                     onClick={() => navigate('/chat')}
                 />
                 <div className={styles.headerDetails}>
+                    {/* 아래 문장이 타이틀에 상대방 닉네임 가져오는거 */}
                     <h3 className={styles.headerTitle}>{requestData.Nickname || '알 수 없음'}</h3>
                     <span className={styles.responseTime}>보통 1시간 이내 응답</span>
                 </div>
@@ -214,21 +218,22 @@ const Chat = () => {
                     <div
                         key={index}
                         className={
-                            message.fromUserId === user.id
+                            message.sender === user
                                 ? styles.messageRowRight
                                 : styles.messageRow
                         }
                     >
-                        {message.fromUserId !== user.id && (
+                        {message.sender !== user.id && (
                             <img
                                 src={chatPartner.profileImage || panda}
                                 alt="User Avatar"
                                 className={styles.messageAvatar}
                             />
+                            
                         )}
                         <div
                             className={
-                                message.fromUserId === user.id
+                                message.sender === user
                                     ? styles.messageBubbleRight
                                     : styles.messageBubble
                             }

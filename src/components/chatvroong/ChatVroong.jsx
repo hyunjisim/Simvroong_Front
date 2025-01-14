@@ -94,7 +94,7 @@ const ChatVroong = () => {
                             >
                                 {/* <img/> 채팅상대 프로필 이미지 */}
                                 <div className={styles.chatContent}>
-                                    <h4 className={styles.chatTitle}>{chat.toTaskUserId}</h4>
+                                    <h4 className={styles.chatTitle}>{chat.otherUserNickname}</h4>
                                     {/* <p className={styles.chatSubtitle}>{chat.location}</p> */}
                                     <p className={styles.chatMessage}>{chat.lastMessage}</p>
                                 </div>
