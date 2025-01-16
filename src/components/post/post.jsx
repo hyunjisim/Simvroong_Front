@@ -281,6 +281,7 @@ const PostPage = () => {
             // 채팅방을 만들고 조인룸을 하면서 채널과 태스크아이디,현재유저아이디를 보낸다
             //게시물 데이터는 taskid로 백엔드에서 찾아서 프론트에 넘긴다
             const channelId = response.data.data._id;
+            // const Chatroom = response.data.data.Chatroom
             navigate(`/chat/${channelId}`)
             //이러고 백엔드에서 보낼때는 _id를 암호화해서 보낸다
             //백엔드에 어쓰컨트롤러에 8번째 줄
