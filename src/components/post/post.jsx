@@ -5,14 +5,7 @@ import heartFull from '../../img/Heart(red).png';
 import heartEmpty from '../../img/Heart(empty).png';
 import headimg from '../../img/head.jpg';
 import axios from 'axios';
-import { Socket } from 'socket.io-client';
-import io from 'socket.io-client';
 
-// Socket.IO 초기화
-const socket = io('http://127.0.0.1:8080', {
-    transports: ['websocket'], // WebSocket 연결 강제
-    auth: { token: sessionStorage.getItem('authToken') },
-});
 
 const PostPage = () => {
     
@@ -54,7 +47,6 @@ const PostPage = () => {
 
             setRequestData(data);
             setQuestions(data.QnA || []);
-            setIsLiked(data.isLiked || false);
         } catch (error) {
             console.error('데이터 가져오기 실패:', error.response?.data || error.message);
             if (error.response?.status === 401) {
@@ -65,9 +57,31 @@ const PostPage = () => {
             setLoading(false);
         }
     };
+    const fetchLike = async () => {
+        try {
+            const token = sessionStorage.getItem('authToken');
+            // 좋아요 상태를 확인하는 API 요청
+            const response = await axios.post(`http://localhost:8080/order/${taskId}`, 
+            {},
+            {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            console.log('a',response)
+            // 서버 응답에서 isLiked 상태를 추출하여 설정
+            if (response.data.data.isLiked !== undefined) {
+                setIsLiked(response.data.data.isLiked);
+                console.log('좋아요 상태:', response.data.data.isLiked); // 상태 확인 로그
+            } else {
+                console.error('서버 응답에 좋아요 상태가 포함되지 않았습니다.');
+            }
+        } catch (error) {
+            console.error('좋아요 상태를 가져오는 중 오류 발생:', error);
+        }
+    };
 
     useEffect(() => {
         fetchData();
+        fetchLike();
     }, [taskId]);
 
     const toggleLike = async () => {
@@ -472,9 +486,9 @@ const PostPage = () => {
                     ))}
             </section>
             <footer className={styles.footer}>
-              <button className={styles.acceptButton} onClick={handleCreateChannel}>
-                심부름 하기
-              </button>
+                <button className={styles.acceptButton} onClick={handleCreateChannel}>
+                    심부름 하기
+                </button>
             </footer>
         </div>
     );
