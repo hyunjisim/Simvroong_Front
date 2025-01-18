@@ -25,6 +25,7 @@ const Chat = () => {
     const [Channel,setChannel] = useState('');
     const [page, setPage] = useState(1); // 페이지 상태
     const [taskId,setTaskId] = useState({});
+    const [active,setActive] = useState({})
     // 상대방 닉네임은 내 현재로그인한 유저_id랑 상대 userid 이랑 비교해서 
     // 다르면 상대방으로 지정해서 해당 유저데이터에서 닉네임 불러오기
     // 게시물 사진 불러오기
@@ -101,8 +102,22 @@ const Chat = () => {
                 console.log('채팅 내역 가져오기 실패 : ', error)
             }
         }
+        const fetchActive = async () =>{
+            try{
+                const token = sessionStorage.getItem('authToken');
+                const response = await axios.get(
+                    `http://127.0.0.1:8080/chat/${channel}/completed/${taskId}`,
+                    { headers: {Authorization: `Bearer ${token}`} }
+                )
+                console.log('불러온 거래 내역',response.data);
+                setActive(response.data);
+            } catch (error) {
+                console.log('신청상태 가져오기 실패 : ', error)
+            }
+        }
         fetchChat()
         fetchData();
+        fetchActive()
         // fetchUser()
     }, [channel, navigate]);
 
@@ -114,6 +129,9 @@ const Chat = () => {
             navigate('/login');
             return;
         }
+        // 소켓 연결
+        socket.auth = { token };
+        socket.connect();
         // 2. 소켓을 통해 닉네임 채널 설정...
         socket.emit('setNickname', nickname)
         console.log('nickname',nickname);
@@ -123,6 +141,7 @@ const Chat = () => {
 
         // 컴포넌트가 언마운트되거나 리렌더링될 때 방에서 나가기
         return () => {
+            console.log(`채널 "${channel}"에서 나갑니다.`);
             socket.emit('leaveRoom', { channel });
         };
         
@@ -231,7 +250,7 @@ const Chat = () => {
                             : '가격 미정'}
                     </p>
                 </div>
-                <button className={styles.transactionButton} onClick={handleisActive}>거래 완료</button>
+                <button className={styles.transactionButton} onClick={handleisActive}>{active.data.isActive || '진행중'}</button>
                 {/* 기능 미완성 */}
             </div>
 
