@@ -24,8 +24,6 @@ const Chat = () => {
     const [nickname, setNickname] = useState({});
     const [Channel,setChannel] = useState('');
     const [page, setPage] = useState(1); // 페이지 상태
-    const [taskId,setTaskId] = useState({});
-    const [active,setActive] = useState({})
     // 상대방 닉네임은 내 현재로그인한 유저_id랑 상대 userid 이랑 비교해서 
     // 다르면 상대방으로 지정해서 해당 유저데이터에서 닉네임 불러오기
     // 게시물 사진 불러오기
@@ -52,8 +50,6 @@ const Chat = () => {
                 const data = response.data;
                 console.log("data",data);
 
-                setTaskId(response.data.ChatData.taskId)
-                console.log('taskId',typeof(taskId));
                 setUser(response.data.mongo_id) //안씀
                 setChatPartner(response.data.Nickname) //안씀
                 // setNickname(nickname)
@@ -102,22 +98,8 @@ const Chat = () => {
                 console.log('채팅 내역 가져오기 실패 : ', error)
             }
         }
-        const fetchActive = async () =>{
-            try{
-                const token = sessionStorage.getItem('authToken');
-                const response = await axios.get(
-                    `http://127.0.0.1:8080/chat/${channel}/completed/${taskId}`,
-                    { headers: {Authorization: `Bearer ${token}`} }
-                )
-                console.log('불러온 거래 내역',response.data);
-                setActive(response.data);
-            } catch (error) {
-                console.log('신청상태 가져오기 실패 : ', error)
-            }
-        }
         fetchChat()
         fetchData();
-        fetchActive()
         // fetchUser()
     }, [channel, navigate]);
 
@@ -129,9 +111,6 @@ const Chat = () => {
             navigate('/login');
             return;
         }
-        // 소켓 연결
-        socket.auth = { token };
-        socket.connect();
         // 2. 소켓을 통해 닉네임 채널 설정...
         socket.emit('setNickname', nickname)
         console.log('nickname',nickname);
@@ -141,7 +120,6 @@ const Chat = () => {
 
         // 컴포넌트가 언마운트되거나 리렌더링될 때 방에서 나가기
         return () => {
-            console.log(`채널 "${channel}"에서 나갑니다.`);
             socket.emit('leaveRoom', { channel });
         };
         
@@ -189,25 +167,6 @@ const Chat = () => {
         setNewMessage('');
     };
 
-    const handleisActive = async () => {
-        try{
-            const token = sessionStorage.getItem('authToken');
-            console.log('handleisActive token : ',token);
-            const response = await axios.post(
-            `http://127.0.0.1:8080/chat/${channel}/completed`,
-            {taskId},
-            {
-                'Content-Type': 'application/json',
-                headers: { Authorization: `Bearer ${token}` }
-            }
-        )
-        console.log('신청 완료',response.data);
-        
-        } catch (error) {
-            console.log('신청 실패 : ', error)
-        }
-    };
-
     if (loading) {
         return <div>로딩 중...</div>;
     }
@@ -250,8 +209,7 @@ const Chat = () => {
                             : '가격 미정'}
                     </p>
                 </div>
-                <button className={styles.transactionButton} onClick={handleisActive}>{active.data.isActive || '진행중'}</button>
-                {/* 기능 미완성 */}
+                <button className={styles.transactionButton}>거래 완료</button>
             </div>
 
             {/* 메시지 리스트 */}
@@ -261,45 +219,39 @@ const Chat = () => {
                         key={index}
                         className={
                             message.sender === user
-                                ? styles.messageRowRight // 본인 메시지
-                                : styles.messageRow // 상대방 메시지
+                                ? styles.messageRowRight
+                                : styles.messageRow
                         }
                     >
-                        {message.sender === user ? (
-                            // 본인 메시지: 시간 왼쪽, 메시지 오른쪽
-                            <>
-                                <span className={styles.messageTimeLeft}>
-                                    {new Date(message.timestamp).toLocaleTimeString('ko-KR', {
-                                        hour: '2-digit',
-                                        minute: '2-digit',
-                                    })}
-                                </span>
-                                <div className={styles.messageBubbleRight}>
-                                    {message.content}
-                                </div>
-                            </>
-                        ) : (
-                            // 상대방 메시지: 이미지 왼쪽, 메시지 오른쪽, 시간 오른쪽
-                            <>
-                                <img
-                                    src={chatPartner.profileImage || panda}
-                                    alt="User Avatar"
-                                    className={styles.messageAvatar}
-                                />
-                                <div className={styles.messageNickname}>
-                                    {requestData.Nickname || '알 수 없음'}
-                                </div>
-                                <div className={styles.messageBubble}>
-                                    {message.content}
-                                </div>
-                                <span className={styles.messageTime}>
-                                    {new Date(message.timestamp).toLocaleTimeString('ko-KR', {
-                                        hour: '2-digit',
-                                        minute: '2-digit',
-                                    })}
-                                </span>
-                            </>
+                        {message.sender !== user.id && (
+                            <img
+                                src={chatPartner.profileImage || panda}
+                                alt="User Avatar"
+                                className={styles.messageAvatar}
+                            />
+                            
                         )}
+                        <div
+                            className={
+                                message.sender === user
+                                    ? styles.messageBubbleRight
+                                    : styles.messageBubble
+                            }
+                        >
+                            {message.content}
+                        </div>
+                        <span
+                            className={
+                                message.fromUserId === user.id
+                                    ? styles.messageTimeRight
+                                    : styles.messageTime
+                            }
+                        >
+                            {new Date(message.timestamp).toLocaleTimeString('ko-KR', {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                            })}
+                        </span>
                     </div>
                 ))}
             </div>

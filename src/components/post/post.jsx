@@ -5,7 +5,14 @@ import heartFull from '../../img/Heart(red).png';
 import heartEmpty from '../../img/Heart(empty).png';
 import headimg from '../../img/head.jpg';
 import axios from 'axios';
+import { Socket } from 'socket.io-client';
+import io from 'socket.io-client';
 
+// Socket.IO 초기화
+const socket = io('http://127.0.0.1:8080', {
+    transports: ['websocket'], // WebSocket 연결 강제
+    auth: { token: sessionStorage.getItem('authToken') },
+});
 
 const PostPage = () => {
     
@@ -47,6 +54,7 @@ const PostPage = () => {
 
             setRequestData(data);
             setQuestions(data.QnA || []);
+            setIsLiked(data.isLiked || false);
         } catch (error) {
             console.error('데이터 가져오기 실패:', error.response?.data || error.message);
             if (error.response?.status === 401) {
@@ -57,31 +65,9 @@ const PostPage = () => {
             setLoading(false);
         }
     };
-    const fetchLike = async () => {
-        try {
-            const token = sessionStorage.getItem('authToken');
-            // 좋아요 상태를 확인하는 API 요청
-            const response = await axios.post(`http://localhost:8080/order/${taskId}`, 
-            {},
-            {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            console.log('a',response)
-            // 서버 응답에서 isLiked 상태를 추출하여 설정
-            if (response.data.data.isLiked !== undefined) {
-                setIsLiked(response.data.data.isLiked);
-                console.log('좋아요 상태:', response.data.data.isLiked); // 상태 확인 로그
-            } else {
-                console.error('서버 응답에 좋아요 상태가 포함되지 않았습니다.');
-            }
-        } catch (error) {
-            console.error('좋아요 상태를 가져오는 중 오류 발생:', error);
-        }
-    };
 
     useEffect(() => {
         fetchData();
-        fetchLike();
     }, [taskId]);
 
     const toggleLike = async () => {
@@ -295,7 +281,6 @@ const PostPage = () => {
             // 채팅방을 만들고 조인룸을 하면서 채널과 태스크아이디,현재유저아이디를 보낸다
             //게시물 데이터는 taskid로 백엔드에서 찾아서 프론트에 넘긴다
             const channelId = response.data.data._id;
-            // const Chatroom = response.data.data.Chatroom
             navigate(`/chat/${channelId}`)
             //이러고 백엔드에서 보낼때는 _id를 암호화해서 보낸다
             //백엔드에 어쓰컨트롤러에 8번째 줄
@@ -486,9 +471,9 @@ const PostPage = () => {
                     ))}
             </section>
             <footer className={styles.footer}>
-                <button className={styles.acceptButton} onClick={handleCreateChannel}>
-                    심부름 하기
-                </button>
+              <button className={styles.acceptButton} onClick={handleCreateChannel}>
+                심부름 하기
+              </button>
             </footer>
         </div>
     );
