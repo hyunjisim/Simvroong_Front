@@ -94,11 +94,11 @@
   width: 80%;
 }
 
-.formGroup1 {
-  width: 12rem;
-  padding: 8px;
+.formGroup1 .input {
+  width: 10rem;
+  height: 2rem;
   font-size: 14px;
-  border-radius: 4px;
+  border-radius: 10px;
   color: var(--color-white);
   margin-bottom: 1rem;
 }
@@ -128,7 +128,6 @@
   font-size: 0.9rem;
   color: var(--midgray-color);
   margin-bottom: 0.5rem;
-  display: none;
 }
 
 .labelpw {
@@ -180,26 +179,14 @@
   margin-bottom: 0.5rem;
 }
 
-/* .dash {
-  margin: 0 0.5rem;
-  color: var(--midgray-color);
-}*/
-/* 
 .dash {
   font-size: 20px;
-  font-weight: normal;
-  color: #555;
-  line-height: 3;
-} */
-
-.dash {
-  font-size: 1.5rem;
   font-weight: bold;
   color: var(--midgray-color);
   line-height: 2;
   display: inline-block;
   margin: 0 0.5rem;
-  text-align: center;
+  margin-bottom: 10px;
 }
 
 .changeButton {
@@ -241,8 +228,8 @@
 .verifyContainer {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* 수평 공간 균등 분배 */
-  gap: 0.5rem; /* 요소 간 간격 추가 */
+  justify-content: space-between; 
+  gap: 0.5rem; 
 }
 
 .input {
