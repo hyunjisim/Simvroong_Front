@@ -32,7 +32,7 @@ const PartnershipStep4 = () => {
             if (!token) {
                 throw new Error('토큰이 없습니다.');
             }
-            const response = await axios.post("http://localhost:8080/partnership/Step4",{ services: errands }, {
+            const response = await axios.post("http://192.168.163.8:8080/partnership/Step4",{ services: errands }, {
                 headers: {
                     "Content-Type": "application/json",
                     'Authorization': `Bearer ${token}`,

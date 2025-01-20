@@ -4,6 +4,7 @@
     flex-direction: column;
     font-family: "Arial", sans-serif;
     color: #333;
+    /* background-color: var(--gray-background-color); */
     max-width: 25rem;
     height: 874px;
     margin: 0 auto;
@@ -93,7 +94,7 @@
 .chatListContainer {
     flex-grow: 1;
     padding: 1rem;
-    background-color: #ffffff;
+    background-color: var(--gray-background-color);
     overflow-y: auto;
 }
   
@@ -107,8 +108,10 @@
     display: flex;
     align-items: center;
     padding: 1rem;
-    border-bottom: 1px solid #e0e0e0;
+    background-color: var(--color-white);
+    border-radius: 4px;
     cursor: pointer;
+    margin-bottom: 7px;
 }
   
 .chatImage {

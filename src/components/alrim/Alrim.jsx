@@ -57,7 +57,7 @@ export default function Alrim() {
   // 백엔드에서 데이터를 가져오는 함수
   //const fetchAlrim = async () => {
    // try {
-    //  const response = await axios.get('http://localhost:5000/alrim'); // 백엔드 API URL
+    //  const response = await axios.get('http://192.168.163.8:5000/alrim'); // 백엔드 API URL
      // setAlrim(response.data); // 받아온 데이터를 상태에 저장
       //console.log('test')
    // } catch (error) {

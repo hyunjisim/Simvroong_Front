@@ -24,7 +24,7 @@ const ChatVroong = () => {
 
             // const data = data //유저 아이디 가져와야함
             // const userId = data.userId
-            const response = await axios.get('http://127.0.0.1:8080/chat', {
+            const response = await axios.get('http://192.168.163.8:8080/chat', {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -43,11 +43,6 @@ const ChatVroong = () => {
         fetchChats();
     }, [activeTab]); // activeTab 변경 시 데이터 재요청
 
-    // 탭 변경 핸들러
-    const handleTabChange = (tab) => {
-        setActiveTab(tab);
-    };
-
     return (
         <div className={styles.chatvroongcontainer}>
             {/* 헤더 */}
@@ -55,36 +50,9 @@ const ChatVroong = () => {
                 <h3 className={styles.headerchatvroong}>챗 부릉</h3>
             </div>
 
-            {/* 요구 및 수행 */}
-            <div className={styles.chatvroonglist}>
-                <button
-                    className={`${styles.chatvroongrequire} ${
-                        activeTab === "요구" ? styles.active : ""
-                    }`}
-                    onClick={() => handleTabChange("요구")}
-                >
-                    요구
-                </button>
-                <button
-                    className={`${styles.chatvroongexecute} ${
-                        activeTab === "수행" ? styles.active : ""
-                    }`}
-                    onClick={() => handleTabChange("수행")}
-                >
-                    수행
-                </button>
-            </div>
-
             {/* 내용 */}
             <div className={styles.chatListContainer}>
-                {loading ? (
-                    <div>로딩 중입니다...</div>
-                ) : chatList.length === 0 ? (
-                    <div className={styles.detail}>
-                        <img src={sad} alt="슬픈 이모티콘" />
-                        아직 {activeTab === "요구" ? "요구" : "수행"} 채팅 내역이 없습니다.
-                    </div>
-                ) : (
+
                     <ul className={styles.chatList}>
                         {chatList.map((chat) => (
                             <li
@@ -93,16 +61,26 @@ const ChatVroong = () => {
                                 onClick={() => navigate(`/chat/${chat._id}`)}
                             >
                                 {/* <img/> 채팅상대 프로필 이미지 */}
+                                <img
+                                    src={chat.profileImage || panda}
+                                    alt="User Avatar"
+                                    className={styles.chatImage}
+                                />
                                 <div className={styles.chatContent}>
                                     <h4 className={styles.chatTitle}>{chat.otherUserNickname}</h4>
                                     {/* <p className={styles.chatSubtitle}>{chat.location}</p> */}
                                     <p className={styles.chatMessage}>{chat.lastMessage}</p>
                                 </div>
-                                <span className={styles.chatTime}>{chat.lastMessageTime}</span>
+                                <span className={styles.chatTime}>
+                                {new Date(chat.lastMessageTime).toLocaleTimeString('ko-KR', {
+                                        hour: '2-digit',
+                                        minute: '2-digit',
+                                    })}
+                                </span>
                             </li>
                         ))}
                     </ul>
-                )}
+                
             </div>
 
             {/* 푸터 */}

@@ -30,7 +30,7 @@ const FindPassword = () => {
         }
 
         try {
-            await axios.post('http://127.0.0.1:8080/auth/sendCode', { phoneNumber })
+            await axios.post('http://192.168.163.8:8080/auth/sendCode', { phoneNumber })
             alert('인증번호가 발송되었습니다.')
             setIsCodeSent(true)
         } catch (error) {
@@ -48,7 +48,7 @@ const FindPassword = () => {
         }
 
         try {
-            await axios.post('http://127.0.0.1:8080/auth/verifyCode', {
+            await axios.post('http://192.168.163.8:8080/auth/verifyCode', {
                 phoneNumber,
                 code: verifyCode
             })
@@ -76,7 +76,7 @@ const FindPassword = () => {
         }
 
         try {
-            const response = await axios.post('http://127.0.0.1:8080/auth/findPw', data)
+            const response = await axios.post('http://192.168.163.8:8080/auth/findPw', data)
 
             if (response) {
                 setTempPassword(response.data.tempPassword)

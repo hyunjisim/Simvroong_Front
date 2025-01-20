@@ -172,6 +172,13 @@
     margin-bottom: 1rem;
 }
 
+.messageNickname {
+    font-size: 0.8rem;
+    color: var(--midgray-color);
+    margin-bottom: 0.3rem;
+    text-align: left; /* 왼쪽 정렬 */
+}
+
 .messageAvatar {
     width: 40px;
     height: 40px;
@@ -183,7 +190,6 @@
     background-color: var(--small-border-color);
     padding: 0.5rem 1rem;
     border-radius: 10px;
-    /* border: 1px solid var(--lowgray-text-color); */
     max-width: 70%;
     font-size: 0.9rem;
     color: var(--darkgray-color);
@@ -204,10 +210,11 @@
     margin-left: 0.5rem;
 }
 
-.messageTimeRight {
+.messageTimeLeft {
     font-size: 0.7rem;
     color: var(--lowgray-color);
     margin-right: 0.5rem;
+    align-self: flex-start;
 }
 
 .footer {

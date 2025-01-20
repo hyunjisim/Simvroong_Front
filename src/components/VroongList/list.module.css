@@ -145,6 +145,7 @@
 
 .vroongTag {
   display: inline-block;
+  width: 40px;
   font-size: 12px;
   padding: 3px 8px;
   border-radius: 4px;

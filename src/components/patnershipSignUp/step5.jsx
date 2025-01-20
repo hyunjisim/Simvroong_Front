@@ -26,7 +26,7 @@ const PartnershipStep5 = () => {
         const fetchData = async () => {
             try {
                 const token = sessionStorage.getItem("authToken");
-                const response = await axios.get("http://localhost:8080/partnership/step5", {
+                const response = await axios.get("http://192.168.163.8:8080/partnership/step5", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -68,7 +68,7 @@ const PartnershipStep5 = () => {
         try {
             const token = sessionStorage.getItem("authToken");
             const response = await axios.post(
-                "http://localhost:8080/partnership/step5",
+                "http://192.168.163.8:8080/partnership/step5",
                 { bio: introduction, transportation: transport },
                 {
                     headers: {

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import panda from "../../img/panda.png";
 
+// 기본 데이터 정의 (함수 외부에서 정의)
 const defaultProfileData = {
   name: "정보 없음",
   photo: panda,
@@ -19,7 +20,7 @@ const defaultProfileData = {
 };
 
 const OpProfile = () => {
-  const [profileData, setProfileData] = useState(defaultProfileData); // 초기 데이터 설정
+  const [profileData, setProfileData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showReviewMenu, setShowReviewMenu] = useState(null);
   const navigate = useNavigate();
@@ -28,29 +29,16 @@ const OpProfile = () => {
     const fetchData = async () => {
       const token = sessionStorage.getItem("authToken");
       try {
-        const response = await axios.get("http://127.0.0.1:8080/profile", {
+        const response = await axios.get("http://192.168.163.8:8080/profile", {
           headers: token
             ? { Authorization: `Bearer ${token}` }
-            : undefined,
+            : undefined, // 토큰이 없으면 헤더를 추가하지 않음
         });
-
-        const fetchedData = response.data || {};
-        setProfileData({
-          name: fetchedData.name || "정보 없음",
-          photo: fetchedData.photoUrl || panda,
-          tasks: fetchedData.tasks || ["등록된 심부름이 없습니다."],
-          vehicle: fetchedData.vehicle || "등록되지 않음",
-          certificates: fetchedData.certificates || [],
-          reviews: fetchedData.reviews || [],
-          stats: fetchedData.stats || {
-            activities: 0,
-            completedTasks: 0,
-            reviewCount: 0,
-          },
-        });
+        setProfileData(response.data);
       } catch (error) {
         console.error("프로필 데이터를 가져오는 중 오류가 발생했습니다.", error);
-        setProfileData(defaultProfileData); // 기본 데이터 설정
+        // 기본 데이터를 설정 (로그인하지 않은 경우)
+        setProfileData(defaultProfileData);
       } finally {
         setIsLoading(false);
       }
@@ -71,7 +59,7 @@ const OpProfile = () => {
     certificates,
     reviews,
     stats,
-  } = profileData;
+  } = profileData || defaultProfileData;
 
   const handleReport = async (reviewId) => {
     const token = sessionStorage.getItem("authToken");
@@ -82,7 +70,7 @@ const OpProfile = () => {
 
     try {
       await axios.post(
-        "http://127.0.0.1:8080/report",
+        "http://192.168.163.8:8080/report",
         { reviewId },
         {
           headers: {
@@ -117,7 +105,6 @@ const OpProfile = () => {
             src={photo}
             alt="프로필 사진"
             className={styles.profilePhoto}
-            onError={(e) => (e.target.src = panda)} // 이미지 로딩 실패 시 기본 이미지로 대체
           />
           <div className={styles.profileInfo}>
             <h2>{name}</h2>

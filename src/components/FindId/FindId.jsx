@@ -39,7 +39,7 @@ const FindId = () => {
         const phoneNumber = `${phoneFirst}${phoneRest}`
 
         try {
-            const response = await axios.post('http://127.0.0.1:8080/auth/findId', {
+            const response = await axios.post('http://192.168.163.8:8080/auth/findId', {
                 name: name,
                 phoneNumber: phoneNumber
             })
@@ -73,7 +73,7 @@ const FindId = () => {
 
         try {
             // 인증번호 요청
-            const response = await axios.post('http://127.0.0.1:8080/auth/sendCode', {
+            const response = await axios.post('http://192.168.163.8:8080/auth/sendCode', {
                 phoneNumber: phoneNumber // JSON 형태로 전달
             })
 
@@ -102,7 +102,7 @@ const FindId = () => {
 
         try {
             // 인증번호 확인
-            const response = await axios.post('http://127.0.0.1:8080/auth/verifyCode', {
+            const response = await axios.post('http://192.168.163.8:8080/auth/verifyCode', {
                 phoneNumber: phoneNumber,
                 code: verifyCode
             })

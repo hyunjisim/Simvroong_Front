@@ -17,7 +17,7 @@ const JJimVroong = () => {
             const token = sessionStorage.getItem("authToken");
             if (!token) throw new Error("토큰이 없습니다. 다시 로그인해주세요.");
 
-            const response = await axios.get("http://127.0.0.1:8080/likelists", {
+            const response = await axios.get("http://192.168.163.8:8080/likelists", {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -44,7 +44,7 @@ const JJimVroong = () => {
         try {
             const token = sessionStorage.getItem("authToken");
             const response = await axios.patch(
-                `http://127.0.0.1:8080/likelists/${taskId}`,
+                `http://192.168.163.8:8080/likelists/${taskId}`,
                 {
                     action: "removeFavorite",
                 },

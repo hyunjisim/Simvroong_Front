@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 // const HOST_PORT = 'http://192.168.162.30:8080/'
-const HOST_PORT = 'http://127.0.0.1:8080/'
+const HOST_PORT = 'http://192.168.163.8:8080/'
 
 const PersonalInfo = () => {
     const navigate = useNavigate()

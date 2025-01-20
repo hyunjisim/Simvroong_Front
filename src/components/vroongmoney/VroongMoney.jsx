@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import styles from "./VroongMoney.module.css";
 import backb from "../../img/back-arrow.png";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+
 
 const VroongMoney = () => {
 
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
 
 
   // 뒤로 가기 버튼
@@ -13,6 +16,25 @@ const VroongMoney = () => {
     const charge = () => navigate("/charge");
     const out = () => navigate("/out");
 
+    const fetchAccount = async () => {
+        const token = sessionStorage.getItem("authToken");
+        if (!token) throw new Error("토큰이 없습니다. 다시 로그인해주세요.");
+
+        const response = await axios.get(
+            `http://192.168.163.8:8080/money`,
+            {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+        console.log(response.data.transactions);
+    };
+    useEffect(() => {
+        setLoading(true);
+        fetchAccount();
+    }, []); // activeTab 변경 시 데이터 재요청
+
+    if (loading) {
+        return <div>로딩 중...</div>;
+    }
 return (
 <div className={styles.VroongMoneyContainer}>
       {/* 헤더 */}

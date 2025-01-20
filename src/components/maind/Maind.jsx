@@ -56,7 +56,7 @@ const Maind = () => {
     try {
       const token = sessionStorage.getItem("authToken");
       const response = await axios.get(
-        `http://127.0.0.1:8080/search/?keyword=${encodedText}`,
+        `http://192.168.163.8:8080/search/?keyword=${encodedText}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -67,7 +67,7 @@ const Maind = () => {
         const formattedResults = response.data.results.map((order) => ({
           taskId: order.taskId,
           title: order.title,
-          photoUrl: order.photoUrl || "https://via.placeholder.com/60",
+          thumnail: order.thumnail || "https://via.placeholder.com/60",
           location: order.location?.area || "지역 정보 없음",
           schedule: order.schedule?.estimatedDuration || "시간 정보 없음",
           payment: order.payment?.serviceFee
@@ -169,7 +169,7 @@ const Maind = () => {
                 onClick={() => navigate(`/post/${result.taskId}`)}
               >
                 <img
-                  src={result.photoUrl}
+                  src={result.thumnail}
                   alt={result.title}
                   className={styles.resultImage}
                 />

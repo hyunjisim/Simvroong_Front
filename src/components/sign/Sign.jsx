@@ -91,7 +91,7 @@ const Sign = () => {
         }
 
         try {
-            await axios.post('http://127.0.0.1:8080/auth/signup', userData)
+            await axios.post('http://192.168.163.8:8080/auth/signup', userData)
             alert('회원가입이 완료되었습니다!')
             navigate('/login')
         } catch (err) {
@@ -110,7 +110,7 @@ const Sign = () => {
 
         try {
             // 인증번호 요청
-            const response = await axios.post('http://127.0.0.1:8080/auth/sendCode', {
+            const response = await axios.post('http://192.168.163.8:8080/auth/sendCode', {
                 phoneNumber: phoneNumber // JSON 형태로 전달
             })
 
@@ -141,7 +141,7 @@ const Sign = () => {
 
         try {
             // 인증번호 확인
-            const response = await axios.post('http://127.0.0.1:8080/auth/verifyCode', {
+            const response = await axios.post('http://192.168.163.8:8080/auth/verifyCode', {
                 phoneNumber: phoneNumber,
                 code: verifyCode
             })
