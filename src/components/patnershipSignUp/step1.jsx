@@ -69,7 +69,7 @@ const PartnershipStep1 = () => {
                 throw new Error('토큰이 없습니다.');
             }
 
-            const response = await axios.post("http://localhost:8080/partnership/step1", data, {
+            const response = await axios.post("http://192.168.163.8:8080/partnership/step1", data, {
                 headers: {
                 'Authorization': `Bearer ${token}`,
                 },
@@ -96,7 +96,7 @@ const PartnershipStep1 = () => {
             {/* 헤더 섹션 */}
             <div className={styles.header}>
                 <div  className={styles.pagetitle}>
-                    <img src={BackButtonIcon} alt="뒤로가기 버튼" className={styles.backbutton} />
+                    <img src={BackButtonIcon} alt="뒤로가기 버튼" className={styles.backbutton} onClick={navigate(-1)}/>
                     <h2>본인확인</h2>
                 </div>
                 {/* 단계 표시 바 */}

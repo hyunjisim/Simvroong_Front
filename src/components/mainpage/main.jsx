@@ -25,6 +25,7 @@ import Request from "../../img/mainsel/Request.png";
 import RequestFull from "../../img/mainsel/RequestFull.png";
 import Around from "../../img/mainsel/Around.png";
 
+
 const Main = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeCategory, setActiveCategory] = useState(
@@ -49,13 +50,54 @@ const Main = () => {
     { name: "기타", value: "기타", img: Other },
   ];
 
+  const handleMessage = async (e) => {
+    try {
+      const parsedData = JSON.parse(e.data);
+      const expoToken = JSON.stringify(parsedData.expoToken);
+      // alert(expoToken)
+      sessionStorage.setItem("expoToken", expoToken)
+      sendExpoTokenToServer();
+    } catch (error) {
+      console.error("Error handling WebView message:", error);
+    }
+  };
+  
+  const sendExpoTokenToServer = async () => {
+    try {
+      const token = sessionStorage.getItem("authToken");
+      //alert(token)
+      //const expoToken = JSON.parse(sessionStorage.getItem("expoToken"));
+      const expoToken = sessionStorage.getItem("expoToken")
+      //alert(expoToken)
+      const response = await axios.post(
+        "http://192.168.163.8:8080/notification/saveToken",
+        { token : expoToken },
+        { 
+          headers: { Authorization: `Bearer ${token}`}
+        }
+      );
+      console.log("서버 응답:", response.data);
+    } catch (error) {
+      console.error("서버로 Expo Token 전송 중 오류 발생:", error);
+    }
+  };
+
+  
+  useEffect(() => {
+    document.addEventListener("message", handleMessage);
+  
+    return () => {
+      // document.removeEventListener("message", handleMessage);
+    };
+  }, []);
+  
   const fetchItems = async (category = "전체") => {
     try {
       const token = sessionStorage.getItem("authToken");
       const url =
         category === "전체"
-          ? "http://127.0.0.1:8080/main"
-          : `http://127.0.0.1:8080/main?category=${encodeURIComponent(category)}`;
+          ? "http://192.168.163.8:8080/main"
+          : `http://192.168.163.8:8080/main?category=${encodeURIComponent(category)}`;
   
       const response = await axios.get(url, {
         headers: { Authorization: `Bearer ${token}` },
@@ -171,7 +213,7 @@ const Main = () => {
             <div className={styles.itemDetails}>
               <h3>{item.title}</h3>
               <img
-                src={item.photoUrl}
+                src={item.thumnail}
                 alt={item.title}
                 className={styles.itemImage}
               />

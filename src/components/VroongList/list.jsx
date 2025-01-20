@@ -19,18 +19,19 @@ const VroongList = () => {
   const fetchMyVroongList = async () => {
     try {
       const token = sessionStorage .getItem('authToken');
-      const response = await axios.get('http://127.0.0.1:8080/list/mylist', {
+      const response = await axios.get('http://192.168.163.8:8080/list/mylist', {
         headers: { Authorization: `Bearer ${token}` },
       });
       const formattedData = response.data.data.map((order) => ({
         taskId: order.taskId,
         title: order.title,
-        photoUrl: order.photoUrl,
+        thumnail: order.thumnail,
         location: order.location,
         schedule: order.schedule,
         payment: order.payment,
         isActive: order.isActive,
       }));
+      
       setMyVroongList(formattedData);
     } catch (error) {
       console.error('나의 부릉부릉 데이터를 가져오는 데 실패했습니다:', error);
@@ -44,13 +45,13 @@ const VroongList = () => {
   const fetchRequestedVroongList = async () => {
     try {
       const token = sessionStorage.getItem('authToken');
-      const response = await axios.get('http://127.0.0.1:8080/list/partner', {
+      const response = await axios.get('http://192.168.163.8:8080/list/partner', {
         headers: { Authorization: `Bearer ${token}` },
       });
       const formattedData = response.data.data.map((order) => ({
         taskId: order.taskId,
         title: order.title,
-        photoUrl: order.photoUrl,
+        thumnail: order.thumnail,
         location: order.location,
         schedule: order.schedule,
         payment: order.payment,
@@ -114,14 +115,14 @@ const VroongList = () => {
           </div>
         ) : (
           displayList.map((item) => (
-            console.log(item),
+            console.log('item',item),
             <div
               key={item.taskId}
               className={styles.vroongItem}
               onClick={() => navigate(`/post/${item.taskId}`)}
             >
               <img
-                src={item.photoUrl || 'https://via.placeholder.com/60'}
+                src={item.thumnail || 'https://via.placeholder.com/60'}
                 alt={item.title}
                 className={styles.vroongImage}
               />

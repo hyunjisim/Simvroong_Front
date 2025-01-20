@@ -26,7 +26,7 @@ const BottomSheet2 = ({ onClose, bankName, accountNumber,accountHolder }) => {
                 throw new Error('토큰이 없습니다.');
             }
 
-            const response = await axios.post("http://localhost:8080/partnership/step3", data, {
+            const response = await axios.post("http://192.168.163.8:8080/partnership/step3", data, {
                 headers: {
                 "Content-Type": "application/json",
                 'Authorization': `Bearer ${token}`,

@@ -5,14 +5,7 @@ import heartFull from '../../img/Heart(red).png';
 import heartEmpty from '../../img/Heart(empty).png';
 import headimg from '../../img/head.jpg';
 import axios from 'axios';
-import { Socket } from 'socket.io-client';
-import io from 'socket.io-client';
 
-// Socket.IO 초기화
-const socket = io('http://127.0.0.1:8080', {
-    transports: ['websocket'], // WebSocket 연결 강제
-    auth: { token: sessionStorage.getItem('authToken') },
-});
 
 const PostPage = () => {
     
@@ -37,24 +30,24 @@ const PostPage = () => {
     const fetchData = async () => {
         try {
             const token = sessionStorage.getItem('authToken');
-            const response = await axios.get(`http://localhost:8080/order/${taskId}`, {
+            const response = await axios.get(`http://192.168.163.8:8080/order/${taskId}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             const data = response.data.data;
-            console.log(response)
+            console.log(data)
 
             setTaskid(data.taskId) //심부름 게시물 taskid 설정
-            console.log(data.taskId);
+            // console.log(data.taskId);
             setUserId(data.user_id); // 심부름 게시물 작성자 ID 설정
-            console.log(data.user_id);
+            // console.log(data.user_id);
             setCurrentUserId(response.data.currentUser); // 현재 로그인된 사용자 ID 설정
-            console.log(response.data.currentUser);
-            console.log(response.data);
+            // console.log(response.data.currentUser);
+            // console.log(response.data);
+            console.log(data.photoUrl)
 
 
             setRequestData(data);
             setQuestions(data.QnA || []);
-            setIsLiked(data.isLiked || false);
         } catch (error) {
             console.error('데이터 가져오기 실패:', error.response?.data || error.message);
             if (error.response?.status === 401) {
@@ -65,10 +58,32 @@ const PostPage = () => {
             setLoading(false);
         }
     };
+    const fetchLike = async () => {
+        try {
+            const token = sessionStorage.getItem('authToken');
+            // 좋아요 상태를 확인하는 API 요청
+            const response = await axios.post(`http://192.168.163.8:8080/order/${taskId}`, 
+            {},
+            {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            console.log('a',response)
+            // 서버 응답에서 isLiked 상태를 추출하여 설정
+            if (response.data.data.isLiked !== undefined) {
+                setIsLiked(response.data.data.isLiked);
+                console.log('좋아요 상태:', response.data.data.isLiked); // 상태 확인 로그
+            } else {
+                console.error('서버 응답에 좋아요 상태가 포함되지 않았습니다.');
+            }
+        } catch (error) {
+            console.error('좋아요 상태를 가져오는 중 오류 발생:', error);
+        }
+    };
 
     useEffect(() => {
         fetchData();
-    }, [taskId]);
+        fetchLike();
+    }, []);
 
     const toggleLike = async () => {
         const updatedLikeStatus = !isLiked;
@@ -76,7 +91,7 @@ const PostPage = () => {
         try {
             const token = sessionStorage.getItem('authToken');
             await axios.patch(
-                `http://localhost:8080/order/${taskId}`,
+                `http://192.168.163.8:8080/order/${taskId}`,
                 { action: updatedLikeStatus ? 'addFavorite' : 'removeFavorite' },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -105,7 +120,7 @@ const PostPage = () => {
         try {
             const token = sessionStorage.getItem('authToken');
             await axios.patch(
-                `http://localhost:8080/order/${taskId}`,
+                `http://192.168.163.8:8080/order/${taskId}`,
                 {
                     action: 'addAnswer',
                     questionId,
@@ -128,7 +143,7 @@ const PostPage = () => {
             const token = sessionStorage.getItem('authToken');
             const userId = sessionStorage.getItem('userMongoId');
             await axios.patch(
-                `http://localhost:8080/order/${taskId}`,
+                `http://192.168.163.8:8080/order/${taskId}`,
                 {
                     action: 'addQuestion',
                     data: { content: newQuestion, userId },
@@ -153,7 +168,7 @@ const PostPage = () => {
         try {
             const token = sessionStorage.getItem('authToken');
             await axios.patch(
-                `http://localhost:8080/order/${taskId}`,
+                `http://192.168.163.8:8080/order/${taskId}`,
                 {
                     action: 'updateQuestion',
                     questionId,
@@ -174,7 +189,7 @@ const PostPage = () => {
         try {
             const token = sessionStorage.getItem('authToken');
             await axios.patch(
-                `http://localhost:8080/order/${taskId}`,
+                `http://192.168.163.8:8080/order/${taskId}`,
                 { action: 'deleteQuestion', questionId },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -194,7 +209,7 @@ const PostPage = () => {
             const { questionId, replyId } = editingReply;
             const token = sessionStorage.getItem('authToken');
             await axios.patch(
-                `http://localhost:8080/order/${taskId}`,
+                `http://192.168.163.8:8080/order/${taskId}`,
                 {
                     action: 'updateAnswer',
                     questionId,
@@ -216,7 +231,7 @@ const PostPage = () => {
         try {
             const token = sessionStorage.getItem('authToken');
             await axios.patch(
-                `http://localhost:8080/order/${taskId}`,
+                `http://192.168.163.8:8080/order/${taskId}`,
                 { action: 'deleteAnswer', questionId, answerId: replyId },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -232,7 +247,7 @@ const PostPage = () => {
             const token = sessionStorage.getItem("authToken");
             // 심부름 생성 요청
             const response = await axios.post(
-                `http://127.0.0.1:8080/check/agree/${taskId}`,
+                `http://192.168.163.8:8080/check/agree/${taskId}`,
                 { taskId, message: '심부름 신청하겠습니다' }, // 게시물 ID 전달
                 {
                 headers: { Authorization: `Bearer ${token}` },
@@ -256,7 +271,7 @@ const PostPage = () => {
             console.log('전달 데이터:', { taskId, userId, currentUserId, channel });
 
             const response = await axios.post(
-                `http://127.0.0.1:8080/chat/${channel}`,
+                `http://192.168.163.8:8080/chat/${channel}`,
                 {
                     channel,message: `채널명 : ${channel}`,
                     taskId,
@@ -281,6 +296,7 @@ const PostPage = () => {
             // 채팅방을 만들고 조인룸을 하면서 채널과 태스크아이디,현재유저아이디를 보낸다
             //게시물 데이터는 taskid로 백엔드에서 찾아서 프론트에 넘긴다
             const channelId = response.data.data._id;
+            // const Chatroom = response.data.data.Chatroom
             navigate(`/chat/${channelId}`)
             //이러고 백엔드에서 보낼때는 _id를 암호화해서 보낸다
             //백엔드에 어쓰컨트롤러에 8번째 줄
@@ -299,7 +315,7 @@ const PostPage = () => {
                 <button className={styles.backArrow} onClick={() => navigate(-1)}>
                     ←
                 </button>
-                <img src={headimg} alt="배경 이미지" className={styles.bannerImg} />
+                <img src={requestData.thumnail||headimg} alt="배경 이미지" className={styles.bannerImg} />
             </div>
             <header className={styles.header}>
                 <img src={requestData.photoUrl} alt="프로필" className={styles.profileImg} />
@@ -471,9 +487,9 @@ const PostPage = () => {
                     ))}
             </section>
             <footer className={styles.footer}>
-              <button className={styles.acceptButton} onClick={handleCreateChannel}>
-                심부름 하기
-              </button>
+                <button className={styles.acceptButton} onClick={handleCreateChannel}>
+                    심부름 하기
+                </button>
             </footer>
         </div>
     );

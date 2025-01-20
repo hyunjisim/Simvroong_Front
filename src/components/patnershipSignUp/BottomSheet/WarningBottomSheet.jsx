@@ -24,7 +24,7 @@ const WarningBottomSheet = ({ onClose, onConfirm,introduction,transport }) => {
                 throw new Error('토큰이 없습니다.');
             }
 
-            const response = await axios.post("http://localhost:8080/partnership/step5", data, {
+            const response = await axios.post("http://192.168.163.8:8080/partnership/step5", data, {
                 headers: {
                 "Content-Type": "multipart/form-data",
                 'Authorization': `Bearer ${token}`,
