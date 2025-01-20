@@ -9,7 +9,8 @@ import search from "../../img/search.png";
 import CategoryBottomSheet from "./CategoryBottomSheet";
 
 const Request = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null); // 실제 파일 객체
+  const [imageUrl, setImageUrl] = useState(null); // 업로드된 S3 URL
   const [address, setAddress] = useState("");
   const [detailedAddress, setDetailedAddress] = useState("");
   const [category, setCategory] = useState("");
@@ -37,10 +38,11 @@ const Request = () => {
   };
 
   // 이미지 선택 핸들러
-  const handleImageChange = (e) => {
+  const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setSelectedImage(URL.createObjectURL(file)); // 이미지 미리보기
+      setSelectedFile(file);
+      setImageUrl(URL.createObjectURL(file)); // 로컬 미리보기
     }
   };
 
@@ -81,14 +83,60 @@ const Request = () => {
     setIsFeeNegotiable(e.target.checked);
   };
 
+  // 이미지 업로드
+  const uploadImageToS3 = async () => {
+    if (!selectedFile) {
+      alert("파일이 선택되지 않았습니다.");
+      return null;
+    }
+  
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+  
+    try {
+      const token = sessionStorage.getItem("authToken");
+      const response = await axios.post(
+        "http://127.0.0.1:8080/order/upload", // S3 업로드 엔드포인트
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+  
+      if (response.status === 200 && response.data.url) {
+        console.log("S3 업로드 성공:", response.data.url);
+        return response.data.url;
+      } else {
+        console.error("S3 업로드 실패:", response.data);
+        alert("이미지 업로드 실패");
+      }
+    } catch (error) {
+      console.error("S3 업로드 중 오류 발생:", error);
+      alert("이미지 업로드 중 오류 발생");
+    }
+    return null;
+  };
+
   // 데이터 제출 함수
   const handleSubmit = async () => {
+    try {
+      // S3 업로드
+      const photoUrl = await uploadImageToS3();
+  
+      // S3 업로드 실패 시 처리
+      if (!photoUrl) {
+        alert("이미지 업로드에 실패했습니다. 다시 시도해주세요.");
+        return;
+      }
     const userData = {
       category, // 카테고리
       title, // 제목
       taskDetails: {
         description: requestDetails, // 요청사항
-        thumnail: selectedImage || "", // 이미지 URL
+        thumnail: imageUrl, // 이미지 URL
       },
       location: {
         area: address, // 기본 주소
@@ -117,7 +165,7 @@ const Request = () => {
       isFeeNegotiable: isFeeNegotiable, // 금액 제안 허용 여부
     };
 
-    try {
+    
       const token = sessionStorage.getItem("authToken"); // 토큰 가져오기
       if (!token) {
         alert("로그인이 필요합니다. 다시 로그인해 주세요.");
@@ -134,14 +182,22 @@ const Request = () => {
           },
         }
       );
-      alert("심부름 의뢰가 완료되었습니다!");
-      console.log(response.data);
-  
-      // 의뢰 완료 후 메인 페이지로 이동
-      navigate("/main");
+      // 요청 성공 처리
+      if (response.status === 201) {
+        alert("심부름 의뢰가 완료되었습니다!");
+        console.log("심부름 생성 성공:", response.data);
+        navigate("/main");
+      }
     } catch (error) {
-      console.error("심부름 의뢰 실패:", error);
-      alert("심부름 의뢰에 실패했습니다. 다시 시도해주세요.");
+      // 요청 실패 처리
+      console.error("심부름 생성 중 오류 발생:", error);
+  
+      // 서버로부터의 응답 메시지 확인
+      if (error.response && error.response.data) {
+        alert(`심부름 생성 실패: ${error.response.data.message}`);
+      } else {
+        alert("심부름 생성 실패. 네트워크 상태를 확인해주세요.");
+      }
     }
   };
   
@@ -207,11 +263,11 @@ const Request = () => {
             type="file"
             accept="image/*"
             className={styles.fileInput}
-            onChange={handleImageChange}
+            onChange={handleFileChange}
           />
           <div className={styles.uploadBox}>
             <img
-              src={selectedImage || imgPut}
+              src={imageUrl || imgPut}
               alt="이미지 미리보기"
               className={styles.previewImage}
             />
