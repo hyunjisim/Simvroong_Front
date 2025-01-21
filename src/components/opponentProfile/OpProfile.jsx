@@ -2,22 +2,6 @@ import React, { useState, useEffect } from "react";
 import styles from "./OpProfile.module.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import panda from "../../img/panda.png";
-
-// 기본 데이터 정의 (함수 외부에서 정의)
-const defaultProfileData = {
-  name: "정보 없음",
-  photo: panda,
-  tasks: ["등록된 심부름이 없습니다."],
-  vehicle: "등록되지 않음",
-  certificates: [],
-  reviews: [],
-  stats: {
-    activities: 0,
-    completedTasks: 0,
-    reviewCount: 0,
-  },
-};
 
 const OpProfile = () => {
   const [profileData, setProfileData] = useState(null);
@@ -27,18 +11,23 @@ const OpProfile = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const token = sessionStorage.getItem("authToken");
+      const token = sessionStorage.getItem("authToken") || localStorage.getItem("authToken");
+      const baseUrl = "http://127.0.0.1:8080/profile";
+      if (!token) {
+        console.error("토큰이 존재하지 않습니다.");
+        setProfileData(null);
+        return;
+      }
+
       try {
-        const response = await axios.get("http://192.168.163.8:8080/profile", {
-          headers: token
-            ? { Authorization: `Bearer ${token}` }
-            : undefined, // 토큰이 없으면 헤더를 추가하지 않음
+        const response = await axios.get(baseUrl, {
+          headers: { Authorization: `Bearer ${token}` },
         });
+        console.log("API 응답 데이터:", response.data);
         setProfileData(response.data);
       } catch (error) {
-        console.error("프로필 데이터를 가져오는 중 오류가 발생했습니다.", error);
-        // 기본 데이터를 설정 (로그인하지 않은 경우)
-        setProfileData(defaultProfileData);
+        console.error("프로필 데이터를 가져오는 중 오류 발생:", error.response || error.message);
+        setProfileData(null);
       } finally {
         setIsLoading(false);
       }
@@ -51,18 +40,22 @@ const OpProfile = () => {
     return <div className={styles.loading}>프로필 데이터를 불러오는 중...</div>;
   }
 
+  if (!profileData) {
+    return <div className={styles.error}>프로필 데이터를 가져올 수 없습니다.</div>;
+  }
+
   const {
-    name,
-    photo,
+    nickname,
+    photoUrl,
     tasks,
     vehicle,
     certificates,
     reviews,
     stats,
-  } = profileData || defaultProfileData;
+  } = profileData;
 
   const handleReport = async (reviewId) => {
-    const token = sessionStorage.getItem("authToken");
+    const token = sessionStorage.getItem("authToken") || localStorage.getItem("authToken");
     if (!token) {
       alert("로그인이 필요합니다.");
       return;
@@ -70,12 +63,10 @@ const OpProfile = () => {
 
     try {
       await axios.post(
-        "http://192.168.163.8:8080/report",
+        "http://127.0.0.1:8080/report",
         { reviewId },
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
       alert("신고가 접수되었습니다.");
@@ -89,10 +80,7 @@ const OpProfile = () => {
   return (
     <div className={styles.profileContainer}>
       <header className={styles.profileHeader}>
-        <span
-          className={styles.backArrowText}
-          onClick={() => navigate("/profile")}
-        >
+        <span className={styles.backArrowText} onClick={() => navigate("/profile")}>
           &larr;
         </span>
         <h1>프로필</h1>
@@ -101,31 +89,29 @@ const OpProfile = () => {
       <main className={styles.profileMain}>
         {/* 사용자 정보 */}
         <section className={styles.profileUser}>
-          <img
-            src={photo}
-            alt="프로필 사진"
-            className={styles.profilePhoto}
-          />
+          <img src={photoUrl} alt="프로필 사진" className={styles.profilePhoto} />
           <div className={styles.profileInfo}>
-            <h2>{name}</h2>
+            <h2>{nickname}</h2>
           </div>
         </section>
 
         {/* 활동, 수행, 리뷰 통계 */}
-        <section className={styles.profileStats}>
-          <div className={styles.statBox}>
-            <h3>활동</h3>
-            <p>{stats.activities}</p>
-          </div>
-          <div className={styles.statBox}>
-            <h3>수행</h3>
-            <p>{stats.completedTasks}</p>
-          </div>
-          <div className={styles.statBox}>
-            <h3>리뷰</h3>
-            <p>{stats.reviewCount}</p>
-          </div>
-        </section>
+        {stats && (
+          <section className={styles.profileStats}>
+            <div className={styles.statBox}>
+              <h3>활동</h3>
+              <p>{stats.activities || 0}</p>
+            </div>
+            <div className={styles.statBox}>
+              <h3>수행</h3>
+              <p>{stats.completedTasks || 0}</p>
+            </div>
+            <div className={styles.statBox}>
+              <h3>리뷰</h3>
+              <p>{stats.reviewCount || 0}</p>
+            </div>
+          </section>
+        )}
 
         {/* 자기 소개 */}
         <section className={styles.profileServices}>
@@ -134,16 +120,18 @@ const OpProfile = () => {
         </section>
 
         {/* 수행 가능한 심부름 */}
-        <section className={styles.profileServices}>
-          <h3>수행 가능한 심부름</h3>
-          <div className={styles.servicesList}>
-            {tasks.length > 0 ? (
-              tasks.map((task, index) => <button key={index}>{task}</button>)
-            ) : (
-              <p>등록된 심부름이 없습니다.</p>
-            )}
-          </div>
-        </section>
+        {tasks && (
+          <section className={styles.profileServices}>
+            <h3>수행 가능한 심부름</h3>
+            <div className={styles.servicesList}>
+              {tasks.length > 0 ? (
+                tasks.map((task, index) => <button key={index}>{task}</button>)
+              ) : (
+                <p>등록된 심부름이 없습니다.</p>
+              )}
+            </div>
+          </section>
+        )}
 
         {/* 이동 수단 */}
         {vehicle && (
@@ -175,9 +163,7 @@ const OpProfile = () => {
                   <p>{review.text}</p>
                   <button
                     className={styles.reviewMenuButton}
-                    onClick={() =>
-                      setShowReviewMenu(showReviewMenu === review.id ? null : review.id)
-                    }
+                    onClick={() => setShowReviewMenu(showReviewMenu === review.id ? null : review.id)}
                   >
                     ⁝
                   </button>
@@ -186,7 +172,6 @@ const OpProfile = () => {
                       <button
                         className={styles.reportButton}
                         onClick={() => handleReport(review.id)}
-                        disabled={!sessionStorage.getItem("authToken")} // 로그인 안 한 경우 비활성화
                       >
                         신고
                       </button>

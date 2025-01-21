@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import styles from './changePsw.module.css'
 
-const HOST_PORT = 'http://192.168.163.8:8080/'
+const HOST_PORT = 'http://127.0.0.1:8080/'
 
 const ChangePsw = () => {
     const navigate = useNavigate()

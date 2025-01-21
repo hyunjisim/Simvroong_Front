@@ -7,7 +7,7 @@ import styles from './chat.module.css';
 import axios from 'axios';
 
 // Socket.IO 초기화
-const socket = io('http://192.168.163.8:8080', {
+const socket = io('http://127.0.0.1:8080', {
     transports: ['websocket'], // WebSocket 연결 강제
     auth: { token: sessionStorage.getItem('authToken') },
 });
@@ -48,7 +48,7 @@ const Chat = () => {
                 console.log(token);
 
                 const response = await axios.get(
-                    `http://192.168.163.8:8080/chat/${channel}`,
+                    `http://127.0.0.1/chat/${channel}`,
                     {
                         headers: { Authorization: `Bearer ${token}` },
                     }
@@ -96,7 +96,7 @@ const Chat = () => {
                 // console.log('nickname',nickname)
                 // 이게 아니라 _id가 sender에 담겨서 가져와지니까 현재 유저_id랑 비교해야함
                 const response = await axios.get(
-                    `http://192.168.163.8:8080/chat/${channel}/message?page=${page}&limit=20`,
+                    `http://127.0.0.1/chat/${channel}/message?page=${page}&limit=20`,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
                 console.log('불러온 채팅 내역',response.data);
@@ -112,7 +112,7 @@ const Chat = () => {
                 const token = sessionStorage.getItem('authToken');
                 if(taskId !== null){
                     const response = await axios.get(
-                        `http://192.168.163.8:8080/chat/${channel}/completed/${taskId}`,
+                        `http://127.0.0.1/chat/${channel}/completed/${taskId}`,
                         { headers: {Authorization: `Bearer ${token}`} }
                     )
                     console.log('불러온 거래 내역',response.data);
@@ -201,7 +201,7 @@ const Chat = () => {
             const token = sessionStorage.getItem('authToken');
             console.log('handleisActive token : ',token);
             const response = await axios.post(
-            `http://192.168.163.8:8080/chat/${channel}/completed`,
+            `http://127.0.0.1:8080/chat/${channel}/completed`,
             { taskId },
             {
                 'Content-Type': 'application/json',

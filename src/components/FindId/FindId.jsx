@@ -39,7 +39,7 @@ const FindId = () => {
         const phoneNumber = `${phoneFirst}${phoneRest}`
 
         try {
-            const response = await axios.post('http://192.168.163.8:8080/auth/findId', {
+            const response = await axios.post('http://127.0.0.1:8080/auth/findId', {
                 name: name,
                 phoneNumber: phoneNumber
             })

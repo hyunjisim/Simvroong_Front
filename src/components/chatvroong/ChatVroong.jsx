@@ -24,7 +24,7 @@ const ChatVroong = () => {
 
             // const data = data //유저 아이디 가져와야함
             // const userId = data.userId
-            const response = await axios.get('http://192.168.163.8:8080/chat', {
+            const response = await axios.get('http://127.0.0.1:8080/chat', {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -62,7 +62,7 @@ const ChatVroong = () => {
                             >
                                 {/* <img/> 채팅상대 프로필 이미지 */}
                                 <img
-                                    src={chat.profileImage || panda}
+                                    src={chat.otherUserPhotoUrl}
                                     alt="User Avatar"
                                     className={styles.chatImage}
                                 />

@@ -39,12 +39,17 @@ const Request = () => {
 
   // 이미지 선택 핸들러
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files[0]; // 사용자가 선택한 첫 번째 파일
     if (file) {
-      setSelectedFile(file);
-      setImageUrl(URL.createObjectURL(file)); // 로컬 미리보기
+      console.log("선택한 파일:", file); // 파일 정보 출력
+      setSelectedFile(file); // 상태에 파일 설정
+      setImageUrl(URL.createObjectURL(file)); // 이미지 미리보기 URL 생성
+    } else {
+      console.error("파일이 선택되지 않았습니다.");
+      alert("파일을 선택해주세요.");
     }
   };
+
 
   // 카카오 주소 검색 API 호출
   const handleAddressSearch = () => {
@@ -86,6 +91,7 @@ const Request = () => {
   // 이미지 업로드
   const uploadImageToS3 = async () => {
     if (!selectedFile) {
+      console.error("선택된 파일이 없습니다.");
       alert("파일이 선택되지 않았습니다.");
       return null;
     }
@@ -96,7 +102,7 @@ const Request = () => {
     try {
       const token = sessionStorage.getItem("authToken");
       const response = await axios.post(
-        "http://127.0.0.1:8080/order/upload", // S3 업로드 엔드포인트
+        "http://127.0.0.1:8080/order/upload",
         formData,
         {
           headers: {
@@ -119,87 +125,88 @@ const Request = () => {
     }
     return null;
   };
+  
 
   // 데이터 제출 함수
   const handleSubmit = async () => {
     try {
-      // S3 업로드
-      const photoUrl = await uploadImageToS3();
-  
-      // S3 업로드 실패 시 처리
-      if (!photoUrl) {
-        alert("이미지 업로드에 실패했습니다. 다시 시도해주세요.");
-        return;
-      }
-    const userData = {
-      category, // 카테고리
-      title, // 제목
-      taskDetails: {
-        description: requestDetails, // 요청사항
-        thumnail: imageUrl, // 이미지 URL
-      },
-      location: {
-        area: address, // 기본 주소
-        detailedAddress, // 상세 주소
-        extraNotes: "", // 기타 전달사항
-      },
-      conditions: {
-        hasCCTV: cctvOption === "있어요", // CCTV 여부
-        hasAnimals: petOption === "있어요", // 반려동물 여부
-        partnerParkingAvailable: parkingOption === "가능해요", // 주차 가능 여부
-      },
-      partnerPreference: {
-        gender: partnerPreference, // 파트너 성별
-        ageRange: "", // 선호 연령대 (추가 필요 시 값 지정)
-        otherPreferences: "", // 기타 선호 조건
-      },
-      schedule: {
-        date, // 예약 날짜
-        time: startTime, // 시작 시간
-        estimatedDuration: expectedTime, // 예상 소요 시간
-      },
-      payment: {
-        serviceFee: fee, // 심부름비
-        minFee: 5000, // 최소 금액
-      },
-      isFeeNegotiable: isFeeNegotiable, // 금액 제안 허용 여부
-    };
+        // S3 업로드
+        const photoUrl = await uploadImageToS3();
 
-    
-      const token = sessionStorage.getItem("authToken"); // 토큰 가져오기
-      if (!token) {
-        alert("로그인이 필요합니다. 다시 로그인해 주세요.");
-        navigate("/login"); // 로그인 페이지로 이동
-        return;
-      }
-  
-      const response = await axios.post(
-        "http://192.168.163.8:8080/order/create",
-        userData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`, // Authorization 헤더에 토큰 추가
-          },
+        if (!photoUrl) {
+            alert("이미지 업로드에 실패했습니다. 다시 시도해주세요.");
+            return;
         }
-      );
-      // 요청 성공 처리
-      if (response.status === 201) {
-        alert("심부름 의뢰가 완료되었습니다!");
-        console.log("심부름 생성 성공:", response.data);
-        navigate("/main");
-      }
+
+        // 올바르게 데이터 구성
+        const userData = {
+          category: category || "카테고리 미지정", // 기본값 설정
+          title: title || "제목 없음", // 제목 기본값 설정
+          taskDetails: {
+            description: requestDetails || "요청사항 없음", // 요청사항 기본값
+            thumnail: photoUrl, // S3에서 업로드된 이미지 URL
+          },
+          location: {
+            area: address || "주소 미지정", // 주소 기본값
+            detailedAddress: detailedAddress || "", // 상세주소는 선택적
+            extraNotes: "", // 기타 전달사항 (빈 문자열)
+          },
+          conditions: {
+            hasCCTV: cctvOption === "있어요", // CCTV 여부
+            hasAnimals: petOption === "있어요", // 반려동물 여부
+            partnerParkingAvailable: parkingOption === "가능해요", // 주차 가능 여부
+          },
+          partnerPreference: {
+            gender: partnerPreference || "무관", // 파트너 선호 기본값
+            ageRange: "", // 선호 연령대
+            otherPreferences: "", // 기타 선호 조건
+          },
+          schedule: {
+            date: date || "날짜 미지정", // 날짜 기본값
+            time: startTime || "시간 미지정", // 시작 시간 기본값
+            estimatedDuration: expectedTime || "0시간", // 예상 소요시간 기본값
+          },
+          payment: {
+            serviceFee: fee || 0, // 심부름비 기본값
+            minFee: 5000, // 최소 금액
+          },
+          isFeeNegotiable: isFeeNegotiable, // 금액 제안 허용 여부
+        };
+
+        // 토큰 확인 및 요청 전송
+        const token = sessionStorage.getItem("authToken");
+        if (!token) {
+            alert("로그인이 필요합니다. 다시 로그인해 주세요.");
+            navigate("/login");
+            return;
+        }
+
+        const response = await axios.post(
+            "http://127.0.0.1:8080/order/create",
+            userData,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+
+        if (response.status === 201) {
+            alert("심부름 의뢰가 완료되었습니다!");
+            navigate("/main");
+        }
     } catch (error) {
-      // 요청 실패 처리
-      console.error("심부름 생성 중 오류 발생:", error);
-  
-      // 서버로부터의 응답 메시지 확인
-      if (error.response && error.response.data) {
-        alert(`심부름 생성 실패: ${error.response.data.message}`);
-      } else {
-        alert("심부름 생성 실패. 네트워크 상태를 확인해주세요.");
-      }
+        console.error("심부름 생성 중 오류 발생:", error);
+
+        if (error.response && error.response.data) {
+            alert(`심부름 생성 실패: ${error.response.data.message}`);
+        } else {
+            alert("심부름 생성 실패. 네트워크 상태를 확인해주세요.");
+        }
     }
-  };
+};
+
+
   
   const handleCctvClick = (option) => setCctvOption(option);
   const handlePetClick = (option) => setPetOption(option);
@@ -261,6 +268,7 @@ const Request = () => {
         <label className={styles.uploadLabel}>
           <input
             type="file"
+            name="file" 
             accept="image/*"
             className={styles.fileInput}
             onChange={handleFileChange}

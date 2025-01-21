@@ -56,7 +56,7 @@ const Maind = () => {
     try {
       const token = sessionStorage.getItem("authToken");
       const response = await axios.get(
-        `http://192.168.163.8:8080/search/?keyword=${encodedText}`,
+        `http://127.0.0.1:8080/search/?keyword=${encodedText}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

@@ -19,7 +19,7 @@ const VroongList = () => {
   const fetchMyVroongList = async () => {
     try {
       const token = sessionStorage .getItem('authToken');
-      const response = await axios.get('http://192.168.163.8:8080/list/mylist', {
+      const response = await axios.get('http://127.0.0.1:8080/list/mylist', {
         headers: { Authorization: `Bearer ${token}` },
       });
       const formattedData = response.data.data.map((order) => ({
@@ -45,7 +45,7 @@ const VroongList = () => {
   const fetchRequestedVroongList = async () => {
     try {
       const token = sessionStorage.getItem('authToken');
-      const response = await axios.get('http://192.168.163.8:8080/list/partner', {
+      const response = await axios.get('http://127.0.0.1:8080/list/partner', {
         headers: { Authorization: `Bearer ${token}` },
       });
       const formattedData = response.data.data.map((order) => ({

@@ -70,7 +70,7 @@ const Main = () => {
       const expoToken = sessionStorage.getItem("expoToken")
       //alert(expoToken)
       const response = await axios.post(
-        "http://192.168.163.8:8080/notification/saveToken",
+        "http://127.0.0.1:8080/notification/saveToken",
         { token : expoToken },
         { 
           headers: { Authorization: `Bearer ${token}`}
@@ -96,8 +96,8 @@ const Main = () => {
       const token = sessionStorage.getItem("authToken");
       const url =
         category === "전체"
-          ? "http://192.168.163.8:8080/main"
-          : `http://192.168.163.8:8080/main?category=${encodeURIComponent(category)}`;
+          ? "http://127.0.0.1:8080/main"
+          : `http://127.0.0.1:8080/main?category=${encodeURIComponent(category)}`;
   
       const response = await axios.get(url, {
         headers: { Authorization: `Bearer ${token}` },

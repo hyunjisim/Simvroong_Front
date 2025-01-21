@@ -25,7 +25,7 @@ const VroongSetting = () => {
     }
 
     try {
-      const response = await fetch("http://192.168.163.8:8080/settings/vibration", {
+      const response = await fetch("http://127.0.0.1:8080/settings/vibration", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -79,7 +79,7 @@ const VroongSetting = () => {
 
     try {
       // 백엔드에 탈퇴하기 경로랑 맞게 나중에 고치기!
-      const response = await fetch("http://192.168.163.8:8080/user/withdraw", {
+      const response = await fetch("http://127.0.0.1:8080/user/withdraw", {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
