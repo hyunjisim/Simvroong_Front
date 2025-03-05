@@ -32,14 +32,14 @@
 
 ## 🚀 프로젝트 실행 방법
 
-### 1️⃣ **백엔드 실행**
+### 1️⃣ ** 프론트엔드 실행**
 ```bash
 # 레포지토리 클론
 git clone https://github.com/your-repo/shimburung.git
-cd shimburung/backend
+cd shimburung/frontend
 
 # 패키지 설치
 npm install
 
-# 서버 실행
+# React 앱 실행
 npm start
