@@ -31,12 +31,11 @@
 프로젝트는 **CSS Modules**을 사용하여 컴포넌트 단위 스타일링을 적용하였습니다.
 
 ## 🚀 프로젝트 실행 방법
-
-### 1️⃣ ** 프론트엔드 실행**
+프론트와 백엔드 모두 실행해야 합니다
+### 1️⃣ **프론트엔드 실행**
 ```bash
 # 레포지토리 클론
-git clone https://github.com/your-repo/shimburung.git
-cd shimburung/frontend
+git clone https://github.com/hyunjisim/Simvroong_Back.git
 
 # 패키지 설치
 npm install
